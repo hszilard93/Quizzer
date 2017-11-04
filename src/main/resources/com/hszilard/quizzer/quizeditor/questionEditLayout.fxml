@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:id="root"
+            stylesheets="/main/resources/com/hszilard/quizzer/quizeditor/style/question_edit_styles.css"
+            prefHeight="400.0" prefWidth="600.0"
+            style="-fx-background-color: white">
+    <center>
+        <VBox fx:id="centerVBox"
+              AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
+            <padding>
+                <Insets top="12" right="24" bottom="12" left="24"/>
+            </padding>
+
+            <children>
+                <!--The question's text-->
+                <VBox fx:id="questionTextVBox"
+                      alignment="CENTER_LEFT"
+                      styleClass="question-text-vbox">
+                    <Label text="%edit_question"
+                           styleClass="question-label"/>
+                    <TextField fx:id="questionTextField" prefWidth="${questionTextVBox.width}"/>
+                </VBox>
+                <!--The HBoxes containing the possible answers will be injected into this VBox-->
+                <ScrollPane fitToWidth="true">
+                    <content>
+                        <VBox fx:id="answersVBox"/>
+                    </content>
+                </ScrollPane>
+                <!--Buttons-->
+                <HBox alignment="BASELINE_CENTER" spacing="8">
+                    <padding>
+                        <Insets top="4"/>
+                    </padding>
+
+                    <children>
+                        <Button fx:id="addAnswerButton"
+                                text="%edit_add-answer-button"
+                                minWidth="96"/>
+                        <Button fx:id="removeAnswerButton"
+                                text="%edit_remove-button"
+                                minWidth="128"/>
+                    </children>
+                </HBox>
+
+            </children>
+        </VBox>
+    </center>
+
+    <bottom>
+        <!--Confirm and Cancel buttons-->
+        <HBox alignment="CENTER_RIGHT"
+              spacing="16">
+            <padding>
+                <Insets topRightBottomLeft="12"/>
+            </padding>
+            <Button fx:id="confirmButton"
+                    minWidth="80"
+                    styleClass="confirm-button"/>
+            <Button fx:id="cancelButton"
+                    text="%edit_cancel-button"
+                    minWidth="80"
+                    styleClass="cancel-button"/>
+        </HBox>
+    </bottom>
+</BorderPane>

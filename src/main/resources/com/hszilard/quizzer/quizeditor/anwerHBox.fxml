@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Tooltip?>
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      stylesheets="/main/resources/com/hszilard/quizzer/quizeditor/style/question_edit_styles.css"
+      styleClass="answer-hbox"
+      alignment="BASELINE_LEFT"
+      spacing="16">
+    <padding>
+        <Insets top="8" bottom="8" left="8"/>
+    </padding>
+
+    <children>
+        <Label fx:id="answerLabel" styleClass="answer-label"/>
+
+        <TextField fx:id="answerTextField"
+                   maxWidth="Infinity"
+                   HBox.hgrow="ALWAYS"/>
+
+        <CheckBox fx:id="correctCheckBox">
+            <tooltip>
+                <Tooltip text="%edit_correct-tooltip"
+                         styleClass="tooltip"/>
+            </tooltip>
+        </CheckBox>
+    </children>
+
+</HBox>

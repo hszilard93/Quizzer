@@ -1,0 +1,28 @@
+.cellBox{
+    -fx-padding: 0 0 4 0;
+}
+
+.title{
+    -fx-font-size: 16;
+    -fx-font-weight: 700;
+    -fx-text-fill: #444444;
+}
+
+.answers-grid {
+    -fx-padding: 0 0 1 0;
+}
+
+.answer-label {
+    -fx-pref-width: 250;
+    -fx-padding: 0 4 0 8;
+    -fx-font-size: 13;
+    -fx-font-family: fantasy;
+    -fx-text-fill: #333333;
+    -fx-font-weight: 700;
+}
+
+.correct-answer-label {
+    -fx-background-color: limegreen;
+    -fx-background-radius: 8;
+    -fx-text-fill: white;
+}

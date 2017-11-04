@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_quizzer" default="compile.module.quizzer">
+  <dirname property="module.quizzer.basedir" file="${ant.file.module_quizzer}"/>
+  
+  <property name="module.jdk.home.quizzer" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.quizzer" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.quizzer" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.quizzer" value="-encoding UTF-8 -source 1.8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="quizzer.output.dir" value="${module.quizzer.basedir}/out/production/Quizzer"/>
+  <property name="quizzer.testoutput.dir" value="${module.quizzer.basedir}/out/test/Quizzer"/>
+  
+  <path id="quizzer.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="quizzer.module.production.classpath">
+    <path refid="${module.jdk.classpath.quizzer}"/>
+  </path>
+  
+  <path id="quizzer.runtime.production.module.classpath">
+    <pathelement location="${quizzer.output.dir}"/>
+  </path>
+  
+  <path id="quizzer.module.classpath">
+    <path refid="${module.jdk.classpath.quizzer}"/>
+    <pathelement location="${quizzer.output.dir}"/>
+  </path>
+  
+  <path id="quizzer.runtime.module.classpath">
+    <pathelement location="${quizzer.testoutput.dir}"/>
+    <pathelement location="${quizzer.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.quizzer">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.quizzer">
+    <patternset refid="excluded.from.module.quizzer"/>
+  </patternset>
+  
+  <path id="quizzer.module.sourcepath">
+    <dirset dir="${module.quizzer.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.quizzer" depends="compile.module.quizzer.production,compile.module.quizzer.tests" description="Compile module Quizzer"/>
+  
+  <target name="compile.module.quizzer.production" depends="register.custom.compilers" description="Compile module Quizzer; production classes">
+    <mkdir dir="${quizzer.output.dir}"/>
+    <javac2 destdir="${quizzer.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.quizzer}/javac">
+      <compilerarg line="${compiler.args.quizzer}"/>
+      <bootclasspath refid="quizzer.module.bootclasspath"/>
+      <classpath refid="quizzer.module.production.classpath"/>
+      <src refid="quizzer.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.quizzer"/>
+    </javac2>
+    
+    <copy todir="${quizzer.output.dir}">
+      <fileset dir="${module.quizzer.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.quizzer.tests" depends="register.custom.compilers,compile.module.quizzer.production" description="compile module Quizzer; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.quizzer" description="cleanup module">
+    <delete dir="${quizzer.output.dir}"/>
+    <delete dir="${quizzer.testoutput.dir}"/>
+  </target>
+</project>

@@ -1,0 +1,50 @@
+.left-vbox {
+    -fx-background-color: white;
+}
+
+.center-vbox {
+    -fx-background-color: white;
+}
+
+.top-anchor-pane {
+    -fx-background-color: cornflowerblue;
+}
+
+.title-label {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: 800;
+}
+
+.title-field {
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+}
+
+.number-of-questions-label {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: 800;
+}
+
+.questions-list-view {
+    -fx-control-inner-background: white;
+    -fx-control-inner-background-alt: #e0f0ff;
+    -fx-border-color: -fx-control-inner-background-alt;
+    -fx-border-width: 2;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.button {
+    -fx-background-color: dodgerblue;
+    -fx-background-radius: 8;
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+    -fx-font-weight: 900;
+}
+
+.tooltip {
+    -fx-background-color: cornflowerblue;
+    -fx-font-size: 12;
+}

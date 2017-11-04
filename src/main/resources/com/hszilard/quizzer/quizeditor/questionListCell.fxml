@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<HBox fx:id="cellBox"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      maxWidth="-Infinity"
+      stylesheets="/main/resources/com/hszilard/quizzer/quizeditor/style/question_list_cell_styles.css"
+      styleClass="cellBox">
+
+    <children>
+        <VBox>
+            <children>
+                <Label fx:id="title"
+                       wrapText="true"
+                       styleClass="title"/>
+                <GridPane fx:id="answersGrid"
+                          styleClass="answers-grid"/>
+            </children>
+        </VBox>
+    </children>
+
+</HBox>

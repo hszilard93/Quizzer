@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Tooltip?>
+
+<BorderPane fx:controller="main.java.com.hszilard.quizzer.quizeditor.MainController"
+            xmlns:fx="http://javafx.com/fxml"
+            xmlns="http://javafx.com/javafx/8"
+            stylesheets="/main/resources/com/hszilard/quizzer/quizeditor/style/main_scene_styles.css">
+    <top>
+        <VBox>
+            <children>
+                <!--Menus-->
+                <MenuBar>
+                    <Menu text="%file_menu">
+                        <MenuItem fx:id="fileNewMenuItem"
+                                  onAction="#onNewClicked"
+                                      text="%file_new">
+                            <graphic>
+                                <ImageView fitHeight="16" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="/main/resources/com/hszilard/quizzer/quizeditor/drawable/blank-file.png"/>
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </MenuItem>
+                        <MenuItem fx:id="fileOpenMenuItem"
+                                  onAction="#onOpenClicked"
+                                  text="%file_open">
+                            <graphic>
+                                <ImageView fitHeight="16" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="/main/resources/com/hszilard/quizzer/quizeditor/drawable/open-folder-outline.png"/>
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </MenuItem>
+                        <MenuItem fx:id="fileSaveMenuItem"
+                                  onAction="#onSaveClicked"
+                                  text="%file_save">
+                            <graphic>
+                                <ImageView fitHeight="16" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="/main/resources/com/hszilard/quizzer/quizeditor/drawable/save-file-option.png"/>
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </MenuItem>
+                        <MenuItem fx:id="fileSaveAsMenuItem"
+                                  onAction="#onSaveAsClicked"
+                                  text="%file_save-as"/>
+                        <SeparatorMenuItem/>
+                        <MenuItem fx:id="fileExitMenuItem"
+                                  onAction="#onExitButtonClicked"
+                                  text="%file_exit">
+                            <graphic>
+                                <ImageView fitHeight="16" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="/main/resources/com/hszilard/quizzer/quizeditor/drawable/terminal.png"/>
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </MenuItem>
+                    </Menu>
+
+                    <Menu text="%language_menu">
+                        <MenuItem fx:id="languageEnglishMenuItem"
+                                  onAction="#onEnglishLanguageSelected"
+                                  text="%language_en">
+                            <graphic>
+                                <ImageView fitHeight="16" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="/main/resources/com/hszilard/quizzer/quizeditor/drawable/uk_flag.png"/>
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </MenuItem>
+                        <MenuItem fx:id="languageHungarianMenuItem"
+                                  onAction="#onHungarianLanguageSelected"
+                                  text="%language_hu">
+                            <graphic>
+                                <ImageView fitHeight="16" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="/main/resources/com/hszilard/quizzer/quizeditor/drawable/hungary_flag.png"/>
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </MenuItem>
+                    </Menu>
+                    <Menu text="%help_menu"/>
+                </MenuBar>
+                <!--Quiz title and number of questions-->
+                <AnchorPane prefWidth="${centerVBox.width}"
+                            styleClass="top-anchor-pane">
+                    <children>
+                        <HBox AnchorPane.topAnchor="4"
+                              AnchorPane.leftAnchor="36"
+                              AnchorPane.bottomAnchor="4"
+                              AnchorPane.rightAnchor="192"
+                              alignment="CENTER"
+                              spacing="30">
+                            <children>
+                                <Label text="%main_quiz-title"
+                                       styleClass="title-label"/>
+                                <TextField fx:id="titleField"
+                                           HBox.hgrow="ALWAYS"
+                                           styleClass="title-field"/>
+                            </children>
+                        </HBox>
+                        <Label fx:id="numberOfQuestionLabel"
+                               AnchorPane.topAnchor="4"
+                               AnchorPane.rightAnchor="16"
+                               AnchorPane.bottomAnchor="4"
+                               styleClass="number-of-questions-label"/>
+                    </children>
+                </AnchorPane>
+            </children>
+        </VBox>
+    </top>
+
+    <left>
+        <!--Buttons-->
+        <VBox prefWidth="128"
+              alignment="TOP_CENTER"
+              spacing="8"
+              styleClass="left-vbox">
+            <padding>
+                <Insets top="5"/>
+            </padding>
+            <children>
+                <Button fx:id="addButton"
+                        prefWidth="120"
+                        onAction="#onAddButtonClicked"
+                        styleClass="button"
+                        text="%main_add-button">
+                    <tooltip>
+                        <Tooltip text="%main_add-button-tooltip"
+                                 styleClass="tooltip"/>
+                    </tooltip>
+                </Button>
+
+                <Button fx:id="deleteButton"
+                        prefWidth="120"
+                        onAction="#onDeleteButtonClicked"
+                        styleClass="button"
+                        text="%main_delete-button">
+                    <tooltip>
+                        <Tooltip text="%main_delete-button-tooltip"
+                                 styleClass="tooltip"/>
+                    </tooltip>
+                </Button>
+
+                <Button fx:id="editButton"
+                        prefWidth="120"
+                        onAction="#onEditButtonClicked"
+                        styleClass="button"
+                        text="%main_edit-button">
+                    <tooltip>
+                        <Tooltip text="%main_edit-button-tooltip"
+                                 styleClass="tooltip"/>
+                    </tooltip>
+                </Button>
+            </children>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox fx:id="centerVBox"
+              styleClass="center-vbox">
+            <children>
+                <!--The main attraction-->
+                <ListView fx:id="listView" VBox.vgrow="ALWAYS"
+                          styleClass="questions-list-view"/>
+            </children>
+        </VBox>
+    </center>
+
+</BorderPane>

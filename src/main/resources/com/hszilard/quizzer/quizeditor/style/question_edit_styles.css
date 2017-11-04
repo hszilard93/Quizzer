@@ -1,0 +1,37 @@
+.question-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: 800px;
+}
+
+.answer-hbox {
+    -fx-background-color: lightblue;
+}
+
+.button {
+    -fx-background-color: dodgerblue;
+    -fx-background-radius: 8;
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+    -fx-font-weight: 900;
+}
+
+.confirm-button {
+    -fx-background-color: #1eddbb;
+    -fx-background-radius: 8;
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+    -fx-font-weight: 900;
+}
+
+.cancel-button {
+    -fx-background-color: #ff7777;
+    -fx-background-radius: 8;
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+    -fx-font-weight: 900;
+}
+
+.tooltip {
+    -fx-background-color: cornflowerblue;
+    -fx-font-size: 12;
+}
