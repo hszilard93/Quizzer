@@ -4,8 +4,7 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
 import main.java.com.hszilard.quizzer.common.quiz_model.Quiz;
-import main.java.com.hszilard.quizzer.common.xml_converter.QuizExporter;
-import main.java.com.hszilard.quizzer.common.xml_converter.QuizLoader;
+import main.java.com.hszilard.quizzer.common.xml_converter.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 import javafx.fxml.FXML;
@@ -30,10 +29,11 @@ import java.util.logging.Logger;
  */
 public class MainController {
 
-    private static final Logger LOGGER = Logger.getLogger(QuizLoader.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SimpleQuizLoader.class.getName());
 
-    /* Files with the @FXML tag are automatically injected. */
-    @FXML private ResourceBundle resources;             // contains the internationalized strings.
+    /* Fields with the @FXML annotation are automatically injected. */
+    @FXML
+    private ResourceBundle resources;             // contains the internationalized strings.
 
     @FXML MenuItem fileNewMenuItem;
     @FXML MenuItem fileOpenMenuItem;
@@ -54,7 +54,7 @@ public class MainController {
     private String quizPath;
     private boolean justSaved = false;          // true if the quiz object hasn't been modified since created, opened or saved
 
-    /* This Callback is used both when clicking the Edit button and when double clicking a ListView item (passed to the cell) */
+    /* This Callback is used both when clicking on the Edit button and when double clicking on a ListView item (passed to the cell) */
     private AbstractQuestionEditController.Callback editCallback = questionToSave -> {
         int selectedQuestionIndex = listView.getSelectionModel().getSelectedIndex();
         Question selectedQuestion = listView.getItems().get(selectedQuestionIndex);
@@ -114,17 +114,14 @@ public class MainController {
         File file = fileChooser.showOpenDialog(Main.getPrimaryStage());
         if (file != null) {
             try {
-                quiz = QuizLoader.loadQuiz(file.getPath());
+                QuizLoader quizLoader = new SimpleQuizLoader();
+                quiz = quizLoader.loadQuiz(file.getPath());
                 quizPath = file.getPath();
                 initialize();
                 justSaved = true;
-            }
-            catch (NoSuchFileException e) {
+            } catch (QuizLoadingException e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
-                showErrorAlert(resources.getString("error_no-such-file"));
-            }
-            catch (Exception e) {
-                LOGGER.log(Level.SEVERE, e.getMessage(), e);
+                /* Show generic error message*/
                 showErrorAlert(resources.getString("error_not-legal"));
             }
         }
@@ -136,9 +133,9 @@ public class MainController {
         /* If we know the filepath, just save */
         if (quizPath != null) {
             try {
-                QuizExporter.export(quiz, quizPath);
-            }
-            catch (Exception e) {
+                QuizExporter exporter = new SimpleQuizExporter();
+                exporter.exportQuiz(quiz, quizPath);
+            } catch (QuizExportingException e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
                 showErrorAlert(resources.getString("error_no-save"));
             }
@@ -158,7 +155,8 @@ public class MainController {
         File file = fileChooser.showSaveDialog(Main.getPrimaryStage());
         if (file != null) {
             try {
-                QuizExporter.export(quiz, file.getPath());
+                QuizExporter exporter = new SimpleQuizExporter();
+                exporter.exportQuiz(quiz, file.getPath());
             } catch (Exception e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
                 showErrorAlert(resources.getString("error_no-save"));
@@ -203,8 +201,7 @@ public class MainController {
         }, resources);
         try {
             newQuestionEditController.display();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
             showErrorAlert(resources.getString("error_unexpected-error"));
         }
@@ -230,8 +227,7 @@ public class MainController {
                 new ExistingQuestionEditController(listView.getSelectionModel().getSelectedItem(), editCallback, resources);
         try {
             existingQuestionEditController.display();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
             showErrorAlert(resources.getString("error_unexpected-error"));
         }
@@ -240,8 +236,7 @@ public class MainController {
     private void changeLanguage(Locale locale) {
         if (!LocaleManager.getPreferredLocale().equals(locale)) {
             LocaleManager.setPreferredLocale(locale);
-        }
-        else {
+        } else {
             return;  // don't do anything if selected language is already in use
         }
 
@@ -300,8 +295,7 @@ public class MainController {
         if (quizPath == null) {
             /* The default path of the FileChooser is the user's home directory */
             fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        }
-        else {
+        } else {
             /* If we already have a path to a quiz file, we get its directory */
             String quizDirectory = quizPath.substring(0, quizPath.lastIndexOf(File.separator));
             fileChooser.setInitialDirectory(new File(quizDirectory));
