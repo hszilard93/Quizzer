@@ -2,6 +2,7 @@ package main.java.com.hszilard.quizzer.quizeditor;
 
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import main.java.com.hszilard.quizzer.common.LocaleManager;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
 import main.java.com.hszilard.quizzer.common.quiz_model.Quiz;
 import main.java.com.hszilard.quizzer.common.xml_converter.*;
@@ -15,7 +16,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.nio.file.NoSuchFileException;
 import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Optional;

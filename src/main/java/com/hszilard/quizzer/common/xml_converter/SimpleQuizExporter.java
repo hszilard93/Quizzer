@@ -1,5 +1,6 @@
 package main.java.com.hszilard.quizzer.common.xml_converter;
 
+import com.sun.istack.internal.NotNull;
 import main.java.com.hszilard.quizzer.common.quiz_model.Answer;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
 import main.java.com.hszilard.quizzer.common.quiz_model.Quiz;
@@ -33,6 +34,14 @@ public class SimpleQuizExporter implements QuizExporter {
      */
     public void exportQuiz(final Quiz quiz, final String xmlPath) throws QuizExportingException {
         LOGGER.log(Level.FINE, "Attempting to export quiz as: " + xmlPath);
+
+        if (quiz == null) {
+            throw new QuizExportingException("Quiz must not be null!");
+        }
+        if (xmlPath == null) {
+            throw new QuizExportingException("xmlPath must not be null!");
+        }
+
         try {
             /* Building document */
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
