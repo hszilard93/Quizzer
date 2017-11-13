@@ -5,6 +5,8 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.util.Objects;
+
 /**
  * @author Szilárd Hompoth at https://github.com/hszilard93
  * Answer object. A list of answers belong to a Question object.
@@ -40,4 +42,18 @@ public class Answer {
         return correct;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(answerText, correct);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null) return false;
+        if (getClass() != other.getClass()) return false;
+
+        return this.answerText.get().equals(((Answer)other).answerText.get())
+                && this.correct.get() == ((Answer) other).correct.get();
+    }
 }

@@ -6,8 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import main.java.com.hszilard.quizzer.common.LocaleManager;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**

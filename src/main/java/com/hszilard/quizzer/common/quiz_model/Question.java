@@ -7,6 +7,8 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.Objects;
+
 /**
  * @author Szilárd Hompoth at https://github.com/hszilard93
  * Question object. A list of questions belong to a Quiz object.
@@ -54,4 +56,22 @@ public class Question {
         return answers;
     }
 
+    @Override
+    public int hashCode() {
+        long answersHash = 0;
+        for (Answer a : answers) {
+            answersHash += a.hashCode();
+        }
+        return Objects.hash(questionText, answersHash);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null) return false;
+        if (getClass() != other.getClass()) return false;
+
+        return this.questionText.get().equals(((Question)other).questionText.get())
+                && this.answers.equals(((Question)other).answers);
+    }
 }

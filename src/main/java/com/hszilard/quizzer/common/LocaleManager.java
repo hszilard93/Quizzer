@@ -1,4 +1,4 @@
-package main.java.com.hszilard.quizzer.quizeditor;
+package main.java.com.hszilard.quizzer.common;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,21 +12,22 @@ import java.util.prefs.Preferences;
  */
 public class LocaleManager {
     private static final String LOCALE_KEY = "locale";
-    private static final String DEFAULT_LOCALE_CODE = "en";
     /* When a new language is added to the strings resource bundle, this list must be updated! */
     private static final List<String> supportedLocales = new ArrayList<>(Arrays.asList("en", "hu"));
 
     private static Preferences preferences = Preferences.userNodeForPackage(LocaleManager.class);
     private static Locale preferredLocale;
 
-    static Locale getPreferredLocale() {
+    public static Locale getPreferredLocale() {
         if (preferredLocale == null) {
-            preferredLocale = new Locale(preferences.get(LOCALE_KEY, DEFAULT_LOCALE_CODE));
+            String systemLang = System.getProperty("user.language");
+            String defaultLang = supportedLocales.contains(systemLang) ? systemLang : "en";
+            preferredLocale = new Locale(preferences.get(LOCALE_KEY, defaultLang));
         }
         return preferredLocale;
     }
 
-    static void setPreferredLocale(Locale locale) {
+    public static void setPreferredLocale(Locale locale) {
         if (supportedLocales.contains(locale.getLanguage())) {
             preferredLocale = locale;
             preferences.put(LOCALE_KEY, locale.getLanguage());
