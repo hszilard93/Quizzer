@@ -5,8 +5,6 @@ import main.java.com.hszilard.quizzer.common.quiz_model.Answer;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
 import main.java.com.hszilard.quizzer.common.quiz_model.Quiz;
 import main.java.com.hszilard.quizzer.common.xml_converter.*;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.text.CharacterPredicates;
 import org.apache.commons.text.RandomStringGenerator;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;

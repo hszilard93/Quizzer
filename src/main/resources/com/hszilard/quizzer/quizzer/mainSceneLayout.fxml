@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.SplitPane.Divider?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="main.java.com.hszilard.quizzer.quizzer.MainController"
+            stylesheets="/main/resources/com/hszilard/quizzer/quizzer/style/teams_vbox_styles.css"
+            prefHeight="600" prefWidth="800">
+
+    <top>
+        <VBox>
+            <children>
+                <fx:include source="menuLayout.fxml"
+                            fx:id="menuBarLayout"/>
+            </children>
+        </VBox>
+    </top>
+    <center>
+        <SplitPane dividerPositions="0.8"
+                   styleClass="split-pane">
+            <GridPane fx:id="questionsGrid"
+                      alignment="CENTER"
+                      stylesheets="/main/resources/com/hszilard/quizzer/quizzer/style/grid_cell_style.css"
+                      styleClass="grid"/>
+            <VBox fx:id="teamsVBox"
+                  minWidth="192"
+                  maxWidth="512"
+                  alignment="TOP_CENTER"
+                  style="-fx-background-color: salmon"/>
+        </SplitPane>
+    </center>
+
+</BorderPane>

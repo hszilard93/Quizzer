@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<MenuBar xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml"
+         fx:controller="main.java.com.hszilard.quizzer.quizzer.MenuController"
+         fx:id="menuBar">
+
+        <Menu text="file menu">
+            <MenuItem fx:id="fileOpenMenuItem"
+                      onAction="#onOpenClicked"
+                      text="file open">
+                <graphic>
+                    <ImageView fitHeight="16" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="/main/resources/com/hszilard/quizzer/quizeditor/drawable/open-folder-outline.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </MenuItem>
+            <MenuItem fx:id="fileRestartMenuItem"
+                      onAction="#onRestartButtonClicked"
+                      text="restart quiz">
+
+            </MenuItem>
+            <MenuItem fx:id="fileExitMenuItem"
+                      onAction="#onExitButtonClicked"
+                      text="file exit">
+                <graphic>
+                    <ImageView fitHeight="16" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="/main/resources/com/hszilard/quizzer/quizeditor/drawable/terminal.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </MenuItem>
+        </Menu>
+
+        <Menu text="language menu">
+            <MenuItem fx:id="languageEnglishMenuItem"
+                      onAction="#onEnglishLanguageSelected"
+                      text="language en">
+                <graphic>
+                    <ImageView fitHeight="16" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="/main/resources/com/hszilard/quizzer/quizeditor/drawable/uk_flag.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </MenuItem>
+            <MenuItem fx:id="languageHungarianMenuItem"
+                      onAction="#onHungarianLanguageSelected"
+                      text="language hu">
+                <graphic>
+                    <ImageView fitHeight="16" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="/main/resources/com/hszilard/quizzer/quizeditor/drawable/hungary_flag.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </MenuItem>
+        </Menu>
+        <Menu text="help menu"/>
+
+</MenuBar>

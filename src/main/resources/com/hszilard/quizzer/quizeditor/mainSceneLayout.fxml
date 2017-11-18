@@ -20,7 +20,8 @@
 <BorderPane fx:controller="main.java.com.hszilard.quizzer.quizeditor.MainController"
             xmlns:fx="http://javafx.com/fxml"
             xmlns="http://javafx.com/javafx/8"
-            stylesheets="/main/resources/com/hszilard/quizzer/quizeditor/style/main_scene_styles.css">
+            stylesheets="/main/resources/com/hszilard/quizzer/quizeditor/style/main_scene_styles.css"
+            prefHeight="600" prefWidth="800">
     <top>
         <VBox>
             <children>

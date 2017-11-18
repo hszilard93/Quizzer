@@ -1,0 +1,30 @@
+.add-team-button {
+    -fx-background-color: orange;
+    -fx-background-radius: 8;
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+    -fx-font-weight: 900;
+}
+
+.team-box {
+    -fx-background-color: deeppink;
+    -fx-background-radius: 2;
+}
+
+.name-label {
+    -fx-font-size: 16;
+    -fx-font-weight: 900;
+    -fx-text-fill: white;
+    -fx-padding: 2 0 2 8;
+}
+
+.score-label {
+    -fx-font-size: 16;
+    -fx-font-weight: 900;
+    -fx-text-fill: white;
+    -fx-padding: 2 2 2 0;
+}
+
+.separator-line {
+    -fx-stroke: red;
+}

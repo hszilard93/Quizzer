@@ -26,10 +26,10 @@ public class Main extends Application {
                 LocaleManager.getPreferredLocale());
         /* Loads the root object of the mainScene and initializes its controller (MainController.java) */
         Parent root = FXMLLoader.load(getClass().getResource("/main/resources/com/hszilard/quizzer/quizeditor/mainSceneLayout.fxml"), stringsBundle);
-        Scene mainScene = new Scene(root, 800, 600);
+        Scene mainScene = new Scene(root );
         primaryStage.setScene(mainScene);
-        primaryStage.setMinHeight(400);
         primaryStage.setMinWidth(600);
+        primaryStage.setMinHeight(400);
         primaryStage.getIcons().add(new Image("/main/resources/com/hszilard/quizzer/quizeditor/drawable/question-class-note-symbol_color.png"));
         primaryStage.show();
     }

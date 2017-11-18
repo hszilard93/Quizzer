@@ -1,0 +1,29 @@
+.split-pane {
+    -fx-border-width: 0;
+    -fx-background-color: transparent;
+}
+
+.split-pane > .split-pane-divider {
+    -fx-background-color: transparent;
+}
+
+.grid {
+    -fx-background-color: #1eddbb;
+    -fx-hgap: 5;
+    -fx-vgap: 5;
+}
+
+.grid-cell-button {
+    -fx-background-image: url("/main/resources/com/hszilard/quizzer/quizzer/drawable/safe-small.png");
+    -fx-background-size: 99%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-smooth: true;
+    -fx-min-width: 20px;
+    -fx-alignment: center;
+    -fx-text-alignment: left;
+    -fx-text-fill: black;
+    -fx-font-weight: 900;
+    -fx-font-size: 18px;
+}
