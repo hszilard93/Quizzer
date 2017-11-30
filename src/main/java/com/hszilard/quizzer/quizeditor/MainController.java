@@ -32,8 +32,6 @@ public class MainController {
     private static final Logger LOGGER = Logger.getLogger(SimpleQuizLoader.class.getName());
 
     /* Fields with the @FXML annotation are automatically injected. */
-    @FXML
-    private ResourceBundle resources;             // contains the internationalized strings.
 
     @FXML MenuItem fileNewMenuItem;
     @FXML MenuItem fileOpenMenuItem;
@@ -49,6 +47,8 @@ public class MainController {
     @FXML ListView<Question> listView;
     @FXML TextField titleField;
     @FXML Label numberOfQuestionLabel;
+
+    @FXML private ResourceBundle resources;     // contains the internationalized strings.
 
     private Quiz quiz;                          // main Quiz object of the application
     private String quizPath;
@@ -86,7 +86,7 @@ public class MainController {
     private void onNewClicked() {
         LOGGER.log(Level.FINE, "New menu item clicked.");
         if (!justSaved) {
-            Optional<ButtonType> result = showChangeAlert(resources.getString("alert_sure-text"));
+            Optional<ButtonType> result = showChangeAlert(resources.getString("alert_sure-reset-text"));
             /* Don't do anything if the cancel optin was chosen */
             if (result.isPresent() && result.get() == ButtonType.CANCEL) {
                 return;
@@ -102,7 +102,7 @@ public class MainController {
     private void onOpenClicked() {
         LOGGER.log(Level.FINE, "Open menu item clicked.");
         if (!justSaved) {
-            Optional<ButtonType> result = showChangeAlert(resources.getString("alert_sure-text"));
+            Optional<ButtonType> result = showChangeAlert(resources.getString("alert_sure-reset-text"));
             if (result.isPresent() && result.get() == ButtonType.CANCEL) {
                 return;
             }
@@ -170,7 +170,7 @@ public class MainController {
     private void onExitButtonClicked() {
         LOGGER.log(Level.FINE, "Exit menu item clicked.");
         if (!justSaved) {
-            Optional<ButtonType> result = showChangeAlert(resources.getString("alert_sure-text"));
+            Optional<ButtonType> result = showChangeAlert(resources.getString("alert_sure-reset-text"));
             if (result.isPresent() && result.get() == ButtonType.CANCEL) {
                 return;
             }

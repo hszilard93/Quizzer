@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  * @author Szilárd Hompoth at https://github.com/hszilard93
  * This class is responsible for loading Quizez from XML files.
  */
-public class SimpleQuizLoader implements QuizLoader{
+public class SimpleQuizLoader implements QuizLoader {
 
     private static final Logger LOGGER = Logger.getLogger(SimpleQuizLoader.class.getName());
 
@@ -47,15 +47,18 @@ public class SimpleQuizLoader implements QuizLoader{
             Element quizElement = document.getDocumentElement();
             String created = quizElement.getAttribute(Values.CREATED_ATTR);
             String edited = quizElement.getAttribute(Values.EDITED_ATTR);
-            String title = quizElement.getElementsByTagName(Values.TITLE_TAG).item(0).getTextContent();
+            NodeList tags = quizElement.getElementsByTagName(Values.TITLE_TAG);
+            if (tags.getLength() == 0) {
+                throw new QuizLoadingException("Unable to load Quiz");
+            }
+            String title = tags.item(0).getTextContent();
             LOGGER.log(Level.FINE, "Loading quiz:\n title: " + title + " | created: " + created + " | edited: " + edited);
             quiz = new Quiz(title);
             quiz.setCreated(LocalDate.parse(created));
             quiz.setEdited(LocalDate.parse(edited));
             quiz.getQuestions().addAll(loadQuestions(quizElement));
             LOGGER.log(Level.INFO, "Quiz successfully loaded.");
-        }
-        catch (ParserConfigurationException | IOException | SAXException e) {
+        } catch (ParserConfigurationException | IOException | SAXException e) {
             throw new QuizLoadingException("Unable to load Quiz", e);
         }
         return quiz;

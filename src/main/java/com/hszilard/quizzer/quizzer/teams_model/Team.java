@@ -43,4 +43,13 @@ public class Team {
         this.score.set(score);
     }
 
+    public void addToScore(int addThis) throws IllegalArgumentException {
+        if (addThis >= 0) {
+            score.set(score.intValue() + addThis);
+        }
+        else {
+            throw new IllegalArgumentException("Team addToScore was passed the negative integer " + addThis);
+        }
+    }
+
 }

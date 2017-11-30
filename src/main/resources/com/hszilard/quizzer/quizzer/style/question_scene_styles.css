@@ -1,0 +1,70 @@
+.question-text-label {
+    -fx-font-size: 18;
+    -fx-padding: 16;
+}
+
+.answers-grid {
+    -fx-background-color: orange;
+    -fx-padding: 8 4 8 4;
+    -fx-vgap: 4;
+    -fx-hgap: 4;
+}
+
+.cell-vbox {
+    -fx-background-color: white;
+    -fx-alignment: center;
+}
+
+.answer-label {
+    -fx-alignment: center;
+    -fx-wrap-text: true;
+    -fx-font-size: 14;
+    -fx-font-style: italic;
+}
+
+.correct-label {
+    -fx-fill: lime;
+    -fx-font-size: 16;
+}
+
+.incorrect-label {
+    -fx-fill: crimson;
+    -fx-font-size: 16;
+}
+
+.correct-is-label1 {
+
+}
+
+.correct-is-label2 {
+
+}
+
+.center-vbox {
+
+}
+
+.bottom-hbox {
+    -fx-padding: 8;
+    -fx-alignment: baseline-right;
+}
+
+.correct-ok-button {
+    -fx-min-width: 100;
+    -fx-background-color: lime;
+    -fx-background-radius: 12;
+    -fx-padding: 4;
+    -fx-text-fill: white;
+    -fx-font-size: 16;
+    -fx-font-weight: 900;
+}
+
+.incorrect-ok-button {
+    -fx-min-width: 100;
+    -fx-background-color: crimson;
+    -fx-background-radius: 12;
+    -fx-padding: 4;
+    -fx-text-fill: white;
+    -fx-font-size: 16;
+    -fx-font-weight: 900;
+}

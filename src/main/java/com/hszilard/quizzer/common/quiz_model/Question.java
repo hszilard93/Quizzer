@@ -56,6 +56,16 @@ public class Question {
         return answers;
     }
 
+    /* This convenience method assumes that this question has one and only one correct answer */
+    public Answer getCorrectAnswer() {
+        for (Answer a : answers) {
+            if (a.isCorrect()) {
+                return a;
+            }
+        }
+        return null;
+    }
+
     @Override
     public int hashCode() {
         long answersHash = 0;

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="root"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="main.java.com.hszilard.quizzer.quizzer.QuestionSceneController"
+            stylesheets="/main/resources/com/hszilard/quizzer/quizzer/style/question_scene_styles.css"
+            prefWidth="800">
+
+    <top>
+        <Label fx:id="questionTextLabel"
+               alignment="CENTER"
+               wrapText="true"
+               styleClass="question-text-label"/>
+    </top>
+    <center>
+        <GridPane fx:id="answersGrid"
+                  alignment="CENTER"
+                  styleClass="answers-grid"/>
+    </center>
+
+</BorderPane>

@@ -16,7 +16,7 @@
                 <Insets top="20" bottom="20"/>
             </padding>
             <children>
-                <Label text="Add a new team." />
+                <Label text="%add_new-team-label" />
             </children>
         </HBox>
     </header>
@@ -25,7 +25,7 @@
             <children>
                 <HBox alignment="CENTER" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
                     <children>
-                        <Label text="Team name: " />
+                        <Label text="%add_team-name-label" />
                         <TextField fx:id="nameField"
                                    HBox.hgrow="ALWAYS" />
                     </children>
