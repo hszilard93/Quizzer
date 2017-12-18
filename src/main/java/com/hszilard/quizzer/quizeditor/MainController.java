@@ -3,6 +3,7 @@ package main.java.com.hszilard.quizzer.quizeditor;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import main.java.com.hszilard.quizzer.common.LocaleManager;
+import main.java.com.hszilard.quizzer.common.LocationManager;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
 import main.java.com.hszilard.quizzer.common.quiz_model.Quiz;
 import main.java.com.hszilard.quizzer.common.xml_converter.*;
@@ -25,14 +26,12 @@ import java.util.logging.Logger;
 
 /**
  * @author Szilárd Hompoth at https://github.com/hszilard93
- * The controller belonging to the mainSceneLayout.fxml layout file, effective controller or the application.
+ * The controller belonging to the mainLayout.fxml layout file, effective controller or the application.
  */
 public class MainController {
-
     private static final Logger LOGGER = Logger.getLogger(SimpleQuizLoader.class.getName());
 
     /* Fields with the @FXML annotation are automatically injected. */
-
     @FXML MenuItem fileNewMenuItem;
     @FXML MenuItem fileOpenMenuItem;
     @FXML MenuItem fileSaveMenuItem;
@@ -117,8 +116,9 @@ public class MainController {
                 QuizLoader quizLoader = new SimpleQuizLoader();
                 quiz = quizLoader.loadQuiz(file.getPath());
                 quizPath = file.getPath();
-                initialize();
+                LocationManager.setLastPath(this.getClass(), quizPath.substring(0, quizPath.lastIndexOf(File.separator)));
                 justSaved = true;
+                initialize();
             } catch (QuizLoadingException e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
                 /* Show generic error message*/
@@ -162,6 +162,7 @@ public class MainController {
                 showErrorAlert(resources.getString("error_no-save"));
             }
             quizPath = file.getPath();
+            LocationManager.setLastPath(this.getClass(), quizPath.substring(0, quizPath.lastIndexOf(File.separator)));
             justSaved = true;
         }
     }
@@ -292,13 +293,21 @@ public class MainController {
     private void configureFileChooser(FileChooser fileChooser, String title) {
         fileChooser.setTitle(title);
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(resources.getString("chooser_xml"), "*.xml"));
-        if (quizPath == null) {
-            /* The default path of the FileChooser is the user's home directory */
-            fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        } else {
+        if (quizPath != null) {
             /* If we already have a path to a quiz file, we get its directory */
-            String quizDirectory = quizPath.substring(0, quizPath.lastIndexOf(File.separator));
-            fileChooser.setInitialDirectory(new File(quizDirectory));
+            String directoryPath = quizPath.substring(0, quizPath.lastIndexOf(File.separator));
+            fileChooser.setInitialDirectory(new File(directoryPath));
+        } else {
+            String lastPath = LocationManager.getLastPath(this.getClass());
+            if (lastPath != null) {
+                File directory = new File(lastPath);
+                fileChooser.setInitialDirectory(
+                        directory.exists() ? directory : new File(System.getProperty("user.home"))
+                );
+            }
+            else {
+                fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+            }
         }
     }
 

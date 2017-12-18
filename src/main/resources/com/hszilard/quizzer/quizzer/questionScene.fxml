@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -11,13 +8,19 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="main.java.com.hszilard.quizzer.quizzer.QuestionSceneController"
             stylesheets="/main/resources/com/hszilard/quizzer/quizzer/style/question_scene_styles.css"
-            prefWidth="800">
+            styleClass="root-pane"
+            prefWidth="800"
+            minHeight="196">
 
     <top>
-        <Label fx:id="questionTextLabel"
-               alignment="CENTER"
-               wrapText="true"
-               styleClass="question-text-label"/>
+        <VBox fx:id="topVBox"
+              styleClass="top-vbox">
+            <Label fx:id="questionTextLabel"
+                   minWidth="48"
+                   alignment="CENTER"
+                   wrapText="true"
+                   styleClass="question-text-label"/>
+        </VBox>
     </top>
     <center>
         <GridPane fx:id="answersGrid"

@@ -1,16 +1,16 @@
-.split-pane {
-    -fx-border-width: 0;
-    -fx-background-color: transparent;
-}
-
-.split-pane > .split-pane-divider {
-    -fx-background-color: transparent;
-}
-
 .grid {
-    -fx-background-color: #1eddbb;
+    -fx-background-color: linear-gradient(white 0%, yellow 50%,  greenyellow 100%);
     -fx-hgap: 5;
     -fx-vgap: 5;
+}
+
+.open-quiz-button {
+    -fx-background-color: limegreen;
+    /*-fx-background-color: linear-gradient(limegreen 0%, darkgreen 100%);*/
+    -fx-background-radius: 8;
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+    -fx-font-weight: 900;
 }
 
 .question-button {
@@ -42,7 +42,7 @@
     -fx-text-alignment: left;
     -fx-text-fill: white;
     -fx-font-weight: 900;
-    -fx-font-size: 18px;
+    -fx-font-size: 28;
 }
 
 .empty-button {
@@ -55,8 +55,4 @@
     -fx-min-width: 20px;
     -fx-alignment: center;
     -fx-padding: 4 4 4 4;
-    -fx-text-alignment: left;
-    -fx-text-fill: white;
-    -fx-font-weight: 900;
-    -fx-font-size: 18px;
 }

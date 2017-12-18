@@ -9,7 +9,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             prefHeight="32"
-            stylesheets="/main/resources/com/hszilard/quizzer/quizzer/style/teams_vbox_styles.css"
+            stylesheets="/main/resources/com/hszilard/quizzer/quizzer/style/right_vbox_styles.css"
             styleClass="team-box">
 
     <Label fx:id="nameLabel"

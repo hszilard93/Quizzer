@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import main.java.com.hszilard.quizzer.common.quiz_model.Answer;
@@ -15,12 +16,15 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
+import static main.java.com.hszilard.quizzer.quizzer.CommonUtils.addStyle;
+
 public class QuestionSceneController {
     private static final Logger LOGGER = Logger.getLogger(QuestionSceneController.class.getName());
     private static String STYLE_PATH = "/main/resources/com/hszilard/quizzer/quizzer/style/question_scene_styles.css";
 
     @FXML private ResourceBundle resources;
     @FXML private BorderPane root;
+    @FXML private VBox topVBox;
     @FXML private Label questionTextLabel;
     @FXML private GridPane answersGrid;
 
@@ -71,9 +75,19 @@ public class QuestionSceneController {
     private void onCorrectAnswer() {
         Label correctAnswerLabel = new Label(resources.getString("question_correct-label"));
         addStyleClass(correctAnswerLabel, "correct-label");
-        root.setTop(correctAnswerLabel);
+        topVBox.getChildren().clear();
+        topVBox.getChildren().add(correctAnswerLabel);
+
+        VBox centerVBox = new VBox();
+        addStyleClass(centerVBox, "center-vbox");
+        Label answerLabel = new Label(question.getCorrectAnswer().getAnswerText());
+        answerLabel.prefWidthProperty().bind(centerVBox.widthProperty());
+        addStyleClass(answerLabel, "correct-answer-label");
+        centerVBox.getChildren().add(answerLabel);
+        root.setCenter(centerVBox);
 
         Button correctOkButton = new Button(resources.getString("question_positive-button"));
+        correctOkButton.setDefaultButton(true);
         addStyleClass(correctOkButton, "correct-ok-button");
         correctOkButton.setOnAction(e -> {
             ((Stage)correctOkButton.getScene().getWindow()).close();
@@ -88,17 +102,21 @@ public class QuestionSceneController {
     private void onIncorrectAnswer() {
         Label inCorrectAnswerLabel = new Label(resources.getString("question_incorrect-label"));
         addStyleClass(inCorrectAnswerLabel, "incorrect-label");
-        root.setTop(inCorrectAnswerLabel);
+        topVBox.getChildren().clear();
+        topVBox.getChildren().add(inCorrectAnswerLabel);
 
+        VBox centerVBox = new VBox();
+        addStyleClass(centerVBox, "center-vbox");
         Label correctAnswerIsLabel1 = new Label(resources.getString("question_correct-is"));
         addStyleClass(correctAnswerIsLabel1, "correct-is-label1");
         Label correctAnswerIsLabel2 = new Label(question.getCorrectAnswer().getAnswerText());
+        correctAnswerIsLabel2.prefWidthProperty().bind(centerVBox.widthProperty());
         addStyleClass(correctAnswerIsLabel2, "correct-is-label2");
-        VBox centerVBox = new VBox(correctAnswerIsLabel1, correctAnswerIsLabel2);
-        addStyleClass(centerVBox, "center-vbox");
+        centerVBox.getChildren().addAll(correctAnswerIsLabel1, correctAnswerIsLabel2);
         root.setCenter(centerVBox);
 
         Button incorrectOkButton = new Button(resources.getString("question_negative-button"));
+        incorrectOkButton.setDefaultButton(true);
         addStyleClass(incorrectOkButton, "incorrect-ok-button");
         incorrectOkButton.setOnAction(e -> {
             ((Stage)incorrectOkButton.getScene().getWindow()).close();
@@ -112,7 +130,6 @@ public class QuestionSceneController {
     }
 
     private void addStyleClass(Parent node, String style) {
-        node.getStylesheets().add(STYLE_PATH);
-        node.getStyleClass().add(style);
+        addStyle(node, STYLE_PATH, style);
     }
 }

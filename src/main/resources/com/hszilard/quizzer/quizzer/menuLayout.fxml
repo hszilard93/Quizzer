@@ -73,6 +73,18 @@
                 </graphic>
             </MenuItem>
         </Menu>
-        <Menu text="%help_menu"/>
+        <Menu text="%help_menu">
+            <MenuItem fx:id="aboutMenuItem"
+                      onAction="#onAboutSelected"
+                      text="%help_about">
+                <graphic>
+                    <ImageView fitHeight="16" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="/main/resources/com/hszilard/quizzer/quizzer/drawable/information.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </MenuItem>
+        </Menu>
 
 </MenuBar>

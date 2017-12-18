@@ -3,7 +3,6 @@ package main.java.com.hszilard.quizzer.quizzer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -25,6 +24,7 @@ public class MenuController {
     @FXML private MenuItem fileExitMenuItem;
     @FXML private MenuItem languageEnglishMenuItem;
     @FXML private MenuItem languageHungarianMenuItem;
+    @FXML private MenuItem aboutMenuItem;
 
     private MainController mainControllerInstance;
 
@@ -42,7 +42,7 @@ public class MenuController {
         LOGGER.log(Level.FINE, "Reset menu item clicked.");
 
         String key = resources.getString("alert_sure-reset-text");
-        Optional<ButtonType> result = Util.showChangeAlert(key, resources);
+        Optional<ButtonType> result = CommonUtils.showChangeAlert(key, resources);
         if (result.isPresent() && result.get() != ButtonType.CANCEL) {
             mainControllerInstance.restart();
         }
@@ -52,10 +52,16 @@ public class MenuController {
     private void onExitButtonClicked(ActionEvent actionEvent) {
         LOGGER.log(Level.FINE, "Exit menu item clicked.");
 
-        Optional<ButtonType> result = Util.showChangeAlert(resources.getString("alert_sure-exit-text"), resources);
+        Optional<ButtonType> result = CommonUtils.showChangeAlert(resources.getString("alert_sure-exit-text"), resources);
         if (result.isPresent() && result.get() != ButtonType.CANCEL) {
             ((Stage) menuBar.getScene().getWindow()).close();
         }
+    }
+
+    @FXML
+    private void onAboutSelected(ActionEvent actionEvent) {
+        LOGGER.log(Level.FINE, "About menu item clicked.");
+        CommonUtils.showPopup(null, resources.getString("about_text"), resources);
     }
 
     @FXML
@@ -78,7 +84,7 @@ public class MenuController {
         }
 
         /* Show confirmation dialog */
-        Optional<ButtonType> returnType = Util.showChangeAlert(ResourceBundle.getBundle("main.resources.com.hszilard.quizzer.quizzer.strings",
+        Optional<ButtonType> returnType = CommonUtils.showChangeAlert(ResourceBundle.getBundle("main.resources.com.hszilard.quizzer.quizzer.strings",
                 locale).getString("alert_language-change")
                 + "\n"
                 + resources.getString("alert_language-change"), resources);

@@ -5,6 +5,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.util.Objects;
+
 public class Team {
 
     private StringProperty name;
@@ -52,4 +54,21 @@ public class Team {
         }
     }
 
+    /*
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, score);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null) return false;
+        if (getClass() != other.getClass()) return false;
+
+        return this.name.get().equals(((Team)other).name.get())
+                && this.score.get() == ((Team)other).score.get();
+    }
+    */
 }
+

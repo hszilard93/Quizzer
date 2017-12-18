@@ -4,21 +4,23 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import main.java.com.hszilard.quizzer.common.LocaleManager;
 
 import java.util.ResourceBundle;
+
+import static java.util.ResourceBundle.getBundle;
+import static main.java.com.hszilard.quizzer.common.LocaleManager.getPreferredLocale;
+import static main.java.com.hszilard.quizzer.quizzer.CommonUtils.iconify;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        ResourceBundle stringsBundle = ResourceBundle.getBundle("main.resources.com.hszilard.quizzer.quizzer.strings",
-                LocaleManager.getPreferredLocale());
+        ResourceBundle stringsBundle = getBundle("main.resources.com.hszilard.quizzer.quizzer.strings",
+                getPreferredLocale());
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resources/com/hszilard/quizzer/quizzer/mainSceneLayout.fxml"), stringsBundle);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resources/com/hszilard/quizzer/quizzer/mainLayout.fxml"), stringsBundle);
         Parent root = loader.load();
         Scene mainScene = new Scene(root);
 
@@ -28,7 +30,7 @@ public class Main extends Application {
         primaryStage.setMinWidth(600);
         primaryStage.setMinHeight(400);
         primaryStage.setTitle("Quizzer");
-        primaryStage.getIcons().add(new Image("/main/resources/com/hszilard/quizzer/quizzer/drawable/question.png"));
+        iconify(primaryStage);
         primaryStage.show();
     }
 }

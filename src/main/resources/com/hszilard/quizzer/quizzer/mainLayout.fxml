@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.SplitPane?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Label?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="main.java.com.hszilard.quizzer.quizzer.MainController"
+            stylesheets="/main/resources/com/hszilard/quizzer/quizzer/style/right_vbox_styles.css"
+            prefHeight="600" prefWidth="800">
+
+    <top>
+        <VBox>
+            <children>
+                <fx:include source="menuLayout.fxml"
+                            fx:id="menuBarLayout"/>
+            </children>
+        </VBox>
+    </top>
+    <center>
+        <SplitPane styleClass="modified-split-pane" dividerPositions="0.8">
+            <GridPane fx:id="questionsGrid"
+                      alignment="CENTER"
+                      stylesheets="/main/resources/com/hszilard/quizzer/quizzer/style/grid_styles.css"
+                      styleClass="grid"/>
+            <VBox fx:id="rightVBox"
+                  minWidth="192"
+                  maxWidth="512">
+                <Label fx:id="turnsLabel"
+                       prefHeight="36"
+                       prefWidth="${rightVBox.width}"
+                       alignment="CENTER"
+                       styleClass="turns-label"
+                       text="Turn 3/7"/>
+                <ScrollPane fitToWidth="true"
+                            fitToHeight="true"
+                            VBox.vgrow="ALWAYS"
+                            SplitPane.resizableWithParent="false">
+                    <VBox fx:id="teamsVBox"
+                          prefWidth="${rightVBox.width}"
+                          alignment="TOP_CENTER"
+                          styleClass="teams-vbox">
+                    </VBox>
+                </ScrollPane>
+            </VBox>
+        </SplitPane>
+    </center>
+
+</BorderPane>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<DialogPane xmlns="http://javafx.com/javafx/8.0.121"
+            xmlns:fx="http://javafx.com/fxml/1"
+            prefWidth="480.0"
+            prefHeight="-Infinity"
+            stylesheets="/main/resources/com/hszilard/quizzer/quizzer/style/team-dialog-styles.css"
+            styleClass="root-pane">
+    <header>
+        <HBox prefWidth="480" alignment="CENTER">
+            <padding>
+                <Insets top="20" bottom="20"/>
+            </padding>
+            <Label fx:id="headerLabel"
+                   styleClass="header-label"/>
+        </HBox>
+    </header>
+    <content>
+        <VBox spacing="24">
+            <HBox alignment="CENTER"
+                  spacing="4">
+                <Label fx:id="nameLabel"
+                       styleClass="name-label"/>
+                <TextField fx:id="nameField"
+                           HBox.hgrow="ALWAYS"
+                           styleClass="name-text-field"/>
+            </HBox>
+            <HBox alignment="BOTTOM_RIGHT"
+                  spacing="8">
+                <Button fx:id="cancelButton"
+                        styleClass="cancel-button"
+                        text="%team_cancel-button"/>
+                <Button fx:id="applyButton"
+                        defaultButton="true"
+                        styleClass="apply-button"
+                        text="%team_apply-button"/>
+            </HBox>
+        </VBox>
+    </content>
+</DialogPane>

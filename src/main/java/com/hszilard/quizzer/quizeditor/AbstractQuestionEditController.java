@@ -104,8 +104,8 @@ abstract class AbstractQuestionEditController {
     }
 
     protected void configureAddAnswersButton() {
-        LOGGER.log(Level.INFO, "addAnswerButton clicked.");
         addAnswerButton.setOnMouseClicked(e -> {
+            LOGGER.log(Level.INFO, "addAnswerButton clicked.");
             try {
                 Answer newAnswer = new Answer("", false);
                 question.getAnswers().add(newAnswer);
@@ -119,9 +119,9 @@ abstract class AbstractQuestionEditController {
     }
 
     protected void configureRemoveAnswersButton() {
-        LOGGER.log(Level.INFO, "removeAnswerButton clicked.");
         removeAnswerButton.disableProperty().bind(Bindings.or(question.answersProperty().isNull(), question.answersProperty().emptyProperty()));
         removeAnswerButton.setOnMouseClicked(e -> {
+            LOGGER.log(Level.INFO, "removeAnswerButton clicked.");
             int lastAnswerIndex = question.getAnswers().size() - 1;
             question.getAnswers().remove(lastAnswerIndex);
             answersVBox.getChildren().remove(lastAnswerIndex);
@@ -129,8 +129,8 @@ abstract class AbstractQuestionEditController {
     }
 
     protected void configureConfirmButton() {
-        LOGGER.log(Level.INFO, "confirmButton clicked.");
         confirmButton.setOnMouseClicked(e -> {
+            LOGGER.log(Level.INFO, "confirmButton clicked.");
             if (question.getAnswers().stream().filter(Answer::isCorrect).count() > 1) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle(resources.getString("alert_warning_title"));
@@ -152,8 +152,10 @@ abstract class AbstractQuestionEditController {
     }
 
     protected void configureCancelButton() {
-        LOGGER.log(Level.INFO, "cancelButton clicked.");
-        cancelButton.setOnMouseClicked(e -> stage.close());
+        cancelButton.setOnMouseClicked(e -> {
+            LOGGER.log(Level.INFO, "cancelButton clicked.");
+            stage.close();
+        });
     }
 
     protected HBox makeAnswerHBox(int i, Answer answer) throws IOException {
@@ -161,7 +163,7 @@ abstract class AbstractQuestionEditController {
         answerHBox.prefWidthProperty().bind(questionTextField.widthProperty());
 
         Label answerLabel = (Label) answerHBox.lookup("#answerLabel");
-        answerLabel.setText(i + resources.getString("edit_answer_label"));
+        answerLabel.setText(String.format(resources.getString("edit_answer_label"), i));
 
         TextField answerTextField = (TextField) answerHBox.lookup("#answerTextField");
         answerTextField.textProperty().bindBidirectional(answer.answerTextProperty());
