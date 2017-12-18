@@ -1,10 +1,13 @@
-package main.java.com.hszilard.quizzer.quizzer.teams_model;
+package main.java.com.hszilard.quizzer.quizzer.game_model;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.beans.value.ObservableObjectValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import main.java.com.hszilard.quizzer.quizzer.teams_model.Team;
+
+import java.util.List;
 
 public class TeamsManager {
     private ObservableList<Team> teams = new SimpleListProperty<>(FXCollections.observableArrayList());
@@ -25,7 +28,7 @@ public class TeamsManager {
         teams.add(team);
     }
 
-    public ObservableObjectValue<Team> currentTeam() {
+    public ObservableObjectValue<Team> currentTeamProperty() {
         return currentTeam;
     }
 
