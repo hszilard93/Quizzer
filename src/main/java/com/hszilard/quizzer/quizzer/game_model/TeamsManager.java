@@ -4,13 +4,10 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.beans.value.ObservableObjectValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import main.java.com.hszilard.quizzer.quizzer.teams_model.Team;
 
-import java.util.List;
-
 public class TeamsManager {
-    private ObservableList<Team> teams = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private ListProperty<Team> teams = new SimpleListProperty<>(FXCollections.observableArrayList());
     private IntegerProperty currentIndex = new SimpleIntegerProperty(0);
     private ObjectProperty<Team> currentTeam = new SimpleObjectProperty<>();
 
@@ -32,7 +29,7 @@ public class TeamsManager {
         return currentTeam;
     }
 
-    public void next() {
+    public void nextTeam() {
         currentIndex.set(currentIndex.get() < teams.size()-1 ? currentIndex.get() + 1 : 0);
     }
 
@@ -43,7 +40,7 @@ public class TeamsManager {
         currentIndex.set(0);
     }
 
-    public ObservableList<Team> teamsProperty() {
+    public ListProperty<Team> teamsProperty() {
         return teams;
     }
 }

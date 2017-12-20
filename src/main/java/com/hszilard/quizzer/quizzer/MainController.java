@@ -256,8 +256,8 @@ public class MainController {
                         teamsManager.currentTeamProperty().get().addToScore(DEFAULT_SCORE);
                         button.setText("" + DEFAULT_SCORE);
                     }
-                    teamsManager.next();
-                    turnsManager.nextTurn();
+                    teamsManager.nextTeam();
+                    turnsManager.nextQuestion();
 
                     button.getStyleClass().clear();
                     button.getStyleClass().add("coin-button");
@@ -266,8 +266,8 @@ public class MainController {
 
                 @Override
                 public void onIncorrect() {
-                    teamsManager.next();
-                    turnsManager.nextTurn();
+                    teamsManager.nextTeam();
+                    turnsManager.nextQuestion();
 
                     button.getStyleClass().clear();
                     button.setText("");

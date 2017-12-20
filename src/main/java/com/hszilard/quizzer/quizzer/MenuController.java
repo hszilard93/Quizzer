@@ -97,7 +97,7 @@ public class MenuController {
         /*
          * We must restart the application for the language change to take place.
          * The preferred locale is already changed, so if the user cancels here, he will still get the
-         * selected language on next start.
+         * selected language on nextTeam start.
          */
         Platform.runLater(() -> {
             try {

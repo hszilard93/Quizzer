@@ -68,7 +68,7 @@ public class TurnsManager {
                 LOGGER.log(INFO, "gameOver: " + newValue));
     }
 
-    public void nextTurn() {
+    public void nextQuestion() {
         questionCounter.set(questionCounter.get() + 1);
     }
 
