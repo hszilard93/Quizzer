@@ -1,5 +1,7 @@
 package main.java.com.hszilard.quizzer.quizeditor;
 
+import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import main.java.com.hszilard.quizzer.common.quiz_model.Answer;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
 import javafx.beans.binding.Bindings;
@@ -23,9 +25,9 @@ import java.util.logging.Logger;
  * and {@link NewQuestionEditController} classes.
  */
 abstract class AbstractQuestionEditController {
-
     private static final String QEC_LAYOUT = "/main/resources/com/hszilard/quizzer/quizeditor/questionEditLayout.fxml";
     private static final String ANSWER_HBOX = "/main/resources/com/hszilard/quizzer/quizeditor/anwerHBox.fxml";
+
     protected static final Logger LOGGER = Logger.getLogger(AbstractQuestionEditController.class.getName());
 
     protected ResourceBundle resources;
@@ -82,6 +84,12 @@ abstract class AbstractQuestionEditController {
     protected void configureStage() {
         stage.setMinWidth(400);
         stage.setMinHeight(200);
+        stage.getIcons().add(new Image(
+                "/main/resources/com/hszilard/quizzer/quizeditor/drawable/question-class-note-symbol_color.png"
+        ));
+        /* Making sure the 'owner' stage cannot be interacted with. */
+        stage.initOwner(Main.getPrimaryStage());
+        stage.initModality(Modality.WINDOW_MODAL);
     }
 
     protected void configureNodes() throws IOException {
@@ -104,8 +112,8 @@ abstract class AbstractQuestionEditController {
     }
 
     protected void configureAddAnswersButton() {
-        LOGGER.log(Level.INFO, "addAnswerButton clicked.");
         addAnswerButton.setOnMouseClicked(e -> {
+            LOGGER.log(Level.INFO, "addAnswerButton clicked.");
             try {
                 Answer newAnswer = new Answer("", false);
                 question.getAnswers().add(newAnswer);
@@ -119,9 +127,9 @@ abstract class AbstractQuestionEditController {
     }
 
     protected void configureRemoveAnswersButton() {
-        LOGGER.log(Level.INFO, "removeAnswerButton clicked.");
         removeAnswerButton.disableProperty().bind(Bindings.or(question.answersProperty().isNull(), question.answersProperty().emptyProperty()));
         removeAnswerButton.setOnMouseClicked(e -> {
+            LOGGER.log(Level.INFO, "removeAnswerButton clicked.");
             int lastAnswerIndex = question.getAnswers().size() - 1;
             question.getAnswers().remove(lastAnswerIndex);
             answersVBox.getChildren().remove(lastAnswerIndex);
@@ -129,8 +137,8 @@ abstract class AbstractQuestionEditController {
     }
 
     protected void configureConfirmButton() {
-        LOGGER.log(Level.INFO, "confirmButton clicked.");
         confirmButton.setOnMouseClicked(e -> {
+            LOGGER.log(Level.INFO, "confirmButton clicked.");
             if (question.getAnswers().stream().filter(Answer::isCorrect).count() > 1) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle(resources.getString("alert_warning_title"));
@@ -152,8 +160,10 @@ abstract class AbstractQuestionEditController {
     }
 
     protected void configureCancelButton() {
-        LOGGER.log(Level.INFO, "cancelButton clicked.");
-        cancelButton.setOnMouseClicked(e -> stage.close());
+        cancelButton.setOnMouseClicked(e -> {
+            LOGGER.log(Level.INFO, "cancelButton clicked.");
+            stage.close();
+        });
     }
 
     protected HBox makeAnswerHBox(int i, Answer answer) throws IOException {
@@ -161,7 +171,7 @@ abstract class AbstractQuestionEditController {
         answerHBox.prefWidthProperty().bind(questionTextField.widthProperty());
 
         Label answerLabel = (Label) answerHBox.lookup("#answerLabel");
-        answerLabel.setText(i + resources.getString("edit_answer_label"));
+        answerLabel.setText(String.format(resources.getString("edit_answer_label"), i));
 
         TextField answerTextField = (TextField) answerHBox.lookup("#answerTextField");
         answerTextField.textProperty().bindBidirectional(answer.answerTextProperty());

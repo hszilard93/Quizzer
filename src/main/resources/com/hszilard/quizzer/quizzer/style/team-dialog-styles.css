@@ -1,0 +1,32 @@
+.root-pane {
+    -fx-background-color: linear-gradient(yellow 0%, limegreen 100%);
+}
+
+.header-label {
+    -fx-font-size: 16;
+    -fx-font-weight: 800;
+}
+
+.name-label {
+    -fx-font-size: 14;
+}
+
+.name-text-field {
+    -fx-font-size: 14;
+}
+
+.cancel-button {
+    -fx-background-color: tomato;
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-background-radius: 8;
+    -fx-font-weight: 800;
+}
+
+.apply-button {
+    -fx-background-color: lightgreen;
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-background-radius: 8;
+    -fx-font-weight: 800;
+}

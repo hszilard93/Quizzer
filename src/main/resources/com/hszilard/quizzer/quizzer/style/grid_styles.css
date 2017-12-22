@@ -1,0 +1,58 @@
+.grid {
+    -fx-background-color: linear-gradient(white 0%, yellow 50%,  greenyellow 100%);
+    -fx-hgap: 5;
+    -fx-vgap: 5;
+}
+
+.open-quiz-button {
+    -fx-background-color: limegreen;
+    /*-fx-background-color: linear-gradient(limegreen 0%, darkgreen 100%);*/
+    -fx-background-radius: 8;
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+    -fx-font-weight: 900;
+}
+
+.question-button {
+    -fx-background-image: url("/main/resources/com/hszilard/quizzer/quizzer/drawable/safe-small.png");
+    -fx-background-size: 100%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-smooth: true;
+    -fx-min-width: 20px;
+    -fx-alignment: center;
+    -fx-padding: 4 4 4 4;
+    -fx-text-alignment: left;
+    -fx-text-fill: black;
+    -fx-font-weight: 900;
+    -fx-font-size: 18px;
+}
+
+.coin-button {
+    -fx-background-image: url("/main/resources/com/hszilard/quizzer/quizzer/drawable/coins-26084_640.png");
+    -fx-background-size: 70%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-smooth: true;
+    -fx-min-width: 20px;
+    -fx-alignment: center;
+    -fx-padding: 4 4 4 4;
+    -fx-text-alignment: left;
+    -fx-text-fill: white;
+    -fx-font-weight: 900;
+    -fx-font-size: 28;
+}
+
+.empty-button {
+    -fx-background-image: url("/main/resources/com/hszilard/quizzer/quizzer/drawable/empty_b.png");
+    -fx-background-size: 120%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-smooth: true;
+    -fx-min-width: 20px;
+    -fx-alignment: center;
+    -fx-padding: 4 4 4 4;
+}

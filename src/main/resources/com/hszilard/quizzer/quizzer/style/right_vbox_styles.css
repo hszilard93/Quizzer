@@ -1,0 +1,47 @@
+.teams-vbox {
+    -fx-background-color: darkorange;
+    -fx-padding: 4 2 4 2;
+    -fx-spacing: 4;
+}
+
+.add-team-button {
+    -fx-background-color: limegreen;
+    -fx-background-radius: 16;
+    -fx-font-size: 20;
+    -fx-padding: 0 8 0 8;
+    -fx-text-fill: white;
+    -fx-font-style: oblique;
+    -fx-font-weight: 900;
+}
+
+.team-box {
+    -fx-background-radius: 4;
+    -fx-padding: 2 0 0 0;
+}
+
+.name-label {
+    -fx-font-size: 16;
+    -fx-font-weight: 900;
+    -fx-text-fill: white;
+    -fx-padding: 2 0 2 8;
+}
+
+.score-label {
+    -fx-font-size: 16;
+    -fx-font-weight: 900;
+    -fx-text-fill: white;
+    -fx-padding: 2 8 2 0;
+}
+
+.modified-split-pane > .split-pane-divider {
+    -fx-padding: 1;
+    -fx-background-color: transparent;
+}
+
+.turns-label {
+    -fx-background-color: darkslategray;
+    -fx-text-fill: #222222;
+    -fx-font-size: 16;
+    -fx-text-fill: white;
+    -fx-font-weight: 900;
+}

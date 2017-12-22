@@ -1,26 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.control.Tooltip?>
-
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <BorderPane fx:controller="main.java.com.hszilard.quizzer.quizeditor.MainController"
             xmlns:fx="http://javafx.com/fxml"
             xmlns="http://javafx.com/javafx/8"
-            stylesheets="/main/resources/com/hszilard/quizzer/quizeditor/style/main_scene_styles.css">
+            stylesheets="/main/resources/com/hszilard/quizzer/quizeditor/style/main_scene_styles.css"
+            prefHeight="600" prefWidth="800">
     <top>
         <VBox>
             <children>
@@ -29,7 +17,7 @@
                     <Menu text="%file_menu">
                         <MenuItem fx:id="fileNewMenuItem"
                                   onAction="#onNewClicked"
-                                      text="%file_new">
+                                  text="%file_new">
                             <graphic>
                                 <ImageView fitHeight="16" pickOnBounds="true" preserveRatio="true">
                                     <image>

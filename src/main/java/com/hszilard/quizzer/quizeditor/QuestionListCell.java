@@ -2,7 +2,7 @@ package main.java.com.hszilard.quizzer.quizeditor;
 
 import main.java.com.hszilard.quizzer.common.quiz_model.Answer;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
-import main.java.com.hszilard.quizzer.common.xml_converter.QuizLoader;
+import main.java.com.hszilard.quizzer.common.xml_converter.SimpleQuizLoader;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
 import javafx.fxml.FXML;
@@ -25,17 +25,16 @@ import java.util.logging.Logger;
 class QuestionListCell extends ListCell<Question> {
     private static final String QUESTION_LIST_CELL_FXML = "/main/resources/com/hszilard/quizzer/quizeditor/questionListCell.fxml";
     private static final String STYLES = "/main/resources/com/hszilard/quizzer/quizeditor/style/main_scene_styles.css";
-    private static final Logger LOGGER = Logger.getLogger(QuizLoader.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SimpleQuizLoader.class.getName());
 
     @FXML private HBox cellBox;
     @FXML private Label title;
     @FXML private GridPane answersGrid;
 
+    private final ResourceBundle resources;
+    private final AbstractQuestionEditController.Callback callback;
     private FXMLLoader loader;
-    private ResourceBundle resources;
-
     private Question question;
-    private AbstractQuestionEditController.Callback callback;
 
     QuestionListCell(AbstractQuestionEditController.Callback callback, ResourceBundle resources) {
         this.resources = resources;

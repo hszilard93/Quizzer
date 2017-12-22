@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="32"
+            stylesheets="/main/resources/com/hszilard/quizzer/quizzer/style/right_vbox_styles.css"
+            styleClass="team-box">
+
+    <Label fx:id="nameLabel"
+           AnchorPane.leftAnchor="0"
+           styleClass="name-label"/>
+
+    <Label fx:id="scoreLabel"
+           AnchorPane.rightAnchor="0"
+           styleClass="score-label"/>
+
+</AnchorPane>

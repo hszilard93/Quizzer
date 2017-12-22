@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<BorderPane fx:id="root"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="main.java.com.hszilard.quizzer.quizzer.QuestionSceneController"
+            stylesheets="/main/resources/com/hszilard/quizzer/quizzer/style/question_scene_styles.css"
+            styleClass="root-pane"
+            prefWidth="800"
+            minHeight="196">
+
+    <top>
+        <VBox fx:id="topVBox"
+              styleClass="top-vbox">
+            <Label fx:id="questionTextLabel"
+                   minWidth="48"
+                   alignment="CENTER"
+                   wrapText="true"
+                   styleClass="question-text-label"/>
+        </VBox>
+    </top>
+    <center>
+        <GridPane fx:id="answersGrid"
+                  alignment="CENTER"
+                  styleClass="answers-grid"/>
+    </center>
+
+</BorderPane>

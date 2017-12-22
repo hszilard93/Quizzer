@@ -1,9 +1,11 @@
-package main.java.com.hszilard.quizzer.quizeditor;
+package main.java.com.hszilard.quizzer.common;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
 /**
@@ -11,25 +13,28 @@ import java.util.prefs.Preferences;
  * This class manages the locale settings for the supported languages.
  */
 public class LocaleManager {
-    private static final String LOCALE_KEY = "locale";
-    private static final String DEFAULT_LOCALE_CODE = "en";
+    private static final Logger LOGGER = Logger.getLogger(LocaleManager.class.getName());
+    private static final String PREF_KEY = "locale";
     /* When a new language is added to the strings resource bundle, this list must be updated! */
     private static final List<String> supportedLocales = new ArrayList<>(Arrays.asList("en", "hu"));
 
     private static Preferences preferences = Preferences.userNodeForPackage(LocaleManager.class);
     private static Locale preferredLocale;
 
-    static Locale getPreferredLocale() {
+    public static Locale getPreferredLocale() {
         if (preferredLocale == null) {
-            preferredLocale = new Locale(preferences.get(LOCALE_KEY, DEFAULT_LOCALE_CODE));
+            String systemLang = System.getProperty("user.language");
+            String defaultLang = supportedLocales.contains(systemLang) ? systemLang : "en";
+            preferredLocale = new Locale(preferences.get(PREF_KEY, defaultLang));
         }
         return preferredLocale;
     }
 
-    static void setPreferredLocale(Locale locale) {
+    public static void setPreferredLocale(Locale locale) {
         if (supportedLocales.contains(locale.getLanguage())) {
             preferredLocale = locale;
-            preferences.put(LOCALE_KEY, locale.getLanguage());
+            preferences.put(PREF_KEY, locale.getLanguage());
+            LOGGER.log(Level.INFO, "New preferred locale set: " + preferredLocale.getLanguage());
         }
     }
 }
