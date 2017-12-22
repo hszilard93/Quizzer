@@ -31,7 +31,11 @@ import java.util.logging.Logger;
 public class MainController {
     private static final Logger LOGGER = Logger.getLogger(SimpleQuizLoader.class.getName());
 
-    /* Fields with the @FXML annotation are automatically injected. */
+    /*
+     * Fields with the @FXML annotation are automatically injected.
+     */
+    @FXML private ResourceBundle resources;     // contains the internationalized strings.
+
     @FXML MenuItem fileNewMenuItem;
     @FXML MenuItem fileOpenMenuItem;
     @FXML MenuItem fileSaveMenuItem;
@@ -47,11 +51,10 @@ public class MainController {
     @FXML TextField titleField;
     @FXML Label numberOfQuestionLabel;
 
-    @FXML private ResourceBundle resources;     // contains the internationalized strings.
-
     private Quiz quiz;                          // main Quiz object of the application
     private String quizPath;
-    private boolean justSaved = false;          // true if the quiz object hasn't been modified since created, opened or saved
+    private boolean justSaved = false;
+            // true if the quiz object hasn't been modified since created, opened or saved
 
     /* This Callback is used both when clicking on the Edit button and when double clicking on a ListView item (passed to the cell) */
     private AbstractQuestionEditController.Callback editCallback = questionToSave -> {
@@ -86,12 +89,12 @@ public class MainController {
         LOGGER.log(Level.FINE, "New menu item clicked.");
         if (!justSaved) {
             Optional<ButtonType> result = showChangeAlert(resources.getString("alert_sure-reset-text"));
-            /* Don't do anything if the cancel optin was chosen */
+            /* Don't do anything if the cancel option was chosen */
             if (result.isPresent() && result.get() == ButtonType.CANCEL) {
                 return;
             }
         }
-        /* Create new quiz, start initalization logic */
+        /* Create new quiz, start initialization logic */
         quiz = null;
         quizPath = null;
         initialize();
@@ -119,7 +122,8 @@ public class MainController {
                 LocationManager.setLastPath(this.getClass(), quizPath.substring(0, quizPath.lastIndexOf(File.separator)));
                 justSaved = true;
                 initialize();
-            } catch (QuizLoadingException e) {
+            }
+            catch (QuizLoaderException e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
                 /* Show generic error message*/
                 showErrorAlert(resources.getString("error_not-legal"));
@@ -135,7 +139,8 @@ public class MainController {
             try {
                 QuizExporter exporter = new SimpleQuizExporter();
                 exporter.exportQuiz(quiz, quizPath);
-            } catch (QuizExportingException e) {
+            }
+            catch (QuizExporterException e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
                 showErrorAlert(resources.getString("error_no-save"));
             }
@@ -157,7 +162,8 @@ public class MainController {
             try {
                 QuizExporter exporter = new SimpleQuizExporter();
                 exporter.exportQuiz(quiz, file.getPath());
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
                 showErrorAlert(resources.getString("error_no-save"));
             }
@@ -202,7 +208,8 @@ public class MainController {
         }, resources);
         try {
             newQuestionEditController.display();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
             showErrorAlert(resources.getString("error_unexpected-error"));
         }
@@ -225,10 +232,12 @@ public class MainController {
     void onEditButtonClicked() {
         LOGGER.log(Level.FINE, "editButton clicked.");
         ExistingQuestionEditController existingQuestionEditController =
-                new ExistingQuestionEditController(listView.getSelectionModel().getSelectedItem(), editCallback, resources);
+                new ExistingQuestionEditController(listView.getSelectionModel().getSelectedItem(), editCallback,
+                        resources);
         try {
             existingQuestionEditController.display();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
             showErrorAlert(resources.getString("error_unexpected-error"));
         }
@@ -237,15 +246,17 @@ public class MainController {
     private void changeLanguage(Locale locale) {
         if (!LocaleManager.getPreferredLocale().equals(locale)) {
             LocaleManager.setPreferredLocale(locale);
-        } else {
+        }
+        else {
             return;  // don't do anything if selected language is already in use
         }
 
         /* Show confirmation dialog */
-        Optional<ButtonType> returnType = showChangeAlert(ResourceBundle.getBundle("main.resources.com.hszilard.quizzer.quizeditor.strings",
-                locale).getString("alert_language-change")
-                + "\n"
-                + resources.getString("alert_language-change"));
+        Optional<ButtonType> returnType =
+                showChangeAlert(ResourceBundle.getBundle("main.resources.com.hszilard.quizzer.quizeditor.strings",
+                        locale).getString("alert_language-change")
+                                + "\n"
+                                + resources.getString("alert_language-change"));
         if (!returnType.isPresent() || returnType.get() == ButtonType.CANCEL) {
             return;
         }
@@ -260,7 +271,8 @@ public class MainController {
         Platform.runLater(() -> {
             try {
                 new Main().start(new Stage());
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 LOGGER.log(Level.SEVERE, "Restarting application failed/n" + e.getMessage(), e);
             }
         });
@@ -292,18 +304,20 @@ public class MainController {
 
     private void configureFileChooser(FileChooser fileChooser, String title) {
         fileChooser.setTitle(title);
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(resources.getString("chooser_xml"), "*.xml"));
+        fileChooser.getExtensionFilters()
+                .add(new FileChooser.ExtensionFilter(resources.getString("chooser_xml"), "*.xml"));
         if (quizPath != null) {
             /* If we already have a path to a quiz file, we get its directory */
             String directoryPath = quizPath.substring(0, quizPath.lastIndexOf(File.separator));
             fileChooser.setInitialDirectory(new File(directoryPath));
-        } else {
+        }
+        else {
             String lastPath = LocationManager.getLastPath(this.getClass());
             if (lastPath != null) {
                 File directory = new File(lastPath);
                 fileChooser.setInitialDirectory(
                         directory.exists() ? directory : new File(System.getProperty("user.home"))
-                );
+                                               );
             }
             else {
                 fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -312,7 +326,8 @@ public class MainController {
     }
 
     private void configureStage() {
-        Main.getPrimaryStage().titleProperty().bind(Bindings.concat(resources.getString("main_window-title"), quiz.titleProperty()));
+        Main.getPrimaryStage().titleProperty()
+                .bind(Bindings.concat(resources.getString("main_window-title"), quiz.titleProperty()));
     }
 
     private void configureMenuItems() {

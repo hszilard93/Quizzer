@@ -17,7 +17,7 @@ import main.java.com.hszilard.quizzer.common.LocationManager;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
 import main.java.com.hszilard.quizzer.common.quiz_model.Quiz;
 import main.java.com.hszilard.quizzer.common.xml_converter.QuizLoader;
-import main.java.com.hszilard.quizzer.common.xml_converter.QuizLoadingException;
+import main.java.com.hszilard.quizzer.common.xml_converter.QuizLoaderException;
 import main.java.com.hszilard.quizzer.common.xml_converter.SimpleQuizLoader;
 import main.java.com.hszilard.quizzer.quizzer.game_model.TeamsManager;
 import main.java.com.hszilard.quizzer.quizzer.game_model.TurnsManager;
@@ -37,11 +37,16 @@ import static javafx.stage.Modality.WINDOW_MODAL;
 import static main.java.com.hszilard.quizzer.quizzer.CommonUtils.*;
 import static main.java.com.hszilard.quizzer.quizzer.QuestionSceneController.Callback;
 
+/**
+ * @author Szilárd Hompoth at https://github.com/hszilard93
+ * Main application window.
+ */
 @SuppressWarnings("Duplicates")
 public class MainController {
-    private static final String GRID_STYLESHEET = "/main/resources/com/hszilard/quizzer/quizzer/style/grid_styles.css";
-    private static final String RIGHT_STYLESHEET = "/main/resources/com/hszilard/quizzer/quizzer/style/right_vbox_styles.css";
     private static final Logger LOGGER = Logger.getLogger(MainController.class.getName());
+    private static final String GRID_STYLESHEET = "/main/resources/com/hszilard/quizzer/quizzer/style/grid_styles.css";
+    private static final String RIGHT_STYLESHEET =
+            "/main/resources/com/hszilard/quizzer/quizzer/style/right_vbox_styles.css";
     private static final int DEFAULT_SCORE = 10;
 
     @FXML private ResourceBundle resources;                 // contains the internationalized strings.
@@ -63,22 +68,28 @@ public class MainController {
     }
 
     void restart() {
+        LOGGER.log(Level.INFO, "Attempting to restart quiz.");
+
         teamsManager.resetTeams();
         if (turnsManager != null)
             turnsManager.reset();
         setupViews();
+
+        LOGGER.log(Level.INFO, "Quiz restarted.");
     }
 
     void openQuiz() {
+        LOGGER.log(Level.INFO, "Attempting to open quiz.");
+
         File file = null;
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(resources.getString("open_title"));
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(resources.getString("open_format"),"*.xml"));
+        fileChooser.getExtensionFilters()
+                .add(new FileChooser.ExtensionFilter(resources.getString("open_format"), "*.xml"));
 
         String quizPath = LocationManager.getLastPath(this.getClass());
         try {
-            String quizDirectory = quizPath;
-            fileChooser.setInitialDirectory(new File(quizDirectory));
+            fileChooser.setInitialDirectory(new File(quizPath));
             file = fileChooser.showOpenDialog(menuBarLayout.getScene().getWindow());
         }
         /* quizPath is null or folder does not exist (eg. portable drive removed) */
@@ -101,12 +112,18 @@ public class MainController {
                 quiz = quizLoader.loadQuiz(file.getPath());
                 postOpenQuiz(quiz);
                 quizPath = file.getPath();
-                LocationManager.setLastPath(this.getClass(), quizPath.substring(0, quizPath.lastIndexOf(File.separator)));
-            } catch (QuizLoadingException e) {
+                LocationManager
+                        .setLastPath(this.getClass(), quizPath.substring(0, quizPath.lastIndexOf(File.separator)));
+            }
+            catch (QuizLoaderException e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
                 /* Show generic error message*/
                 CommonUtils.showError(resources.getString("error_open-message"), resources);
             }
+        }
+        else {
+            LOGGER.log(Level.SEVERE, "file is null.");
+            CommonUtils.showError(resources.getString("error_open-message"), resources);
         }
     }
 
@@ -123,7 +140,7 @@ public class MainController {
         configureTurnsLabel();
 
         /*
-        What happens when there are no more turns left.
+        This happens when there are no more turns left.
          */
         turnsManager.gameOverProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == true) {
@@ -137,6 +154,7 @@ public class MainController {
     }
 
     private void setupViews() {
+        LOGGER.log(Level.INFO, "Setting up views.");
         menuBarLayoutController.init(this);
         configureQuestionsGrid();
         configureTeamsVBox();
@@ -146,11 +164,15 @@ public class MainController {
     private void configureQuestionsGrid() {
         if (quiz == null) {
             Button openQuizButton = new Button(resources.getString("main_open-quiz-button"));
-            openQuizButton.setOnAction(e -> openQuiz());
+            openQuizButton.setOnAction(e -> {
+                LOGGER.log(Level.INFO, "Open button clicked.");
+                openQuiz();
+            });
             addStyle(openQuizButton, GRID_STYLESHEET, "open-quiz-button");
             questionsGrid.getChildren().clear();
             questionsGrid.getChildren().add(openQuizButton);
-        } else {
+        }
+        else {
             questionsGrid.getChildren().clear();
             int questionsSize = quiz.getQuestions().size();
             int rowSize = Double.valueOf(Math.ceil(Math.sqrt(questionsSize))).intValue();
@@ -166,10 +188,14 @@ public class MainController {
                 questionButton.prefHeightProperty().bind(buttonSize);
                 final Question question = quiz.getQuestions().get(i);
                 questionButton.setOnAction(e -> {
-                    if (teamsManager.currentTeamProperty().get() != null) {                // if null, there are no teams yet
+                    LOGGER.log(Level.INFO, "Question clicked.");
+                    if (teamsManager.currentTeamProperty().get() !=
+                        null) {                // if null, there are no teams yet
                         showQuestionDialog(question, questionButton);
-                    } else {
-                        showPopup(resources.getString("inform_header-uh-oh"), resources.getString("inform_teams-first"), resources);
+                    }
+                    else {
+                        showPopup(resources.getString("inform_header-uh-oh"),
+                                resources.getString("inform_teams-first"), resources);
                     }
                 });
 
@@ -185,6 +211,7 @@ public class MainController {
             addTeamButton = new Button("+");
             addStyle(addTeamButton, RIGHT_STYLESHEET, "add-team-button");
             addTeamButton.setOnAction(event -> {
+                LOGGER.log(Level.INFO, "addTeamButton clicked.");
                 try {
                     TeamDialogFactory teamDialogFactory = new TeamDialogFactory(resources);
                     Dialog<Team> addTeamDialog = teamDialogFactory.createAddTeamDialog();
@@ -195,7 +222,8 @@ public class MainController {
                         teamsManager.addTeam(team);
 
                         FXMLLoader teamBoxLoader = new FXMLLoader(getClass()
-                                .getResource("/main/resources/com/hszilard/quizzer/quizzer/teamBox.fxml"), resources);
+                                .getResource("/main/resources/com/hszilard/quizzer/quizzer/teamBox.fxml"),
+                                resources);
                         Parent teamBox = teamBoxLoader.load();
                         teamBox.styleProperty().bind(when(equal(team, teamsManager.currentTeamProperty()))
                                 .then("-fx-background-color: crimson;")
@@ -210,12 +238,14 @@ public class MainController {
 
                         teamBox.setOnMouseClicked(teamBoxEvent -> {
                             if (teamBoxEvent.getClickCount() == 2) {
+                                LOGGER.log(Level.INFO, "teamBox double-clicked.");
                                 try {
                                     Dialog<Team> editTeamDialog = teamDialogFactory.createEditTeamDialog(team);
                                     Optional<Team> editResult = editTeamDialog.showAndWait();
                                     if (editResult.isPresent())
                                         team.setName(editResult.get().getName());
-                                } catch (IOException e) {
+                                }
+                                catch (IOException e) {
                                     e.printStackTrace();
                                 }
                             }
@@ -223,7 +253,8 @@ public class MainController {
 
                         teamsVBox.getChildren().add(teamsVBox.getChildren().size() - 1, teamBox);
                     }
-                } catch (IOException e) {
+                }
+                catch (IOException e) {
                     e.printStackTrace();
                 }
             });
@@ -233,16 +264,16 @@ public class MainController {
     }
 
     private void configureTurnsLabel() {
-        if (turnsManager != null) {
+        if (turnsManager != null)
             turnsLabel.textProperty().bind(new SimpleStringProperty(resources.getString("main_turns"))
                     .concat(turnsManager.currentTurnProperty().asString()
                             .concat("/").concat(turnsManager.totalTurnsProperty().asString())));
-        } else {
+        else
             turnsLabel.setText(resources.getString("main_turns") + "-/-");
-        }
     }
 
     private void showQuestionDialog(final Question question, final Button button) {
+        LOGGER.log(Level.INFO, "Preparing to show question dialog.");
         try {
             FXMLLoader loader = new FXMLLoader(this.getClass()
                     .getResource("/main/resources/com/hszilard/quizzer/quizzer/questionScene.fxml"), resources);
@@ -252,6 +283,7 @@ public class MainController {
             questionSceneController.setup(question, new Callback() {
                 @Override
                 public void onCorrect() {
+                    LOGGER.log(Level.INFO, "Answer was correct.");
                     if (teamsManager.currentTeamProperty() != null) {
                         teamsManager.currentTeamProperty().get().addToScore(DEFAULT_SCORE);
                         button.setText("" + DEFAULT_SCORE);
@@ -266,6 +298,7 @@ public class MainController {
 
                 @Override
                 public void onIncorrect() {
+                    LOGGER.log(Level.INFO, "Answer was incorrect.");
                     teamsManager.nextTeam();
                     turnsManager.nextQuestion();
 
@@ -280,30 +313,34 @@ public class MainController {
             questionStage.setTitle(resources.getString("question_title"));
             iconify(questionStage);
             questionStage.initOwner(questionsGrid.getScene().getWindow());          // setting up the stage-hierarchy
-            questionStage.initModality(WINDOW_MODAL);                      // making the owner stage impossible to interact with until the 'top' stage is active
+            questionStage.initModality(
+                    WINDOW_MODAL);                      // making the owner stage impossible to interact with until the 'top' stage is active
 
             questionStage.setMinHeight(200);
             questionStage.setMinWidth(400);
             questionStage.show();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
             CommonUtils.showError(resources.getString("error_generic-message"), resources);
         }
     }
 
     private void showCongratsPopup() {
+        LOGGER.log(Level.INFO, "Preparing to show congrats popup.");
         try {
             FXMLLoader loader = new FXMLLoader(this.getClass()
                     .getResource("/main/resources/com/hszilard/quizzer/quizzer/congratsLayout.fxml"), resources);
             Parent root = loader.load();
-            ((CongratsController)loader.getController()).setTeamsManager(teamsManager);
+            ((CongratsController) loader.getController()).setTeamsManager(teamsManager);
             Scene congratsScene = new Scene(root);
             Stage congratsStage = new Stage();
             congratsStage.setScene(congratsScene);
             congratsStage.setResizable(false);
             iconify(congratsStage);
             congratsStage.show();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             LOGGER.log(Level.SEVERE, "congratsLayout can't be shown!", e.getMessage());
         }
     }

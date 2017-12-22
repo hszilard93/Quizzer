@@ -1,7 +1,7 @@
 package test.java.com.hszilard.quizzer.common.xml_converter;
 
 import main.java.com.hszilard.quizzer.common.xml_converter.QuizLoader;
-import main.java.com.hszilard.quizzer.common.xml_converter.QuizLoadingException;
+import main.java.com.hszilard.quizzer.common.xml_converter.QuizLoaderException;
 import main.java.com.hszilard.quizzer.common.xml_converter.SimpleQuizLoader;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +33,7 @@ public class SimpleQuizLoaderTest {
     void loadingNonExistingQuizThrowsException() {
         Executable codeToTest = () -> quizLoaderInstance.loadQuiz(TEST_XML_PATH);
 
-        assertThrows(QuizLoadingException.class, codeToTest);
+        assertThrows(QuizLoaderException.class, codeToTest);
     }
 
     @AfterAll

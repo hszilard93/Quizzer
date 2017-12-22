@@ -1,6 +1,5 @@
 package main.java.com.hszilard.quizzer.common.xml_converter;
 
-import com.sun.istack.internal.NotNull;
 import main.java.com.hszilard.quizzer.common.quiz_model.Answer;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
 import main.java.com.hszilard.quizzer.common.quiz_model.Quiz;
@@ -30,16 +29,16 @@ public class SimpleQuizExporter implements QuizExporter {
     /**
      * @param quiz Quiz object to be exported
      * @param xmlPath the filepath of the .xml document that will be created (or overwritten)
-     * @throws QuizExportingException
+     * @throws QuizExporterException
      */
-    public void exportQuiz(final Quiz quiz, final String xmlPath) throws QuizExportingException {
+    public void exportQuiz(final Quiz quiz, final String xmlPath) throws QuizExporterException {
         LOGGER.log(Level.FINE, "Attempting to export quiz as: " + xmlPath);
 
         if (quiz == null) {
-            throw new QuizExportingException("Quiz must not be null!");
+            throw new QuizExporterException("Quiz must not be null!");
         }
         if (xmlPath == null) {
-            throw new QuizExportingException("xmlPath must not be null!");
+            throw new QuizExporterException("xmlPath must not be null!");
         }
 
         try {
@@ -63,7 +62,7 @@ public class SimpleQuizExporter implements QuizExporter {
             writeQuiz(document, xmlPath);
         }
         catch (ParserConfigurationException | TransformerException e) {
-            throw new QuizExportingException("Unable to export quiz", e);
+            throw new QuizExporterException("Unable to export quiz", e);
         }
         LOGGER.log(Level.INFO, "Quiz successfully exported as: " + xmlPath);
 

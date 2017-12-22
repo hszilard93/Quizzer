@@ -31,11 +31,10 @@ class QuestionListCell extends ListCell<Question> {
     @FXML private Label title;
     @FXML private GridPane answersGrid;
 
+    private final ResourceBundle resources;
+    private final AbstractQuestionEditController.Callback callback;
     private FXMLLoader loader;
-    private ResourceBundle resources;
-
     private Question question;
-    private AbstractQuestionEditController.Callback callback;
 
     QuestionListCell(AbstractQuestionEditController.Callback callback, ResourceBundle resources) {
         this.resources = resources;

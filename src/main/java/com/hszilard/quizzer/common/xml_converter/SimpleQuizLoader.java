@@ -30,9 +30,9 @@ public class SimpleQuizLoader implements QuizLoader {
     /**
      * @param xmlPath the filepath of the .xml file to be loaded
      * @return Quiz object
-     * @throws QuizLoadingException
+     * @throws QuizLoaderException
      */
-    public Quiz loadQuiz(String xmlPath) throws QuizLoadingException {
+    public Quiz loadQuiz(String xmlPath) throws QuizLoaderException {
         LOGGER.log(Level.INFO, "loadQuiz invoked.");
 
         Quiz quiz;
@@ -49,7 +49,7 @@ public class SimpleQuizLoader implements QuizLoader {
             String edited = quizElement.getAttribute(Values.EDITED_ATTR);
             NodeList tags = quizElement.getElementsByTagName(Values.TITLE_TAG);
             if (tags.getLength() == 0) {
-                throw new QuizLoadingException("Unable to load Quiz");
+                throw new QuizLoaderException("Unable to load Quiz");
             }
             String title = tags.item(0).getTextContent();
             LOGGER.log(Level.FINE, "Loading quiz:\n title: " + title + " | created: " + created + " | edited: " + edited);
@@ -59,7 +59,7 @@ public class SimpleQuizLoader implements QuizLoader {
             quiz.getQuestions().addAll(loadQuestions(quizElement));
             LOGGER.log(Level.INFO, "Quiz successfully loaded.");
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            throw new QuizLoadingException("Unable to load Quiz", e);
+            throw new QuizLoaderException("Unable to load Quiz", e);
         }
         return quiz;
     }
@@ -72,7 +72,7 @@ public class SimpleQuizLoader implements QuizLoader {
             Element questionElement = (Element) questionNodeList.item(i);
             String questionText = questionElement.getElementsByTagName(Values.QUESTION_TEXT_TAG).item(0).getTextContent();
             Question question = new Question(questionText);
-            // loading all the answers belinging to this question
+            // loading all answers belonging to this question
             question.getAnswers().addAll(loadAnswers(questionElement));
             questionsList.add(question);
             LOGGER.log(Level.FINE, "Question # " + i + " loaded.\n" +

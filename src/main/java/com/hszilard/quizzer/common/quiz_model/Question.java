@@ -16,8 +16,8 @@ import java.util.Objects;
  */
 public class Question {
 
-    private StringProperty questionText;
-    private ListProperty<Answer> answers;
+    private final StringProperty questionText;
+    private final ListProperty<Answer> answers;
 
     /**
      * Default constructor for Question, creates a Question with an empty text and

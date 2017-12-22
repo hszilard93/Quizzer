@@ -6,28 +6,26 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import main.java.com.hszilard.quizzer.common.quiz_model.Quiz;
-import main.java.com.hszilard.quizzer.quizzer.QuestionSceneController;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static java.util.logging.Level.*;
 
+/**
+ * @author Szilárd Hompoth at https://github.com/hszilard93
+ */
 public class TurnsManager {
-    private static final Logger LOGGER = Logger.getLogger(QuestionSceneController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(TurnsManager.class.getName());
 
-    private Quiz quiz;
-    private TeamsManager teamsManager;
+    private final IntegerProperty totalTurns = new SimpleIntegerProperty();
+    private final IntegerProperty currentTurn = new SimpleIntegerProperty(1);
+    private final IntegerProperty questionsPerTurn = new SimpleIntegerProperty();
+    private final IntegerProperty questionCounter = new SimpleIntegerProperty(0);
+    private final BooleanProperty gameOver = new SimpleBooleanProperty();
 
-    private IntegerProperty totalTurns = new SimpleIntegerProperty();
-    private IntegerProperty currentTurn = new SimpleIntegerProperty(1);
-    private IntegerProperty questionsPerTurn = new SimpleIntegerProperty();
-    private IntegerProperty questionCounter = new SimpleIntegerProperty(0);
-    private BooleanProperty gameOver = new SimpleBooleanProperty();
-
-    public TurnsManager(Quiz quiz, TeamsManager teamsManager) {
-        this.quiz = quiz;
-        this.teamsManager = teamsManager;
+    public TurnsManager(final Quiz quiz, final TeamsManager teamsManager) {
+        LOGGER.log(INFO, "Constructing TurnsManager.");
 
         totalTurns.bind(Bindings.createIntegerBinding(() -> {
             if (teamsManager.teamsProperty().size() > 0)
@@ -69,10 +67,12 @@ public class TurnsManager {
     }
 
     public void nextQuestion() {
+        LOGGER.log(INFO, "Stepping to next question.");
         questionCounter.set(questionCounter.get() + 1);
     }
 
     public void reset() {
+        LOGGER.log(INFO, "Resetting question counter.");
         questionCounter.set(0);
     }
 

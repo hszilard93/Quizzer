@@ -1,5 +1,7 @@
 package main.java.com.hszilard.quizzer.quizeditor;
 
+import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import main.java.com.hszilard.quizzer.common.quiz_model.Answer;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
 import javafx.beans.binding.Bindings;
@@ -23,9 +25,9 @@ import java.util.logging.Logger;
  * and {@link NewQuestionEditController} classes.
  */
 abstract class AbstractQuestionEditController {
-
     private static final String QEC_LAYOUT = "/main/resources/com/hszilard/quizzer/quizeditor/questionEditLayout.fxml";
     private static final String ANSWER_HBOX = "/main/resources/com/hszilard/quizzer/quizeditor/anwerHBox.fxml";
+
     protected static final Logger LOGGER = Logger.getLogger(AbstractQuestionEditController.class.getName());
 
     protected ResourceBundle resources;
@@ -82,6 +84,12 @@ abstract class AbstractQuestionEditController {
     protected void configureStage() {
         stage.setMinWidth(400);
         stage.setMinHeight(200);
+        stage.getIcons().add(new Image(
+                "/main/resources/com/hszilard/quizzer/quizeditor/drawable/question-class-note-symbol_color.png"
+        ));
+        /* Making sure the 'owner' stage cannot be interacted with. */
+        stage.initOwner(Main.getPrimaryStage());
+        stage.initModality(Modality.WINDOW_MODAL);
     }
 
     protected void configureNodes() throws IOException {

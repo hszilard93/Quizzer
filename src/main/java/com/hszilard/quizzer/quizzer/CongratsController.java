@@ -12,8 +12,16 @@ import main.java.com.hszilard.quizzer.quizzer.teams_model.Team;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
+import static java.util.logging.Level.INFO;
+
+/**
+ * @author Szilárd Hompoth at https://github.com/hszilard93
+ * * This window is shown when the game is over.
+ */
 public class CongratsController {
+    private static final Logger LOGGER = Logger.getLogger(CongratsController.class.getName());
     private static final String STYLESHEET = "/main/resources/com/hszilard/quizzer/quizzer/style/congrats_styles.css";
 
     @FXML private ResourceBundle resources;
@@ -24,11 +32,13 @@ public class CongratsController {
 
     @FXML
     private void initialize() {
-
+        LOGGER.log(INFO, "Initializing.");
     }
 
     private void postInit() {
-        List<Team> teamsInOrder = teamsManager.teamsProperty().sorted(Comparator.comparingInt(Team::getScore).reversed());
+        LOGGER.log(INFO, "postInit started.");
+        List<Team> teamsInOrder = teamsManager.teamsProperty()
+                .sorted(Comparator.comparingInt(Team::getScore).reversed());
         Team previousTeam = teamsInOrder.get(0);
         int place = 1;
 
@@ -39,7 +49,7 @@ public class CongratsController {
             Label scoreLabel = new Label(Integer.toString(team.getScore()));
             Label placeLabel = new Label();
 
-            if (team.getScore() < previousTeam.getScore()){
+            if (team.getScore() < previousTeam.getScore()) {
                 place += 1;
                 previousTeam = team;
             }
@@ -91,6 +101,7 @@ public class CongratsController {
 
     @FXML
     private void okButtonClicked(ActionEvent actionEvent) {
-        ((Stage)congratsVBox.getScene().getWindow()).close();
+        LOGGER.log(INFO, "okButton clicked.");
+        ((Stage) congratsVBox.getScene().getWindow()).close();
     }
 }

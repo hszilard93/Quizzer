@@ -16,10 +16,10 @@ import java.util.Objects;
  * Its properties are its title; the dates it was created and last edited on; a list of Question objects.
  */
 public class Quiz {
-    private StringProperty title;
+    private final StringProperty title;
     private LocalDate created;
     private LocalDate edited;
-    private ListProperty<Question> questions;
+    private final ListProperty<Question> questions;
 
     /**
      * Default constructor for Quiz, creates a Quiz with an empty title and

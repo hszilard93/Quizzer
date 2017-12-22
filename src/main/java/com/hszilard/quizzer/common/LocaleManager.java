@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
 /**
@@ -11,6 +13,7 @@ import java.util.prefs.Preferences;
  * This class manages the locale settings for the supported languages.
  */
 public class LocaleManager {
+    private static final Logger LOGGER = Logger.getLogger(LocaleManager.class.getName());
     private static final String PREF_KEY = "locale";
     /* When a new language is added to the strings resource bundle, this list must be updated! */
     private static final List<String> supportedLocales = new ArrayList<>(Arrays.asList("en", "hu"));
@@ -31,6 +34,7 @@ public class LocaleManager {
         if (supportedLocales.contains(locale.getLanguage())) {
             preferredLocale = locale;
             preferences.put(PREF_KEY, locale.getLanguage());
+            LOGGER.log(Level.INFO, "New preferred locale set: " + preferredLocale.getLanguage());
         }
     }
 }

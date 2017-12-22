@@ -11,8 +11,8 @@
 
 .congrats-label {
     -fx-padding: 8;
-    -fx-text-fill: darkred;
-    -fx-font-size: 24;
+    -fx-text-fill: red;
+    -fx-font-size: 28;
     -fx-font-weight: 800;
 }
 
@@ -20,7 +20,7 @@
     -fx-alignment: center;
     -fx-padding: 4;
     -fx-text-fill: gold;
-    -fx-font-size: 20;
+    -fx-font-size: 26;
     -fx-font-weight: 900;
 }
 
@@ -28,7 +28,7 @@
     -fx-alignment: center;
     -fx-padding: 2;
     -fx-text-fill: white;
-    -fx-font-size: 19;
+    -fx-font-size: 24;
     -fx-font-weight: 800;
 }
 
@@ -36,7 +36,7 @@
     -fx-alignment: center;
     -fx-padding: 2;
     -fx-text-fill: white;
-    -fx-font-size: 18;
+    -fx-font-size: 22;
     -fx-font-weight: 800;
 }
 
@@ -44,7 +44,7 @@
     -fx-alignment: center;
     -fx-padding: 2;
     -fx-text-fill: white;
-    -fx-font-size: 17;
+    -fx-font-size: 20;
     -fx-font-weight: 700;
 }
 
@@ -52,7 +52,7 @@
     -fx-alignment: center;
     -fx-padding: 4;
     -fx-text-fill: gold;
-    -fx-font-size: 20;
+    -fx-font-size: 26;
     -fx-font-weight: 900;
 }
 
@@ -60,7 +60,7 @@
     -fx-alignment: center;
     -fx-padding: 4;
     -fx-text-fill: white;
-    -fx-font-size: 19;
+    -fx-font-size: 24;
     -fx-font-weight: 800;
 }
 
@@ -68,7 +68,7 @@
     -fx-alignment: center;
     -fx-padding: 4;
     -fx-text-fill: white;
-    -fx-font-size: 18;
+    -fx-font-size: 22;
     -fx-font-weight: 800;
 }
 
@@ -76,7 +76,7 @@
     -fx-alignment: center;
     -fx-padding: 2;
     -fx-text-fill: white;
-    -fx-font-size: 17;
+    -fx-font-size: 20;
     -fx-font-weight: 700;
 }
 
@@ -84,7 +84,7 @@
     -fx-alignment: center;
     -fx-padding: 4;
     -fx-text-fill: gold;
-    -fx-font-size: 20;
+    -fx-font-size: 26;
     -fx-font-weight: 900;
 }
 
@@ -92,7 +92,7 @@
     -fx-alignment: center;
     -fx-padding: 4;
     -fx-text-fill: white;
-    -fx-font-size: 19;
+    -fx-font-size: 24;
     -fx-font-weight: 800;
 }
 
@@ -100,7 +100,7 @@
     -fx-alignment: center;
     -fx-padding: 4;
     -fx-text-fill: white;
-    -fx-font-size: 18;
+    -fx-font-size: 22;
     -fx-font-weight: 800;
 }
 
@@ -108,7 +108,7 @@
     -fx-alignment: center;
     -fx-padding: 2;
     -fx-text-fill: white;
-    -fx-font-size: 17;
+    -fx-font-size: 20;
     -fx-font-weight: 700;
 }
 

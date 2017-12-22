@@ -14,8 +14,8 @@ import java.util.Objects;
  */
 public class Answer {
 
-    private StringProperty answerText;
-    private BooleanProperty correct;
+    private final StringProperty answerText;
+    private final BooleanProperty correct;
 
     /**
      * @param answerText the text of the answer

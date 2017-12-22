@@ -31,14 +31,14 @@ public class SimpleQuizExporterTest  {
     void savingWithNullQuizThrowsException() {
         Executable codeToTest = () -> quizExporterInstance.exportQuiz(null, TEST_XML_PATH);
 
-        assertThrows(QuizExportingException.class, codeToTest);
+        assertThrows(QuizExporterException.class, codeToTest);
     }
 
     @Test
     void savingWithNullPathThrowsException() {
         Executable codeToTest = () -> quizExporterInstance.exportQuiz(new Quiz(), null);
 
-        assertThrows(QuizExportingException.class, codeToTest);
+        assertThrows(QuizExporterException.class, codeToTest);
     }
 
     @AfterAll

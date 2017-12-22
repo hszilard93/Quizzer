@@ -4,23 +4,25 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import main.java.com.hszilard.quizzer.common.quiz_model.Answer;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static main.java.com.hszilard.quizzer.quizzer.CommonUtils.addStyle;
 
+/**
+ * @author Szilárd Hompoth at https://github.com/hszilard93
+ * This window shows the question and its possible answers, along with buttons.
+ */
 public class QuestionSceneController {
     private static final Logger LOGGER = Logger.getLogger(QuestionSceneController.class.getName());
-    private static String STYLE_PATH = "/main/resources/com/hszilard/quizzer/quizzer/style/question_scene_styles.css";
+    private static final String STYLE_PATH = "/main/resources/com/hszilard/quizzer/quizzer/style/question_scene_styles.css";
 
     @FXML private ResourceBundle resources;
     @FXML private BorderPane root;
@@ -30,7 +32,6 @@ public class QuestionSceneController {
 
     private Question question;
     private Callback callback;
-    private Map<Label, Answer> answerLabelMap = new HashMap<>();
 
     public interface Callback {
         void onCorrect();
@@ -43,6 +44,7 @@ public class QuestionSceneController {
 
         questionTextLabel.setText(question.getQuestionText());
         configureAnswersGrid(question.getAnswers());
+        LOGGER.log(Level.INFO, "Scene ready.");
     }
 
     private void configureAnswersGrid(List<Answer> answers) {
@@ -59,10 +61,13 @@ public class QuestionSceneController {
             VBox cellVBox = new VBox(answerLabel);
             addStyleClass(cellVBox, "cell-vbox");
             cellVBox.setOnMouseClicked(e -> {
+                LOGGER.log(Level.INFO, "Answer selected.");
                 if (answer.isCorrect()) {
+                    LOGGER.log(Level.FINE, "The answer was correct.");
                     onCorrectAnswer();
                 }
                 else {
+                    LOGGER.log(Level.FINE, "The answer was incorrect.");
                     onIncorrectAnswer();
                 }
             });
@@ -90,6 +95,7 @@ public class QuestionSceneController {
         correctOkButton.setDefaultButton(true);
         addStyleClass(correctOkButton, "correct-ok-button");
         correctOkButton.setOnAction(e -> {
+            LOGGER.log(Level.INFO, "correctOkButton clicked");
             ((Stage)correctOkButton.getScene().getWindow()).close();
             callback.onCorrect();
         });
@@ -119,6 +125,7 @@ public class QuestionSceneController {
         incorrectOkButton.setDefaultButton(true);
         addStyleClass(incorrectOkButton, "incorrect-ok-button");
         incorrectOkButton.setOnAction(e -> {
+            LOGGER.log(Level.INFO, "correctOkButton clicked");
             ((Stage)incorrectOkButton.getScene().getWindow()).close();
             callback.onIncorrect();
         });

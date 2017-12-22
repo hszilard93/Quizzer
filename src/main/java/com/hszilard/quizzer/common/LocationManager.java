@@ -6,6 +6,8 @@ import com.sun.istack.internal.Nullable;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
+import static java.util.logging.Level.FINE;
+
 /**
  * @author Szilárd Hompoth at https://github.com/hszilard93
  * This class stores the location of the last quiz opened or saved, but for each class!
@@ -23,7 +25,9 @@ public class LocationManager {
         if (lastPath == null) {
             preferences = Preferences.userNodeForPackage(caller);
             lastPath = preferences.get(PREF_KEY, null);
+            LOGGER.log(FINE, "Preferences loaded.");
         }
+        LOGGER.log(FINE, "lastPath is: " + lastPath);
         return lastPath;
     }
 
@@ -31,6 +35,7 @@ public class LocationManager {
         lastPath = path;
         preferences = Preferences.userNodeForPackage(caller);
         preferences.put(PREF_KEY, lastPath);
+        LOGGER.log(FINE, "lastPath set to: " + lastPath);
     }
 
 }

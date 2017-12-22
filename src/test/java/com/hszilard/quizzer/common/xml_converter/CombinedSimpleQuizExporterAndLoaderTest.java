@@ -42,7 +42,7 @@ public class CombinedSimpleQuizExporterAndLoaderTest {
     }
 
     @Test
-    void savingAndLoadingEmptyQuizEqualsOriginal() throws QuizExportingException, QuizLoadingException {
+    void savingAndLoadingEmptyQuizEqualsOriginal() throws QuizExporterException, QuizLoaderException {
         Quiz originalQuiz = new Quiz();
 
         quizExporterInstance.exportQuiz(originalQuiz, TEST_XML_PATH);
@@ -52,7 +52,7 @@ public class CombinedSimpleQuizExporterAndLoaderTest {
     }
 
     @Test
-    void savingAndLoadingSimpleQuizEqualsOriginal() throws QuizExportingException, QuizLoadingException {
+    void savingAndLoadingSimpleQuizEqualsOriginal() throws QuizExporterException, QuizLoaderException {
         Quiz originalQuiz = new Quiz("Simple Quiz");
 
         Question question1 = new Question("Question1 some text");
@@ -79,7 +79,7 @@ public class CombinedSimpleQuizExporterAndLoaderTest {
     }
 
     @Test
-    void savingAndLoadingRandomQuizEqualsOriginal() throws QuizLoadingException, QuizExportingException {
+    void savingAndLoadingRandomQuizEqualsOriginal() throws QuizLoaderException, QuizExporterException {
         /* Generate and log a seed for random */
         final int seed = (int)System.currentTimeMillis();
         Logger.getLogger(this.getClass()).log(Level.INFO, "Random seed is: " + seed);
