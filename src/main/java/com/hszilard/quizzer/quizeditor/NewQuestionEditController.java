@@ -26,10 +26,10 @@ public class NewQuestionEditController extends AbstractQuestionEditController {
 
     /* Automatically add two new possible answers to every new Question.*/
     @Override
-    protected void configureAnswers() throws IOException {
+    protected void configureAnswersVBox() throws IOException {
         question.getAnswers().add(new Answer("", true));
         question.getAnswers().add(new Answer("", false));
-        super.configureAnswers();
+        super.configureAnswersVBox();
     }
 
     @Override

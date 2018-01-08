@@ -18,7 +18,7 @@ import main.java.com.hszilard.quizzer.common.quiz_model.Question;
 import main.java.com.hszilard.quizzer.common.quiz_model.Quiz;
 import main.java.com.hszilard.quizzer.common.xml_converter.QuizLoader;
 import main.java.com.hszilard.quizzer.common.xml_converter.QuizLoaderException;
-import main.java.com.hszilard.quizzer.common.xml_converter.SimpleQuizLoader;
+import main.java.com.hszilard.quizzer.common.xml_converter.SimpleXmlQuizLoader;
 import main.java.com.hszilard.quizzer.quizzer.game_model.TeamsManager;
 import main.java.com.hszilard.quizzer.quizzer.game_model.TurnsManager;
 import main.java.com.hszilard.quizzer.quizzer.teams_model.Team;
@@ -108,7 +108,7 @@ public class MainController {
         if (file != null) {
             try {
                 Quiz quiz;
-                QuizLoader quizLoader = new SimpleQuizLoader();
+                QuizLoader quizLoader = new SimpleXmlQuizLoader();
                 quiz = quizLoader.loadQuiz(file.getPath());
                 postOpenQuiz(quiz);
                 quizPath = file.getPath();

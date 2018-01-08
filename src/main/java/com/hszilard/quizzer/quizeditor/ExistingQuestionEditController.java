@@ -15,6 +15,7 @@ public class ExistingQuestionEditController extends AbstractQuestionEditControll
         this.question = new Question();
         this.question.setQuestionText(question.getQuestionText());
         this.question.answersProperty().set(question.getAnswers());
+        this.question.difficultyObjectProperty().set(question.getDifficulty());
 
         this.callback = callback;
         this.resources = resources;

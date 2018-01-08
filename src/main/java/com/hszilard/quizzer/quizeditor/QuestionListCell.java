@@ -1,8 +1,10 @@
 package main.java.com.hszilard.quizzer.quizeditor;
 
+import javafx.scene.shape.Circle;
 import main.java.com.hszilard.quizzer.common.quiz_model.Answer;
+import main.java.com.hszilard.quizzer.common.quiz_model.Difficulty;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
-import main.java.com.hszilard.quizzer.common.xml_converter.SimpleQuizLoader;
+import main.java.com.hszilard.quizzer.common.xml_converter.SimpleXmlQuizLoader;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
 import javafx.fxml.FXML;
@@ -18,6 +20,8 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static main.java.com.hszilard.quizzer.common.quiz_model.Difficulty.*;
+
 /**
  * @author Szilárd Hompoth at https://github.com/hszilard93
  * Customized ListView cell to display a Questions text and possible answers.
@@ -25,11 +29,16 @@ import java.util.logging.Logger;
 class QuestionListCell extends ListCell<Question> {
     private static final String QUESTION_LIST_CELL_FXML = "/main/resources/com/hszilard/quizzer/quizeditor/questionListCell.fxml";
     private static final String STYLES = "/main/resources/com/hszilard/quizzer/quizeditor/style/main_scene_styles.css";
-    private static final Logger LOGGER = Logger.getLogger(SimpleQuizLoader.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SimpleXmlQuizLoader.class.getName());
 
-    @FXML private HBox cellBox;
-    @FXML private Label title;
-    @FXML private GridPane answersGrid;
+    @FXML
+    private HBox cellBox;
+    @FXML
+    private Label titleLabel;
+    @FXML
+    private Circle difficultyCircle;
+    @FXML
+    private GridPane answersGrid;
 
     private final ResourceBundle resources;
     private final AbstractQuestionEditController.Callback callback;
@@ -69,11 +78,22 @@ class QuestionListCell extends ListCell<Question> {
 
     /* Cell customization logic */
     private void addContent() {
-        title.textProperty().bind(question.questionTextProperty());
+        titleLabel.textProperty().bind(question.questionTextProperty());
+
+        difficultyCircle.getStyleClass().clear();
+        if (question.getDifficulty().equals(EASY))
+            difficultyCircle.getStyleClass().add("easy-circle");
+        else if (question.getDifficulty().equals(DEFAULT))
+            difficultyCircle.getStyleClass().add("medium-circle");
+        else if (question.getDifficulty().equals(HARD))
+            difficultyCircle.getStyleClass().add("hard-circle");
+        else
+            difficultyCircle.getStyleClass().add("custom-circle");
+
 
         configureGrid();
 
-        final NumberBinding cellBoxWidth = Bindings.subtract(getListView().widthProperty(), 36);
+        final NumberBinding cellBoxWidth = Bindings.subtract(getListView().widthProperty(), 36);    // calculating optimal width
         cellBox.prefWidthProperty().bind(cellBoxWidth);
         answersGrid.prefWidthProperty().bind(cellBoxWidth);         // make the grid grow with the cell
 

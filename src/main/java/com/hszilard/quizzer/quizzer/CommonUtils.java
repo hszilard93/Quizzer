@@ -47,6 +47,7 @@ class CommonUtils {
         alert.setTitle(resources.getString("alert_confirmation_title"));
         alert.setHeaderText(resources.getString("alert_sure-header"));
         alert.setContentText(text);
+        iconify(alert.getDialogPane().getScene().getWindow());
 
         ((Button) (alert.getDialogPane().lookupButton(ButtonType.OK))).setText(resources.getString("alert_ok-button"));
         ((Button) (alert.getDialogPane().lookupButton(ButtonType.CANCEL)))

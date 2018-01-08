@@ -91,7 +91,7 @@
                     </Menu>
                     <Menu text="%help_menu"/>
                 </MenuBar>
-                <!--Quiz title and number of questions-->
+                <!--Quiz titleLabel and number of questions-->
                 <AnchorPane prefWidth="${centerVBox.width}"
                             styleClass="top-anchor-pane">
                     <children>
