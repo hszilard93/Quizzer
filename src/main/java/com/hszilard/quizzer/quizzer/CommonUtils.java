@@ -35,7 +35,7 @@ class CommonUtils {
     /* /* Adds the app icon to the given stage. */
     static public void iconify(Stage stage) {
         LOGGER.log(INFO, "Iconifying stage " + (stage.getTitle() == null ? stage : stage.getTitle()));
-        stage.getIcons().add(new Image("/main/resources/com/hszilard/quizzer/quizzer/drawable/question.png"));
+        stage.getIcons().add(new Image("/main/resources/com/hszilard/quizzer/quizzer/drawable/icon.png"));
     }
 
     /* Confirmation alert boilerplate */

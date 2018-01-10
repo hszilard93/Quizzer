@@ -21,10 +21,10 @@ public class Difficulty {
     }
 
     public void setValue(int value) {
-        if (value > 0)
-            this.value.set(value);
-        else
+        if (value <= 0) {
             throw new IllegalArgumentException("Illegal value: " + value);
+        }
+        this.value.setValue(value);
     }
 
     public IntegerProperty valueProperty() {
