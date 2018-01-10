@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.*;
  * @author Szilárd Hompoth at https://github.com/hszilard93
  */
 @DisplayName("Testing LocaleManager")
-public class LocaleManagerTest {
+class LocaleManagerTest {
     private static final String LOCALE_KEY = "locale";
 
     private static String oldUserLanguage;

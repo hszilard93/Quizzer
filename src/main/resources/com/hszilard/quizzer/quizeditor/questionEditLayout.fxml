@@ -16,72 +16,66 @@
                 <Insets top="12" right="24" bottom="12" left="24"/>
             </padding>
 
-            <children>
-                <!--The question's text-->
-                <VBox fx:id="questionTextVBox"
-                      alignment="CENTER_LEFT"
-                      styleClass="question-text-vbox">
-                    <Label text="%edit_question"
-                           styleClass="question-label"/>
-                    <TextField fx:id="questionTextField" prefWidth="${questionTextVBox.width}"/>
-                </VBox>
-                <HBox fx:id="difficultiesHBox"
-                      prefWidth="${centerVBox.width}"
-                      alignment="CENTER_LEFT"
+            <!--The question's text-->
+            <VBox fx:id="questionTextVBox"
+                  alignment="CENTER_LEFT"
+                  styleClass="question-text-vbox">
+                <Label text="%edit_question"
+                       styleClass="question-label"/>
+                <TextField fx:id="questionTextField" prefWidth="${questionTextVBox.width}"/>
+            </VBox>
+            <HBox fx:id="difficultiesHBox"
+                  prefWidth="${centerVBox.width}"
+                  alignment="CENTER_LEFT"
+                  spacing="8">
+                <padding>
+                    <Insets top="2" bottom="2"/>
+                </padding>
+                <Label text="%edit_difficulty"
+                       minWidth="64"
+                       styleClass="difficultyLabel"/>
+                <HBox HBox.hgrow="ALWAYS"
+                      alignment="CENTER"
                       spacing="8">
-                    <padding>
-                        <Insets top="2" bottom="2"/>
-                    </padding>
-                    <Label text="%edit_difficulty"
-                           minWidth="64"
-                           styleClass="difficultyLabel"/>
-                    <HBox HBox.hgrow="ALWAYS"
-                          alignment="CENTER"
-                          spacing="8">
-                        <RadioButton fx:id="easyRadioButton"
-                                     text="%edit_difficulty-easy"
+                    <RadioButton fx:id="easyRadioButton"
+                                 text="%edit_difficulty-easy"
+                                 minWidth="64"/>
+                    <RadioButton fx:id="mediumRadioButton"
+                                 text="%edit_difficulty-medium"
+                                 minWidth="64"/>
+                    <RadioButton fx:id="hardRadioButton"
+                                 text="%edit_difficulty-hard"
+                                 minWidth="64"/>
+                    <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                        <RadioButton fx:id="customRadioButton"
+                                     text="%edit_difficulty-custom"
                                      minWidth="64"/>
-                        <RadioButton fx:id="mediumRadioButton"
-                                     text="%edit_difficulty-medium"
-                                     minWidth="64"/>
-                        <RadioButton fx:id="hardRadioButton"
-                                     text="%edit_difficulty-hard"
-                                     minWidth="64"/>
-                        <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
-                            <RadioButton fx:id="customRadioButton"
-                                         text="%edit_difficulty-custom"
-                                         minWidth="64"/>
 
-                            <TextField fx:id="difficultyTextField"
-                                       text="0"
-                                       HBox.hgrow="SOMETIMES"
-                                       minWidth="24"/>
-                        </HBox>
+                        <TextField fx:id="difficultyTextField"
+                                   text="0"
+                                   HBox.hgrow="SOMETIMES"
+                                   minWidth="24"/>
                     </HBox>
                 </HBox>
-                <!--The HBoxes containing the possible answers will be injected into this VBox-->
-                <ScrollPane fitToWidth="true">
-                    <content>
-                        <VBox fx:id="answersVBox"/>
-                    </content>
-                </ScrollPane>
-                <!--Buttons-->
-                <HBox alignment="BASELINE_CENTER" spacing="8">
-                    <padding>
-                        <Insets top="4"/>
-                    </padding>
+            </HBox>
+            <!--The HBoxes containing the possible answers will be injected into this VBox-->
+            <ScrollPane fitToWidth="true">
+                <VBox fx:id="answersVBox"/>
+            </ScrollPane>
+            <!--Buttons-->
+            <HBox alignment="BASELINE_CENTER" spacing="8">
+                <padding>
+                    <Insets top="4"/>
+                </padding>
 
-                    <children>
-                        <Button fx:id="addAnswerButton"
-                                text="%edit_add-answer-button"
-                                minWidth="96"/>
-                        <Button fx:id="removeAnswerButton"
-                                text="%edit_remove-button"
-                                minWidth="128"/>
-                    </children>
-                </HBox>
+                <Button fx:id="addAnswerButton"
+                        text="%edit_add-answer-button"
+                        minWidth="96"/>
+                <Button fx:id="removeAnswerButton"
+                        text="%edit_remove-button"
+                        minWidth="128"/>
+            </HBox>
 
-            </children>
         </VBox>
     </center>
 

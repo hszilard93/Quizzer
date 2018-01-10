@@ -5,6 +5,6 @@
 !.idea/resourceBundles.xml
 !.idea/vcs.xml
 *.iml
-out/production
+out
 test-resources
 quizzer.properties

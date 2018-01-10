@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
+import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.INFO;
 
 /**
@@ -33,11 +34,11 @@ public class CongratsController {
 
     @FXML
     private void initialize() {
-        LOGGER.log(INFO, "Initializing.");
+        LOGGER.log(FINE, "Initializing.");
     }
 
     private void postInit() {
-        LOGGER.log(INFO, "postInit started.");
+        LOGGER.log(FINE, "postInit started.");
         List<Team> teamsInOrder = teamsManager.teamsProperty()
                 .sorted(Comparator.comparingInt(Team::getScore).reversed());
         Team previousTeam = teamsInOrder.get(0);

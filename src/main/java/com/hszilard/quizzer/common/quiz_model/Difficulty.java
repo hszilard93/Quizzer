@@ -3,8 +3,6 @@ package main.java.com.hszilard.quizzer.common.quiz_model;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-import java.util.Objects;
-
 /**
  * @author Szilárd Hompoth at https://github.com/hszilard93
  * Difficulty is a property of a question.

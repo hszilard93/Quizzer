@@ -282,7 +282,7 @@ public class MainController {
     }
 
     private void showQuestionDialog(final Question question, final Button valueButton) {
-        LOGGER.log(Level.INFO, "Preparing to show question dialog.");
+        LOGGER.log(Level.FINE, "Preparing to show question dialog.");
         try {
             FXMLLoader loader = new FXMLLoader(this.getClass()
                     .getResource("/main/resources/com/hszilard/quizzer/quizzer/questionScene.fxml"), resources);
@@ -337,7 +337,7 @@ public class MainController {
     }
 
     private void showCongratsPopup() {
-        LOGGER.log(Level.INFO, "Preparing to show congrats popup.");
+        LOGGER.log(Level.FINE, "Preparing to show congrats popup.");
         try {
             FXMLLoader loader = new FXMLLoader(this.getClass()
                     .getResource("/main/resources/com/hszilard/quizzer/quizzer/congratsLayout.fxml"), resources);

@@ -44,7 +44,7 @@ public class QuestionSceneController {
 
         questionTextLabel.setText(question.getQuestionText());
         configureAnswersGrid(question.getAnswers());
-        LOGGER.log(Level.INFO, "Scene ready.");
+        LOGGER.log(Level.FINE, "Scene ready.");
     }
 
     private void configureAnswersGrid(List<Answer> answers) {

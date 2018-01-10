@@ -11,7 +11,7 @@ import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 
 @DisplayName("Testing TurnsManager")
-public class TurnsManagerTest {
+class TurnsManagerTest {
 
     private TurnsManager turnsManager;
     private TeamsManager teamsManager;

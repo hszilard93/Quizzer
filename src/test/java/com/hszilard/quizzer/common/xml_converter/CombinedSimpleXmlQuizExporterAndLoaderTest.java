@@ -25,7 +25,7 @@ import static org.hamcrest.Matchers.*;
  * @author Szilárd Hompoth at https://github.com/hszilard93
  */
 @DisplayName("Combined testing of the SimpleXmlQuizExporter and SimpleXmlQuizLoader classes' functionality")
-public class CombinedSimpleXmlQuizExporterAndLoaderTest {
+class CombinedSimpleXmlQuizExporterAndLoaderTest {
     private static final String TEST_XML_PATH = "test-resources/test-quiz.xml";
 
     private QuizExporter quizExporterInstance;

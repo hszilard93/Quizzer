@@ -2,7 +2,6 @@ package main.java.com.hszilard.quizzer.quizeditor;
 
 import javafx.scene.shape.Circle;
 import main.java.com.hszilard.quizzer.common.quiz_model.Answer;
-import main.java.com.hszilard.quizzer.common.quiz_model.Difficulty;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
 import main.java.com.hszilard.quizzer.common.xml_converter.SimpleXmlQuizLoader;
 import javafx.beans.binding.Bindings;
@@ -31,14 +30,10 @@ class QuestionListCell extends ListCell<Question> {
     private static final String STYLES = "/main/resources/com/hszilard/quizzer/quizeditor/style/main_scene_styles.css";
     private static final Logger LOGGER = Logger.getLogger(SimpleXmlQuizLoader.class.getName());
 
-    @FXML
-    private HBox cellBox;
-    @FXML
-    private Label titleLabel;
-    @FXML
-    private Circle difficultyCircle;
-    @FXML
-    private GridPane answersGrid;
+    @FXML private HBox cellBox;
+    @FXML private Label titleLabel;
+    @FXML private Circle difficultyCircle;
+    @FXML private GridPane answersGrid;
 
     private final ResourceBundle resources;
     private final AbstractQuestionEditController.Callback callback;

@@ -23,7 +23,6 @@ import java.util.logging.Logger;
  * Responsible for exporting Quiz objects in .xml format.
  */
 public class SimpleXmlQuizExporter implements QuizExporter {
-
     private final Logger LOGGER = Logger.getLogger(SimpleXmlQuizLoader.class.getName());
 
     /**

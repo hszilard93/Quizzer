@@ -13,8 +13,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static java.util.logging.Level.INFO;
-
 /**
  * @author Szilárd Hompoth at https://github.com/hszilard93
  * Common methods for displaying popups and doing other repetitive tasks.
@@ -39,8 +37,9 @@ public class CommonUtils {
             iconPath = QUIZZER_ICON_PATH;
         else if (pack.getName().equals("main.java.com.hszilard.quizzer.quizeditor"))
             iconPath = EDITOR_ICON_PATH;
-        else
-            LOGGER.log(Level.SEVERE, "Invalid package!");
+        else {
+            LOGGER.log(Level.SEVERE, "Invalid package: " + pack);
+        }
     }
 
     /* Adds given style to a parent object. */

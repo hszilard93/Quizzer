@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import main.java.com.hszilard.quizzer.common.CommonUtils;
 import main.java.com.hszilard.quizzer.common.LocaleManager;
@@ -34,7 +33,7 @@ public class Main extends Application {
         primaryStage.setScene(mainScene);
         primaryStage.setMinWidth(600);
         primaryStage.setMinHeight(400);
-        primaryStage.getIcons().add(new Image("/main/resources/com/hszilard/quizzer/quizeditor/drawable/icon.png"));
+        CommonUtils.iconify(primaryStage);
         primaryStage.show();
     }
 

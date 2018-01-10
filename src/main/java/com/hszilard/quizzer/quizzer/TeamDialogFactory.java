@@ -57,21 +57,24 @@ class TeamDialogFactory {
         Button cancelButton = (Button) dialogLoader.getNamespace().get("cancelButton");
 
         applyButton.setOnAction(action -> {
+            LOGGER.log(Level.INFO, "applyButton clicked.");
             if (nameField.getText().isEmpty())
                 showPopup(resources.getString("inform_header-uh-oh"), resources.getString("inform_name_empty"));
             else {
                 ((Stage) window).close();
                 teamDialog.setResult(new Team(nameField.getText(), 0));
             }
-            LOGGER.log(Level.INFO, "TeamDialog applied and closed.");
+            LOGGER.log(Level.FINE, "TeamDialog applied and closed.");
         });
         cancelButton.setOnAction(action -> {
+            LOGGER.log(Level.INFO, "cancelButton clicked.");
             ((Stage) window).close();
-            LOGGER.log(Level.INFO, "TeamDialog canceled and closed.");
+            LOGGER.log(Level.FINE, "TeamDialog canceled and closed.");
         });
         window.setOnCloseRequest(event -> {
+            LOGGER.log(Level.INFO, "CloseRequest.");
             ((Stage) window).close();
-            LOGGER.log(Level.INFO, "TeamDialog cancelled and closed.");
+            LOGGER.log(Level.FINE, "TeamDialog cancelled and closed.");
         });
 
         return teamDialog;

@@ -12,10 +12,8 @@
 
     <top>
         <VBox>
-            <children>
-                <fx:include source="menuLayout.fxml"
-                            fx:id="menuBarLayout"/>
-            </children>
+            <fx:include source="menuLayout.fxml"
+                        fx:id="menuBarLayout"/>
         </VBox>
     </top>
     <center>
