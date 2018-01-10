@@ -3,6 +3,7 @@ package main.java.com.hszilard.quizzer.quizeditor;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import main.java.com.hszilard.quizzer.common.quiz_model.Answer;
+import main.java.com.hszilard.quizzer.common.quiz_model.Difficulty;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
@@ -39,6 +40,11 @@ abstract class AbstractQuestionEditController {
     protected Button removeAnswerButton;
     protected Button confirmButton;
     protected Button cancelButton;
+    protected RadioButton easyRadioButton;
+    protected RadioButton mediumRadioButton;
+    protected RadioButton hardRadioButton;
+    protected RadioButton customRadioButton;
+    protected TextField difficultyTextField;
 
     protected Question question;
 
@@ -64,7 +70,6 @@ abstract class AbstractQuestionEditController {
 
     protected void setUpLayout() throws IOException {
         stage = new Stage();
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource(QEC_LAYOUT), resources);
         root = loader.load();
         /* This hack makes it possible to get access to the layout's objects. Abstract classes can't do this normally. */
@@ -76,25 +81,31 @@ abstract class AbstractQuestionEditController {
         removeAnswerButton = (Button) namespace.get("removeAnswerButton");
         confirmButton = (Button) namespace.get("confirmButton");
         cancelButton = (Button) namespace.get("cancelButton");
+        easyRadioButton = (RadioButton) namespace.get("easyRadioButton");
+        mediumRadioButton = (RadioButton) namespace.get("mediumRadioButton");
+        hardRadioButton = (RadioButton) namespace.get("hardRadioButton");
+        customRadioButton = (RadioButton) namespace.get("customRadioButton");
+        difficultyTextField = (TextField) namespace.get("difficultyTextField");
 
         configureStage();
         configureNodes();
     }
 
     protected void configureStage() {
-        stage.setMinWidth(400);
-        stage.setMinHeight(200);
+        stage.setMinWidth(500);
+        stage.setMinHeight(350);
         stage.getIcons().add(new Image(
                 "/main/resources/com/hszilard/quizzer/quizeditor/drawable/question-class-note-symbol_color.png"
         ));
         /* Making sure the 'owner' stage cannot be interacted with. */
-        stage.initOwner(Main.getPrimaryStage());
+        stage.initOwner(Main.getStage());
         stage.initModality(Modality.WINDOW_MODAL);
     }
 
     protected void configureNodes() throws IOException {
         configureQuestionText();
-        configureAnswers();
+        configureDifficultiesHBox();
+        configureAnswersVBox();
         configureAddAnswersButton();
         configureRemoveAnswersButton();
         configureConfirmButton();
@@ -105,10 +116,46 @@ abstract class AbstractQuestionEditController {
         questionTextField.setText(question.getQuestionText());
     }
 
-    protected void configureAnswers() throws IOException {
-        for (int i = 0; i < question.getAnswers().size(); i++) {
-            answersVBox.getChildren().add(makeAnswerHBox(i + 1, question.getAnswers().get(i)));
+    protected void configureDifficultiesHBox() {
+        Difficulty difficulty = question.getDifficulty();
+
+        ToggleGroup toggleGroup = new ToggleGroup();
+        easyRadioButton.setToggleGroup(toggleGroup);
+        mediumRadioButton.setToggleGroup(toggleGroup);
+        hardRadioButton.setToggleGroup(toggleGroup);
+        customRadioButton.setToggleGroup(toggleGroup);
+
+        difficultyTextField.setEditable(false);
+        difficultyTextField.setOnMouseClicked(e -> customRadioButton.setSelected(true));
+
+        easyRadioButton.setOnAction(e -> difficultyTextField.setText(Integer.toString(Difficulty.EASY.getValue())));
+        mediumRadioButton.setOnAction(e -> difficultyTextField.setText(Integer.toString(Difficulty.DEFAULT.getValue())));
+        hardRadioButton.setOnAction(e -> difficultyTextField.setText(Integer.toString(Difficulty.HARD.getValue())));
+
+        if (difficulty.equals(Difficulty.EASY))
+            easyRadioButton.setSelected(true);
+        else if (difficulty.equals(Difficulty.DEFAULT))
+            mediumRadioButton.setSelected(true);
+        else if (difficulty.equals(Difficulty.HARD))
+            hardRadioButton.setSelected(true);
+        else {
+            customRadioButton.setSelected(true);
+            difficultyTextField.setEditable(true);
         }
+        difficultyTextField.setText(Integer.toString(difficulty.getValue()));
+
+        toggleGroup.selectedToggleProperty().addListener((ov, oldToggle, newToggle) -> {
+            newToggle.setSelected(true);
+            if (newToggle == customRadioButton) {
+                difficultyTextField.setEditable(true);
+                difficultyTextField.requestFocus();
+            }
+        });
+    }
+
+    protected void configureAnswersVBox() throws IOException {
+        for (int i = 0; i < question.getAnswers().size(); i++)
+            answersVBox.getChildren().add(makeAnswerHBox(i + 1, question.getAnswers().get(i)));
     }
 
     protected void configureAddAnswersButton() {
@@ -119,8 +166,7 @@ abstract class AbstractQuestionEditController {
                 question.getAnswers().add(newAnswer);
                 HBox newHBox = makeAnswerHBox(question.getAnswers().size(), newAnswer);
                 answersVBox.getChildren().add(newHBox);
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
             }
         });
@@ -153,6 +199,34 @@ abstract class AbstractQuestionEditController {
                 alert.showAndWait();
             } else {
                 question.setQuestionText(questionTextField.getText());
+                if (easyRadioButton.isSelected())
+                    question.setDifficulty(Difficulty.EASY);
+                else if (mediumRadioButton.isSelected())
+                    question.setDifficulty(Difficulty.DEFAULT);
+                else if (hardRadioButton.isSelected())
+                    question.setDifficulty(Difficulty.HARD);
+                else if (customRadioButton.isSelected()) {
+                    try {
+                        int difficultyValue = Integer.parseInt(difficultyTextField.getText());
+                        if (difficultyValue <= 0)
+                            throw new NumberFormatException();
+                        else if (difficultyValue == Difficulty.EASY.getValue())
+                            question.setDifficulty(Difficulty.EASY);
+                        else if (difficultyValue == Difficulty.DEFAULT.getValue())
+                            question.setDifficulty(Difficulty.DEFAULT);
+                        else if (difficultyValue == Difficulty.HARD.getValue())
+                            question.setDifficulty(Difficulty.HARD);
+                        else
+                            question.setDifficulty(new Difficulty(difficultyValue));
+                    } catch (NumberFormatException nfe) {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle(resources.getString("alert_warning_title"));
+                        alert.setHeaderText(resources.getString("alert_difficulty-number-header"));
+                        alert.setContentText(resources.getString("alert_difficulty-number-text"));
+                        alert.showAndWait();
+                        return;
+                    }
+                }
                 callback.onConfirm(question);
                 stage.close();
             }

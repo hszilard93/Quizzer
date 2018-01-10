@@ -25,6 +25,40 @@
                            styleClass="question-label"/>
                     <TextField fx:id="questionTextField" prefWidth="${questionTextVBox.width}"/>
                 </VBox>
+                <HBox fx:id="difficultiesHBox"
+                      prefWidth="${centerVBox.width}"
+                      alignment="CENTER_LEFT"
+                      spacing="8">
+                    <padding>
+                        <Insets top="2" bottom="2"/>
+                    </padding>
+                    <Label text="%edit_difficulty"
+                           minWidth="64"
+                           styleClass="difficultyLabel"/>
+                    <HBox HBox.hgrow="ALWAYS"
+                          alignment="CENTER"
+                          spacing="8">
+                        <RadioButton fx:id="easyRadioButton"
+                                     text="%edit_difficulty-easy"
+                                     minWidth="64"/>
+                        <RadioButton fx:id="mediumRadioButton"
+                                     text="%edit_difficulty-medium"
+                                     minWidth="64"/>
+                        <RadioButton fx:id="hardRadioButton"
+                                     text="%edit_difficulty-hard"
+                                     minWidth="64"/>
+                        <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                            <RadioButton fx:id="customRadioButton"
+                                         text="%edit_difficulty-custom"
+                                         minWidth="64"/>
+
+                            <TextField fx:id="difficultyTextField"
+                                       text="0"
+                                       HBox.hgrow="SOMETIMES"
+                                       minWidth="24"/>
+                        </HBox>
+                    </HBox>
+                </HBox>
                 <!--The HBoxes containing the possible answers will be injected into this VBox-->
                 <ScrollPane fitToWidth="true">
                     <content>

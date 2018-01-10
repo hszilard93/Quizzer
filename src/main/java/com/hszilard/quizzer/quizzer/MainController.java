@@ -9,16 +9,18 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import main.java.com.hszilard.quizzer.common.LocationManager;
+import main.java.com.hszilard.quizzer.common.quiz_model.Difficulty;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
 import main.java.com.hszilard.quizzer.common.quiz_model.Quiz;
 import main.java.com.hszilard.quizzer.common.xml_converter.QuizLoader;
 import main.java.com.hszilard.quizzer.common.xml_converter.QuizLoaderException;
-import main.java.com.hszilard.quizzer.common.xml_converter.SimpleQuizLoader;
+import main.java.com.hszilard.quizzer.common.xml_converter.SimpleXmlQuizLoader;
 import main.java.com.hszilard.quizzer.quizzer.game_model.TeamsManager;
 import main.java.com.hszilard.quizzer.quizzer.game_model.TurnsManager;
 import main.java.com.hszilard.quizzer.quizzer.teams_model.Team;
@@ -105,10 +107,11 @@ public class MainController {
             }
         }
 
+        // At this point, if the file is null, the Open Dialog has probably been cancelled.
         if (file != null) {
             try {
                 Quiz quiz;
-                QuizLoader quizLoader = new SimpleQuizLoader();
+                QuizLoader quizLoader = new SimpleXmlQuizLoader();
                 quiz = quizLoader.loadQuiz(file.getPath());
                 postOpenQuiz(quiz);
                 quizPath = file.getPath();
@@ -120,10 +123,6 @@ public class MainController {
                 /* Show generic error message*/
                 CommonUtils.showError(resources.getString("error_open-message"), resources);
             }
-        }
-        else {
-            LOGGER.log(Level.SEVERE, "file is null.");
-            CommonUtils.showError(resources.getString("error_open-message"), resources);
         }
     }
 
@@ -182,11 +181,21 @@ public class MainController {
                     questionsGrid.heightProperty().divide(colSize)).subtract(8);
 
             for (int i = 0; i < questionsSize; i++) {
+                final Question question = quiz.getQuestions().get(i);
+
                 Button questionButton = new Button("" + (i + 1));
                 addStyle(questionButton, GRID_STYLESHEET, "question-button");
+                if (question.getDifficulty().equals(Difficulty.EASY))
+                    questionButton.getStyleClass().add("easy-question-button");
+                else if (question.getDifficulty().equals(Difficulty.DEFAULT))
+                    questionButton.getStyleClass().add("medium-question-button");
+                else if (question.getDifficulty().equals(Difficulty.HARD))
+                    questionButton.getStyleClass().add("hard-question-button");
+                else
+                    questionButton.getStyleClass().add("custom-question-button");
+
                 questionButton.prefWidthProperty().bind(buttonSize);
                 questionButton.prefHeightProperty().bind(buttonSize);
-                final Question question = quiz.getQuestions().get(i);
                 questionButton.setOnAction(e -> {
                     LOGGER.log(Level.INFO, "Question clicked.");
                     if (teamsManager.currentTeamProperty().get() !=
@@ -272,7 +281,7 @@ public class MainController {
             turnsLabel.setText(resources.getString("main_turns") + "-/-");
     }
 
-    private void showQuestionDialog(final Question question, final Button button) {
+    private void showQuestionDialog(final Question question, final Button valueButton) {
         LOGGER.log(Level.INFO, "Preparing to show question dialog.");
         try {
             FXMLLoader loader = new FXMLLoader(this.getClass()
@@ -285,15 +294,16 @@ public class MainController {
                 public void onCorrect() {
                     LOGGER.log(Level.INFO, "Answer was correct.");
                     if (teamsManager.currentTeamProperty() != null) {
-                        teamsManager.currentTeamProperty().get().addToScore(DEFAULT_SCORE);
-                        button.setText("" + DEFAULT_SCORE);
+                        int score = question.getDifficulty().getValue();
+                        teamsManager.currentTeamProperty().get().addToScore(score);
+                        valueButton.setText("" + score);
                     }
                     teamsManager.nextTeam();
                     turnsManager.nextQuestion();
 
-                    button.getStyleClass().clear();
-                    button.getStyleClass().add("coin-button");
-                    button.setDisable(true);
+                    valueButton.getStyleClass().clear();
+                    valueButton.getStyleClass().add("coin-button");
+                    valueButton.setDisable(true);
                 }
 
                 @Override
@@ -302,10 +312,10 @@ public class MainController {
                     teamsManager.nextTeam();
                     turnsManager.nextQuestion();
 
-                    button.getStyleClass().clear();
-                    button.setText("");
-                    button.getStyleClass().add("empty-button");
-                    button.setDisable(true);
+                    valueButton.getStyleClass().clear();
+                    valueButton.setText("");
+                    valueButton.getStyleClass().add("empty-button");
+                    valueButton.setDisable(true);
                 }
             });
             Stage questionStage = new Stage();

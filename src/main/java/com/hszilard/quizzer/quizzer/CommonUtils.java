@@ -35,7 +35,7 @@ class CommonUtils {
     /* /* Adds the app icon to the given stage. */
     static public void iconify(Stage stage) {
         LOGGER.log(INFO, "Iconifying stage " + (stage.getTitle() == null ? stage : stage.getTitle()));
-        stage.getIcons().add(new Image("/main/resources/com/hszilard/quizzer/quizzer/drawable/question.png"));
+        stage.getIcons().add(new Image("/main/resources/com/hszilard/quizzer/quizzer/drawable/icon.png"));
     }
 
     /* Confirmation alert boilerplate */
@@ -47,6 +47,7 @@ class CommonUtils {
         alert.setTitle(resources.getString("alert_confirmation_title"));
         alert.setHeaderText(resources.getString("alert_sure-header"));
         alert.setContentText(text);
+        iconify(alert.getDialogPane().getScene().getWindow());
 
         ((Button) (alert.getDialogPane().lookupButton(ButtonType.OK))).setText(resources.getString("alert_ok-button"));
         ((Button) (alert.getDialogPane().lookupButton(ButtonType.CANCEL)))

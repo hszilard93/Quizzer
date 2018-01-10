@@ -22,9 +22,9 @@ import java.util.logging.Logger;
  * @author Szilárd Hompoth at https://github.com/hszilard93
  * Responsible for exporting Quiz objects in .xml format.
  */
-public class SimpleQuizExporter implements QuizExporter {
+public class SimpleXmlQuizExporter implements QuizExporter {
 
-    private final Logger LOGGER = Logger.getLogger(SimpleQuizLoader.class.getName());
+    private final Logger LOGGER = Logger.getLogger(SimpleXmlQuizLoader.class.getName());
 
     /**
      * @param quiz Quiz object to be exported
@@ -83,6 +83,7 @@ public class SimpleQuizExporter implements QuizExporter {
 
     private Node getQuestionElement(Document doc, Question question) {
         Element questionElement = doc.createElement(Values.QUESTION_TAG);
+        questionElement.setAttribute(Values.DIFFICULTY_ATTR, Integer.toString(question.getDifficulty().getValue()));
         questionElement.appendChild(getTextElement(doc, Values.QUESTION_TEXT_TAG, question.getQuestionText()));
 
         for (Answer answer : question.getAnswers()) {

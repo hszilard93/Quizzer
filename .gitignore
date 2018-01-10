@@ -3,6 +3,7 @@
 !.idea/encodings.xml
 !.idea/modules.xml
 !.idea/resourceBundles.xml
+!.idea/vcs.xml
 *.iml
 out/production
 test-resources

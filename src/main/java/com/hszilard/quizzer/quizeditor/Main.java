@@ -26,7 +26,7 @@ public class Main extends Application {
                 LocaleManager.getPreferredLocale());
         /* Loads the root object of the mainScene and initializes its controller (MainController.java) */
         Parent root = FXMLLoader.load(getClass().getResource("/main/resources/com/hszilard/quizzer/quizeditor/mainSceneLayout.fxml"), stringsBundle);
-        Scene mainScene = new Scene(root );
+        Scene mainScene = new Scene(root);
         primaryStage.setScene(mainScene);
         primaryStage.setMinWidth(600);
         primaryStage.setMinHeight(400);
@@ -41,7 +41,7 @@ public class Main extends Application {
         launch(args);
     }
 
-    static Stage getPrimaryStage() {
+    static Stage getStage() {
         return primaryStage;
     }
 

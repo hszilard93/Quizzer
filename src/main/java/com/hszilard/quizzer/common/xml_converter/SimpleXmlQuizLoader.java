@@ -1,6 +1,7 @@
 package main.java.com.hszilard.quizzer.common.xml_converter;
 
 import main.java.com.hszilard.quizzer.common.quiz_model.Answer;
+import main.java.com.hszilard.quizzer.common.quiz_model.Difficulty;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
 import main.java.com.hszilard.quizzer.common.quiz_model.Quiz;
 import org.w3c.dom.Document;
@@ -23,9 +24,9 @@ import java.util.logging.Logger;
  * @author Szilárd Hompoth at https://github.com/hszilard93
  * This class is responsible for loading Quizez from XML files.
  */
-public class SimpleQuizLoader implements QuizLoader {
+public class SimpleXmlQuizLoader implements QuizLoader {
 
-    private static final Logger LOGGER = Logger.getLogger(SimpleQuizLoader.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SimpleXmlQuizLoader.class.getName());
 
     /**
      * @param xmlPath the filepath of the .xml file to be loaded
@@ -70,8 +71,18 @@ public class SimpleQuizLoader implements QuizLoader {
         NodeList questionNodeList = quizElement.getElementsByTagName(Values.QUESTION_TAG);
         for (int i = 0; i < questionNodeList.getLength(); i++) {
             Element questionElement = (Element) questionNodeList.item(i);
+            int difficultyValue;
+            try {
+                difficultyValue = Integer.parseInt(questionElement.getAttribute(Values.DIFFICULTY_ATTR));
+            }
+            catch (NumberFormatException e) {
+                LOGGER.log(Level.INFO, "Nonexistent or invalid difficulty for question nr. " + i);
+                difficultyValue = Difficulty.DEFAULT.getValue();
+            }
+
             String questionText = questionElement.getElementsByTagName(Values.QUESTION_TEXT_TAG).item(0).getTextContent();
             Question question = new Question(questionText);
+            question.setDifficulty(new Difficulty(difficultyValue));
             // loading all answers belonging to this question
             question.getAnswers().addAll(loadAnswers(questionElement));
             questionsList.add(question);

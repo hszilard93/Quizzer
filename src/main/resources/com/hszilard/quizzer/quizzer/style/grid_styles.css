@@ -13,8 +13,9 @@
     -fx-font-weight: 900;
 }
 
+
+
 .question-button {
-    -fx-background-image: url("/main/resources/com/hszilard/quizzer/quizzer/drawable/safe-small.png");
     -fx-background-size: 100%;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
@@ -22,15 +23,31 @@
     -fx-smooth: true;
     -fx-min-width: 20px;
     -fx-alignment: center;
-    -fx-padding: 4 4 4 4;
+    -fx-padding: 4 12 4 12;
     -fx-text-alignment: left;
     -fx-text-fill: black;
     -fx-font-weight: 900;
     -fx-font-size: 18px;
 }
 
+.easy-question-button {
+    -fx-background-image: url("/main/resources/com/hszilard/quizzer/quizzer/drawable/safe-easy_256.png");
+}
+
+.medium-question-button {
+    -fx-background-image: url("/main/resources/com/hszilard/quizzer/quizzer/drawable/safe-medium_256.png");
+}
+
+.hard-question-button {
+    -fx-background-image: url("/main/resources/com/hszilard/quizzer/quizzer/drawable/safe-hard_256.png");
+}
+
+.custom-question-button {
+    -fx-background-image: url("/main/resources/com/hszilard/quizzer/quizzer/drawable/safe-custom_256.png");
+}
+
 .coin-button {
-    -fx-background-image: url("/main/resources/com/hszilard/quizzer/quizzer/drawable/coins-26084_640.png");
+    -fx-background-image: url("/main/resources/com/hszilard/quizzer/quizzer/drawable/coins_256.png");
     -fx-background-size: 70%;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
@@ -46,8 +63,8 @@
 }
 
 .empty-button {
-    -fx-background-image: url("/main/resources/com/hszilard/quizzer/quizzer/drawable/empty_b.png");
-    -fx-background-size: 120%;
+    -fx-background-image: url("/main/resources/com/hszilard/quizzer/quizzer/drawable/empty_256.png");
+    -fx-background-size: 100%;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
     -fx-background-color: transparent;

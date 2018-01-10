@@ -1,11 +1,9 @@
 package main.java.com.hszilard.quizzer.common.quiz_model;
 
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.apache.commons.lang3.builder.Diff;
 
 import java.util.Objects;
 
@@ -15,13 +13,12 @@ import java.util.Objects;
  * Its properties are the question's text and a list of Answer objects.
  */
 public class Question {
-
     private final StringProperty questionText;
     private final ListProperty<Answer> answers;
+    private final ObjectProperty<Difficulty> difficultyObjectProperty;
 
     /**
-     * Default constructor for Question, creates a Question with an empty text and
-     * initializes the list of possible answers.
+     * Default constructor for Question, creates a Question with an empty text
      */
     public Question () {
         this("");
@@ -34,6 +31,8 @@ public class Question {
     public Question(String questionText) {
         this.questionText = new SimpleStringProperty(questionText);
         this.answers = new SimpleListProperty<>(FXCollections.synchronizedObservableList(FXCollections.observableArrayList()));
+        Difficulty difficulty = Difficulty.DEFAULT;
+        difficultyObjectProperty = new SimpleObjectProperty<>(difficulty);
     }
 
     public String getQuestionText() {
@@ -54,6 +53,18 @@ public class Question {
 
     public ListProperty<Answer> answersProperty() {
         return answers;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficultyObjectProperty.get();
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        difficultyObjectProperty.set(difficulty);
+    }
+
+    public ObjectProperty<Difficulty> difficultyObjectProperty() {
+        return difficultyObjectProperty;
     }
 
     /* This convenience method assumes that this question has one and only one correct answer */

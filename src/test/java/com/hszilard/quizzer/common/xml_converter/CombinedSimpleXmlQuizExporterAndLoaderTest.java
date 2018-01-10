@@ -2,6 +2,7 @@ package test.java.com.hszilard.quizzer.common.xml_converter;
 
 import com.sun.istack.internal.logging.Logger;
 import main.java.com.hszilard.quizzer.common.quiz_model.Answer;
+import main.java.com.hszilard.quizzer.common.quiz_model.Difficulty;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
 import main.java.com.hszilard.quizzer.common.quiz_model.Quiz;
 import main.java.com.hszilard.quizzer.common.xml_converter.*;
@@ -23,8 +24,8 @@ import static org.hamcrest.Matchers.*;
 /**
  * @author Szilárd Hompoth at https://github.com/hszilard93
  */
-@DisplayName("Combined testing of the SimpleQuizExporter and SimpleQuizLoader classes' functionality")
-public class CombinedSimpleQuizExporterAndLoaderTest {
+@DisplayName("Combined testing of the SimpleXmlQuizExporter and SimpleXmlQuizLoader classes' functionality")
+public class CombinedSimpleXmlQuizExporterAndLoaderTest {
     private static final String TEST_XML_PATH = "test-resources/test-quiz.xml";
 
     private QuizExporter quizExporterInstance;
@@ -37,8 +38,8 @@ public class CombinedSimpleQuizExporterAndLoaderTest {
 
     @BeforeEach
     void setupEach() {
-        quizExporterInstance = new SimpleQuizExporter();
-        quizLoaderInstance = new SimpleQuizLoader();
+        quizExporterInstance = new SimpleXmlQuizExporter();
+        quizLoaderInstance = new SimpleXmlQuizLoader();
     }
 
     @Test
@@ -60,6 +61,7 @@ public class CombinedSimpleQuizExporterAndLoaderTest {
         Answer answer2ToQuestion1 = new Answer("Some answer 2", false);
         Answer answer3ToQuestion1 = new Answer("Some answer 3", false);
         question1.answersProperty().addAll(answer1ToQuestion1, answer2ToQuestion1, answer3ToQuestion1);
+        question1.setDifficulty(Difficulty.EASY);
 
         Question question2 = new Question("Question2 some other text");
         Answer answer1ToQuestion2 = new Answer("Some answer 4", false);
@@ -67,6 +69,7 @@ public class CombinedSimpleQuizExporterAndLoaderTest {
         Answer answer3ToQuestion2 = new Answer("Some answer 6", true);
         Answer answer4ToQuestion2 = new Answer("Some answer 7", false);
         question2.answersProperty().addAll(answer1ToQuestion2, answer2ToQuestion2, answer3ToQuestion2, answer4ToQuestion2);
+        question2.setDifficulty(new Difficulty(5));             // custom difficulty
 
         originalQuiz.getQuestions().addAll(question1, question2);
 
@@ -97,6 +100,8 @@ public class CombinedSimpleQuizExporterAndLoaderTest {
         for (int i = 0; i < numberOfQuestions; i++) {
             String questionText = randomStringGenerator.generate(random.nextInt(256));
             Question question = new Question(questionText);
+            Difficulty difficulty = new Difficulty(random.nextInt(Integer.MAX_VALUE) + 1);
+            question.setDifficulty(difficulty);
 
             int numberOfAnswers = random.nextInt(64);
             /* Make answers with random texts and 'correctness' */

@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  * The controller belonging to the mainLayout.fxml layout file, effective controller or the application.
  */
 public class MainController {
-    private static final Logger LOGGER = Logger.getLogger(SimpleQuizLoader.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SimpleXmlQuizLoader.class.getName());
 
     /*
      * Fields with the @FXML annotation are automatically injected.
@@ -53,8 +53,7 @@ public class MainController {
 
     private Quiz quiz;                          // main Quiz object of the application
     private String quizPath;
-    private boolean justSaved = false;
-            // true if the quiz object hasn't been modified since created, opened or saved
+    private boolean justSaved = false;          // true if the quiz object hasn't been modified since created, opened or saved
 
     /* This Callback is used both when clicking on the Edit button and when double clicking on a ListView item (passed to the cell) */
     private AbstractQuestionEditController.Callback editCallback = questionToSave -> {
@@ -83,7 +82,6 @@ public class MainController {
         configureStage();
         configureMenuItems();
     }
-
     @FXML
     private void onNewClicked() {
         LOGGER.log(Level.FINE, "New menu item clicked.");
@@ -104,19 +102,18 @@ public class MainController {
     private void onOpenClicked() {
         LOGGER.log(Level.FINE, "Open menu item clicked.");
         if (!justSaved) {
-            Optional<ButtonType> result = showChangeAlert(resources.getString("alert_sure-reset-text"));
-            if (result.isPresent() && result.get() == ButtonType.CANCEL) {
+            Optional<ButtonType> result = showChangeAlert(resources.getString("alert_sure-text"));
+            if (result.isPresent() && result.get() == ButtonType.CANCEL)
                 return;
-            }
         }
 
         FileChooser fileChooser = new FileChooser();
         configureFileChooser(fileChooser, resources.getString("chooser_open"));
 
-        File file = fileChooser.showOpenDialog(Main.getPrimaryStage());
+        File file = fileChooser.showOpenDialog(Main.getStage());
         if (file != null) {
             try {
-                QuizLoader quizLoader = new SimpleQuizLoader();
+                QuizLoader quizLoader = new SimpleXmlQuizLoader();
                 quiz = quizLoader.loadQuiz(file.getPath());
                 quizPath = file.getPath();
                 LocationManager.setLastPath(this.getClass(), quizPath.substring(0, quizPath.lastIndexOf(File.separator)));
@@ -137,7 +134,7 @@ public class MainController {
         /* If we know the filepath, just save */
         if (quizPath != null) {
             try {
-                QuizExporter exporter = new SimpleQuizExporter();
+                QuizExporter exporter = new SimpleXmlQuizExporter();
                 exporter.exportQuiz(quiz, quizPath);
             }
             catch (QuizExporterException e) {
@@ -157,10 +154,10 @@ public class MainController {
         LOGGER.log(Level.FINE, "Save As quiz menu item clicked clicked or method invoked.");
         FileChooser fileChooser = new FileChooser();
         configureFileChooser(fileChooser, resources.getString("file_save"));
-        File file = fileChooser.showSaveDialog(Main.getPrimaryStage());
+        File file = fileChooser.showSaveDialog(Main.getStage());
         if (file != null) {
             try {
-                QuizExporter exporter = new SimpleQuizExporter();
+                QuizExporter exporter = new SimpleXmlQuizExporter();
                 exporter.exportQuiz(quiz, file.getPath());
             }
             catch (Exception e) {
@@ -177,12 +174,12 @@ public class MainController {
     private void onExitButtonClicked() {
         LOGGER.log(Level.FINE, "Exit menu item clicked.");
         if (!justSaved) {
-            Optional<ButtonType> result = showChangeAlert(resources.getString("alert_sure-reset-text"));
+            Optional<ButtonType> result = showChangeAlert(resources.getString("alert_sure-text"));
             if (result.isPresent() && result.get() == ButtonType.CANCEL) {
                 return;
             }
         }
-        Main.getPrimaryStage().close();
+        Main.getStage().close();
     }
 
     @FXML
@@ -262,7 +259,7 @@ public class MainController {
         }
 
         LOGGER.log(Level.INFO, "Attempting to restart application because of language change.");
-        Main.getPrimaryStage().close();
+        Main.getStage().close();
         /*
          * We must restart the application for the language change to take place.
          * The preferred locale is already change, so if the user cancels here, he will still get the
@@ -281,7 +278,7 @@ public class MainController {
     private void configureQuestionsListView() {
         /* Setting up custom cells, passing a callback and the language resources */
         listView.setCellFactory(listView -> new QuestionListCell(editCallback, resources));
-        /* Making use of the cool JavaFX bindings to bind the ListView elements to a list of questions */
+        /* Making use of the JavaFX bindings to bind the ListView elements to a list of questions */
         listView.itemsProperty().bindBidirectional(quiz.questionsProperty());
     }
 
@@ -326,8 +323,13 @@ public class MainController {
     }
 
     private void configureStage() {
-        Main.getPrimaryStage().titleProperty()
+        Main.getStage().titleProperty()
                 .bind(Bindings.concat(resources.getString("main_window-title"), quiz.titleProperty()));
+        /* Make the window X button behave as the Exit menu item */
+        Main.getStage().setOnCloseRequest(e -> {
+            onExitButtonClicked();
+            e.consume();                // stop the event from propagating
+        });
     }
 
     private void configureMenuItems() {

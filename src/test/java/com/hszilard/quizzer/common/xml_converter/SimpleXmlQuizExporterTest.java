@@ -17,25 +17,25 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * @author Szilárd Hompoth at https://github.com/hszilard93
  */
-@DisplayName("Testing the SimpleQuizExporter class for expected exceptions")
-public class SimpleQuizExporterTest  {
+@DisplayName("Testing the SimpleXmlQuizExporter class for expected exceptions")
+public class SimpleXmlQuizExporterTest {
     private static final String TEST_XML_PATH = "test-resources/test-quiz.xml";
     private QuizExporter quizExporterInstance;
 
     @BeforeEach
     void setup() {
-        quizExporterInstance = new SimpleQuizExporter();
+        quizExporterInstance = new SimpleXmlQuizExporter();
     }
 
     @Test
-    void savingWithNullQuizThrowsException() {
+    void savingNullQuizThrowsException() {
         Executable codeToTest = () -> quizExporterInstance.exportQuiz(null, TEST_XML_PATH);
 
         assertThrows(QuizExporterException.class, codeToTest);
     }
 
     @Test
-    void savingWithNullPathThrowsException() {
+    void savingToNullPathThrowsException() {
         Executable codeToTest = () -> quizExporterInstance.exportQuiz(new Quiz(), null);
 
         assertThrows(QuizExporterException.class, codeToTest);

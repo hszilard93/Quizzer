@@ -1,10 +1,15 @@
 .question-label {
-    -fx-font-size: 14px;
-    -fx-font-weight: 800;
+    -fx-font-size: 16;
+    -fx-font-weight: 900;
 }
 
 .answer-hbox {
     -fx-background-color: lightblue;
+}
+
+.difficultyLabel {
+    -fx-font-size: 14;
+    -fx-font-weight: 700;
 }
 
 .button {

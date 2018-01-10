@@ -4,6 +4,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.layout.AnchorPane?>
 <HBox fx:id="cellBox"
       xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
@@ -11,16 +14,23 @@
       stylesheets="/main/resources/com/hszilard/quizzer/quizeditor/style/question_list_cell_styles.css"
       styleClass="cellBox">
 
-    <children>
-        <VBox>
-            <children>
-                <Label fx:id="title"
-                       wrapText="true"
-                       styleClass="title"/>
-                <GridPane fx:id="answersGrid"
-                          styleClass="answers-grid"/>
-            </children>
-        </VBox>
-    </children>
+    <VBox>
+        <AnchorPane>
+            <Label fx:id="titleLabel"
+                   AnchorPane.topAnchor="0"
+                   AnchorPane.rightAnchor="10"
+                   AnchorPane.bottomAnchor="0"
+                   AnchorPane.leftAnchor="0"
+                   wrapText="true"
+                   styleClass="title"/>
+            <Circle fx:id="difficultyCircle"
+                    radius="6"
+                    AnchorPane.topAnchor="2"
+                    AnchorPane.rightAnchor="0"
+                    AnchorPane.bottomAnchor="2"/>
+        </AnchorPane>
+        <GridPane fx:id="answersGrid"
+                  styleClass="answers-grid"/>
+    </VBox>
 
 </HBox>

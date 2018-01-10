@@ -8,6 +8,22 @@
     -fx-text-fill: #444444;
 }
 
+.easy-circle {
+    -fx-fill: limegreen;
+}
+
+.medium-circle {
+    -fx-fill: yellow;
+}
+
+.hard-circle {
+    -fx-fill: red;
+}
+
+.custom-circle {
+    -fx-fill: deeppink;
+}
+
 .answers-grid {
     -fx-padding: 0 0 1 0;
 }
