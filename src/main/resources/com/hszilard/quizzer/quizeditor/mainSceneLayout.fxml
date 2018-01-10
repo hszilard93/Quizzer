@@ -89,7 +89,17 @@
                             </graphic>
                         </MenuItem>
                     </Menu>
-                    <Menu text="%help_menu"/>
+                    <Menu text="%help_menu">
+                        <MenuItem fx:id="aboutMenuItem"
+                                  onAction="#onAboutClicked"
+                                  text="%help_about">
+                            <graphic>
+                                <ImageView fitHeight="16" pickOnBounds="true" preserveRatio="true">
+                                    <Image url="/main/resources/com/hszilard/quizzer/quizzer/drawable/information.png"/>
+                                </ImageView>
+                            </graphic>
+                        </MenuItem>
+                    </Menu>
                 </MenuBar>
                 <!--Quiz titleLabel and number of questions-->
                 <AnchorPane prefWidth="${centerVBox.width}"

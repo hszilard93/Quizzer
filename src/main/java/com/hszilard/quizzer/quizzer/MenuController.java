@@ -10,6 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
+import main.java.com.hszilard.quizzer.common.CommonUtils;
 import main.java.com.hszilard.quizzer.common.LocaleManager;
 
 import java.util.Locale;
@@ -51,7 +52,7 @@ public class MenuController {
         LOGGER.log(Level.INFO, "Reset menu item clicked.");
 
         String key = resources.getString("alert_sure-reset-text");
-        Optional<ButtonType> result = CommonUtils.showChangeAlert(key, resources);
+        Optional<ButtonType> result = CommonUtils.showChangeAlert(key);
         if (result.isPresent() && result.get() != ButtonType.CANCEL) {
             mainController.restart();
         }
@@ -61,7 +62,7 @@ public class MenuController {
     private void onExitButtonClicked(ActionEvent actionEvent) {
         LOGGER.log(Level.INFO, "Exit menu item clicked.");
 
-        Optional<ButtonType> result = CommonUtils.showChangeAlert(resources.getString("alert_sure-exit-text"), resources);
+        Optional<ButtonType> result = CommonUtils.showChangeAlert(resources.getString("alert_sure-exit-text"));
         if (result.isPresent() && result.get() != ButtonType.CANCEL) {
             ((Stage) menuBar.getScene().getWindow()).close();
         }
@@ -70,7 +71,7 @@ public class MenuController {
     @FXML
     private void onAboutClicked(ActionEvent actionEvent) {
         LOGGER.log(Level.INFO, "About menu item clicked.");
-        CommonUtils.showPopup(null, resources.getString("about_text"), resources);
+        CommonUtils.showPopup(null, resources.getString("about_text"));
     }
 
     @FXML
@@ -102,7 +103,7 @@ public class MenuController {
         Optional<ButtonType> returnType = CommonUtils.showChangeAlert(ResourceBundle.getBundle("main.resources.com.hszilard.quizzer.quizzer.strings",
                 locale).getString("alert_language-change")
                 + "\n"
-                + resources.getString("alert_language-change"), resources);
+                + resources.getString("alert_language-change"));
         if (!returnType.isPresent() || returnType.get() == ButtonType.CANCEL) {
             return;
         }

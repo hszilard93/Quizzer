@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import main.java.com.hszilard.quizzer.common.CommonUtils;
 import main.java.com.hszilard.quizzer.quizzer.game_model.TeamsManager;
 import main.java.com.hszilard.quizzer.quizzer.teams_model.Team;
 

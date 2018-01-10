@@ -11,8 +11,8 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static main.java.com.hszilard.quizzer.quizzer.CommonUtils.iconify;
-import static main.java.com.hszilard.quizzer.quizzer.CommonUtils.showPopup;
+import static main.java.com.hszilard.quizzer.common.CommonUtils.iconify;
+import static main.java.com.hszilard.quizzer.common.CommonUtils.showPopup;
 
 /**
  * @author Szilárd Hompoth at https://github.com/hszilard93
@@ -58,8 +58,7 @@ class TeamDialogFactory {
 
         applyButton.setOnAction(action -> {
             if (nameField.getText().isEmpty())
-                showPopup(resources.getString("inform_header-uh-oh"), resources.getString("inform_name_empty"),
-                        resources);
+                showPopup(resources.getString("inform_header-uh-oh"), resources.getString("inform_name_empty"));
             else {
                 ((Stage) window).close();
                 teamDialog.setResult(new Team(nameField.getText(), 0));

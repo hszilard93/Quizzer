@@ -95,7 +95,7 @@ abstract class AbstractQuestionEditController {
         stage.setMinWidth(500);
         stage.setMinHeight(350);
         stage.getIcons().add(new Image(
-                "/main/resources/com/hszilard/quizzer/quizeditor/drawable/question-class-note-symbol_color.png"
+                "/main/resources/com/hszilard/quizzer/quizeditor/drawable/icon.png"
         ));
         /* Making sure the 'owner' stage cannot be interacted with. */
         stage.initOwner(Main.getStage());

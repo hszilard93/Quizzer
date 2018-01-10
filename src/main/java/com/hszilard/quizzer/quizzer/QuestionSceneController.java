@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static main.java.com.hszilard.quizzer.quizzer.CommonUtils.addStyle;
+import static main.java.com.hszilard.quizzer.common.CommonUtils.addStyle;
 
 /**
  * @author Szilárd Hompoth at https://github.com/hszilard93

@@ -9,11 +9,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import main.java.com.hszilard.quizzer.common.CommonUtils;
 import main.java.com.hszilard.quizzer.common.LocationManager;
 import main.java.com.hszilard.quizzer.common.quiz_model.Difficulty;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
@@ -36,7 +36,7 @@ import java.util.logging.Logger;
 import static javafx.beans.binding.Bindings.equal;
 import static javafx.beans.binding.Bindings.when;
 import static javafx.stage.Modality.WINDOW_MODAL;
-import static main.java.com.hszilard.quizzer.quizzer.CommonUtils.*;
+import static main.java.com.hszilard.quizzer.common.CommonUtils.*;
 import static main.java.com.hszilard.quizzer.quizzer.QuestionSceneController.Callback;
 
 /**
@@ -103,7 +103,7 @@ public class MainController {
             /* Now something very bad must have happened */
             catch (Exception e2) {
                 LOGGER.log(Level.SEVERE, "Could not open location! This should not happen!");
-                CommonUtils.showError(resources.getString("error_generic-message"), resources);
+                CommonUtils.showError(resources.getString("error_generic-message"));
             }
         }
 
@@ -121,7 +121,7 @@ public class MainController {
             catch (QuizLoaderException e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
                 /* Show generic error message*/
-                CommonUtils.showError(resources.getString("error_open-message"), resources);
+                CommonUtils.showError(resources.getString("error_open-message"));
             }
         }
     }
@@ -204,7 +204,7 @@ public class MainController {
                     }
                     else {
                         showPopup(resources.getString("inform_header-uh-oh"),
-                                resources.getString("inform_teams-first"), resources);
+                                resources.getString("inform_teams-first"));
                     }
                 });
 
@@ -332,7 +332,7 @@ public class MainController {
         }
         catch (IOException e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
-            CommonUtils.showError(resources.getString("error_generic-message"), resources);
+            CommonUtils.showError(resources.getString("error_generic-message"));
         }
     }
 

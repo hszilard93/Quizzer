@@ -1,4 +1,4 @@
-package main.java.com.hszilard.quizzer.quizzer;
+package main.java.com.hszilard.quizzer.common;
 
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
@@ -17,31 +17,53 @@ import static java.util.logging.Level.INFO;
 
 /**
  * @author Szilárd Hompoth at https://github.com/hszilard93
+ * Common methods for displaying popups and doing other repetitive tasks.
  */
-class CommonUtils {
+public class CommonUtils {
     private static final Logger LOGGER = Logger.getLogger(CommonUtils.class.getName());
+    private static final String QUIZZER_ICON_PATH = "/main/resources/com/hszilard/quizzer/quizzer/drawable/icon.png";
+    private static final String EDITOR_ICON_PATH = "/main/resources/com/hszilard/quizzer/quizeditor/drawable/icon.png";
+
+    private static String iconPath;
+    private static ResourceBundle resources;
+
+    /**
+     * This method should be called at the start of each application. It helps configure the app-specific resources (e.g. the app icons)
+     * @param pack The Quizzer or the QuizEditor package
+     * @param resources The active string resources
+     */
+    public static void configure(Package pack, ResourceBundle resources) {
+        CommonUtils.resources = resources;
+
+        if (pack.getName().equals("main.java.com.hszilard.quizzer.quizzer"))
+            iconPath = QUIZZER_ICON_PATH;
+        else if (pack.getName().equals("main.java.com.hszilard.quizzer.quizeditor"))
+            iconPath = EDITOR_ICON_PATH;
+        else
+            LOGGER.log(Level.SEVERE, "Invalid package!");
+    }
 
     /* Adds given style to a parent object. */
-    static public void addStyle(Parent node, String stylesheet, String styleClass) {
+    public static void addStyle(Parent node, String stylesheet, String styleClass) {
         node.getStylesheets().add(stylesheet);
         node.getStyleClass().add(styleClass);
     }
 
     /* Adds the app icon to the given window. */
-    static public void iconify(Window window) {
+    public static void iconify(Window window) {
         iconify((Stage) window);
     }
 
     /* /* Adds the app icon to the given stage. */
-    static public void iconify(Stage stage) {
-        LOGGER.log(INFO, "Iconifying stage " + (stage.getTitle() == null ? stage : stage.getTitle()));
-        stage.getIcons().add(new Image("/main/resources/com/hszilard/quizzer/quizzer/drawable/icon.png"));
+    public static void iconify(Stage stage) {
+        LOGGER.log(Level.FINE, "Iconifying stage " + (stage.getTitle() == null ? stage : stage.getTitle()));
+        if (iconPath != null)
+            stage.getIcons().add(new Image(iconPath));
     }
 
     /* Confirmation alert boilerplate */
-    @SuppressWarnings("Duplicates")
-    static Optional<ButtonType> showChangeAlert(String text, ResourceBundle resources) {
-        LOGGER.log(Level.INFO, "Attempting to show change alert.");
+    public static Optional<ButtonType> showChangeAlert(String text) {
+        LOGGER.log(Level.FINE, "Attempting to show change alert.");
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(resources.getString("alert_confirmation_title"));
@@ -57,8 +79,8 @@ class CommonUtils {
     }
 
     /* Information alert boilerplate */
-    static void showPopup(String header, String content, ResourceBundle resources) {
-        LOGGER.log(Level.INFO, "Attempting to show popup. Header: " + header);
+    public static void showPopup(String header, String content) {
+        LOGGER.log(Level.FINE, "Attempting to show popup. Header: " + header);
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(resources.getString("inform_title"));
@@ -69,8 +91,8 @@ class CommonUtils {
     }
 
     /* Error alert boilerplate */
-    static void showError(String text, ResourceBundle resources) {
-        LOGGER.log(Level.INFO, "Attempting to show error alert.");
+    public static void showError(String text) {
+        LOGGER.log(Level.FINE, "Attempting to show error alert.");
 
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(resources.getString("error_title"));

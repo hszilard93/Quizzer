@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import main.java.com.hszilard.quizzer.common.CommonUtils;
 import main.java.com.hszilard.quizzer.common.LocaleManager;
 
 import java.util.ResourceBundle;
@@ -24,13 +25,16 @@ public class Main extends Application {
         /* This bundle contains all the internationalized strings. */
         ResourceBundle stringsBundle = ResourceBundle.getBundle("main.resources.com.hszilard.quizzer.quizeditor.strings",
                 LocaleManager.getPreferredLocale());
+
+        CommonUtils.configure(Main.class.getPackage(), stringsBundle);
+
         /* Loads the root object of the mainScene and initializes its controller (MainController.java) */
         Parent root = FXMLLoader.load(getClass().getResource("/main/resources/com/hszilard/quizzer/quizeditor/mainSceneLayout.fxml"), stringsBundle);
         Scene mainScene = new Scene(root);
         primaryStage.setScene(mainScene);
         primaryStage.setMinWidth(600);
         primaryStage.setMinHeight(400);
-        primaryStage.getIcons().add(new Image("/main/resources/com/hszilard/quizzer/quizeditor/drawable/question-class-note-symbol_color.png"));
+        primaryStage.getIcons().add(new Image("/main/resources/com/hszilard/quizzer/quizeditor/drawable/icon.png"));
         primaryStage.show();
     }
 

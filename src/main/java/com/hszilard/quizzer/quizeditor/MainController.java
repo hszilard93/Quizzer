@@ -1,7 +1,9 @@
 package main.java.com.hszilard.quizzer.quizeditor;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.stage.Stage;
+import main.java.com.hszilard.quizzer.common.CommonUtils;
 import main.java.com.hszilard.quizzer.common.LocaleManager;
 import main.java.com.hszilard.quizzer.common.LocationManager;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
@@ -43,6 +45,7 @@ public class MainController {
     @FXML MenuItem fileExitMenuItem;
     @FXML MenuItem languageEnglishMenuItem;
     @FXML MenuItem languageHungarianMenuItem;
+    @FXML MenuItem aboutMenuItem;
 
     @FXML Button addButton;
     @FXML Button deleteButton;
@@ -86,7 +89,7 @@ public class MainController {
     private void onNewClicked() {
         LOGGER.log(Level.FINE, "New menu item clicked.");
         if (!justSaved) {
-            Optional<ButtonType> result = showChangeAlert(resources.getString("alert_sure-reset-text"));
+            Optional<ButtonType> result = CommonUtils.showChangeAlert(resources.getString("alert_sure-reset-text"));
             /* Don't do anything if the cancel option was chosen */
             if (result.isPresent() && result.get() == ButtonType.CANCEL) {
                 return;
@@ -102,7 +105,7 @@ public class MainController {
     private void onOpenClicked() {
         LOGGER.log(Level.FINE, "Open menu item clicked.");
         if (!justSaved) {
-            Optional<ButtonType> result = showChangeAlert(resources.getString("alert_sure-text"));
+            Optional<ButtonType> result = CommonUtils.showChangeAlert(resources.getString("alert_sure-text"));
             if (result.isPresent() && result.get() == ButtonType.CANCEL)
                 return;
         }
@@ -123,7 +126,7 @@ public class MainController {
             catch (QuizLoaderException e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
                 /* Show generic error message*/
-                showErrorAlert(resources.getString("error_not-legal"));
+                CommonUtils.showError(resources.getString("error_not-legal"));
             }
         }
     }
@@ -139,7 +142,7 @@ public class MainController {
             }
             catch (QuizExporterException e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
-                showErrorAlert(resources.getString("error_no-save"));
+                CommonUtils.showError(resources.getString("error_no-save"));
             }
             justSaved = true;
         }
@@ -162,7 +165,7 @@ public class MainController {
             }
             catch (Exception e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
-                showErrorAlert(resources.getString("error_no-save"));
+                CommonUtils.showError(resources.getString("error_no-save"));
             }
             quizPath = file.getPath();
             LocationManager.setLastPath(this.getClass(), quizPath.substring(0, quizPath.lastIndexOf(File.separator)));
@@ -174,7 +177,7 @@ public class MainController {
     private void onExitButtonClicked() {
         LOGGER.log(Level.FINE, "Exit menu item clicked.");
         if (!justSaved) {
-            Optional<ButtonType> result = showChangeAlert(resources.getString("alert_sure-text"));
+            Optional<ButtonType> result = CommonUtils.showChangeAlert((resources.getString("alert_sure-text")));
             if (result.isPresent() && result.get() == ButtonType.CANCEL) {
                 return;
             }
@@ -194,6 +197,12 @@ public class MainController {
         changeLanguage(new Locale("hu"));
     }
 
+    @FXML
+    private void onAboutClicked(ActionEvent actionEvent) {
+        LOGGER.log(Level.INFO, "About menu item clicked.");
+        CommonUtils.showPopup(null, resources.getString("about_text"));
+    }
+
     /* Add a new question to the quiz */
     @FXML
     private void onAddButtonClicked() {
@@ -208,7 +217,7 @@ public class MainController {
         }
         catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
-            showErrorAlert(resources.getString("error_unexpected-error"));
+            CommonUtils.showError(resources.getString("error_unexpected-error"));
         }
     }
 
@@ -236,7 +245,7 @@ public class MainController {
         }
         catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
-            showErrorAlert(resources.getString("error_unexpected-error"));
+            CommonUtils.showError(resources.getString("error_unexpected-error"));
         }
     }
 
@@ -250,7 +259,7 @@ public class MainController {
 
         /* Show confirmation dialog */
         Optional<ButtonType> returnType =
-                showChangeAlert(ResourceBundle.getBundle("main.resources.com.hszilard.quizzer.quizeditor.strings",
+                CommonUtils.showChangeAlert(ResourceBundle.getBundle("main.resources.com.hszilard.quizzer.quizeditor.strings",
                         locale).getString("alert_language-change")
                                 + "\n"
                                 + resources.getString("alert_language-change"));
@@ -338,24 +347,6 @@ public class MainController {
         fileOpenMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
         fileSaveMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
         fileExitMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_DOWN));
-    }
-
-    /* Confirmation dialog boilerplate in one place */
-    private Optional<ButtonType> showChangeAlert(String text) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(resources.getString("alert_confirmation_title"));
-        alert.setHeaderText(resources.getString("alert_sure-header"));
-        alert.setContentText(text);
-        return alert.showAndWait();
-    }
-
-    /* Error dialog boilerplate in one place */
-    private void showErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(resources.getString("error_title"));
-        alert.setHeaderText(resources.getString("error_uh-oh"));
-        alert.setContentText(message);
-        alert.show();
     }
 
 }
