@@ -25,7 +25,6 @@ import java.util.logging.Logger;
  * This class is responsible for loading Quizez from XML files.
  */
 public class SimpleXmlQuizLoader implements QuizLoader {
-
     private static final Logger LOGGER = Logger.getLogger(SimpleXmlQuizLoader.class.getName());
 
     /**
@@ -34,7 +33,7 @@ public class SimpleXmlQuizLoader implements QuizLoader {
      * @throws QuizLoaderException
      */
     public Quiz loadQuiz(String xmlPath) throws QuizLoaderException {
-        LOGGER.log(Level.INFO, "loadQuiz invoked.");
+        LOGGER.log(Level.FINE, "loadQuiz invoked.");
 
         Quiz quiz;
         try {

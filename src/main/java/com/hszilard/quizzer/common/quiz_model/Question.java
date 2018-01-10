@@ -3,7 +3,6 @@ package main.java.com.hszilard.quizzer.common.quiz_model;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.apache.commons.lang3.builder.Diff;
 
 import java.util.Objects;
 

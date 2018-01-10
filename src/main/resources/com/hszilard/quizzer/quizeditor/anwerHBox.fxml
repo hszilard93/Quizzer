@@ -16,19 +16,16 @@
         <Insets top="8" bottom="8" left="8"/>
     </padding>
 
-    <children>
-        <Label fx:id="answerLabel" styleClass="answer-label"/>
+    <Label fx:id="answerLabel" styleClass="answer-label"/>
 
-        <TextField fx:id="answerTextField"
-                   maxWidth="Infinity"
-                   HBox.hgrow="ALWAYS"/>
+    <TextField fx:id="answerTextField"
+               maxWidth="Infinity"
+               HBox.hgrow="ALWAYS"/>
 
-        <CheckBox fx:id="correctCheckBox">
-            <tooltip>
-                <Tooltip text="%edit_correct-tooltip"
-                         styleClass="tooltip"/>
-            </tooltip>
-        </CheckBox>
-    </children>
-
+    <CheckBox fx:id="correctCheckBox">
+        <tooltip>
+            <Tooltip text="%edit_correct-tooltip"
+                     styleClass="tooltip"/>
+        </tooltip>
+    </CheckBox>
 </HBox>

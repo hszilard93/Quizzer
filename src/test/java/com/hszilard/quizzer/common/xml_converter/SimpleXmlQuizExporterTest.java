@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * @author Szilárd Hompoth at https://github.com/hszilard93
  */
 @DisplayName("Testing the SimpleXmlQuizExporter class for expected exceptions")
-public class SimpleXmlQuizExporterTest {
+class SimpleXmlQuizExporterTest {
     private static final String TEST_XML_PATH = "test-resources/test-quiz.xml";
     private QuizExporter quizExporterInstance;
 

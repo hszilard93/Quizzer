@@ -5,14 +5,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import main.java.com.hszilard.quizzer.common.CommonUtils;
 
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static java.util.ResourceBundle.getBundle;
-import static java.util.logging.Level.INFO;
 import static main.java.com.hszilard.quizzer.common.LocaleManager.getPreferredLocale;
-import static main.java.com.hszilard.quizzer.quizzer.CommonUtils.iconify;
+import static main.java.com.hszilard.quizzer.common.CommonUtils.iconify;
 
 /**
  * @author Szilárd Hompoth at https://github.com/hszilard93
@@ -22,11 +22,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        LOGGER.log(INFO, "Starting application.");
+        LOGGER.log(Level.INFO, "Starting application.");
 
-        ResourceBundle stringsBundle = getBundle("main.resources.com.hszilard.quizzer.quizzer.strings",
+        ResourceBundle stringsBundle = ResourceBundle.getBundle("main.resources.com.hszilard.quizzer.quizzer.strings",
                 getPreferredLocale());
-        LOGGER.log(INFO, "The preferred language is: " + stringsBundle.getLocale().getLanguage());
+        LOGGER.log(Level.FINE, "The preferred language is: " + stringsBundle.getLocale().getLanguage());
+
+        CommonUtils.configure(Main.class.getPackage(), stringsBundle);
 
         Parent root = FXMLLoader.load(getClass()
                 .getResource("/main/resources/com/hszilard/quizzer/quizzer/mainLayout.fxml"),

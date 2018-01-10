@@ -1,7 +1,7 @@
 package main.java.com.hszilard.quizzer.quizeditor;
 
-import javafx.scene.image.Image;
 import javafx.stage.Modality;
+import main.java.com.hszilard.quizzer.common.CommonUtils;
 import main.java.com.hszilard.quizzer.common.quiz_model.Answer;
 import main.java.com.hszilard.quizzer.common.quiz_model.Difficulty;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
@@ -26,10 +26,10 @@ import java.util.logging.Logger;
  * and {@link NewQuestionEditController} classes.
  */
 abstract class AbstractQuestionEditController {
+    protected static final Logger LOGGER = Logger.getLogger(AbstractQuestionEditController.class.getName());
+
     private static final String QEC_LAYOUT = "/main/resources/com/hszilard/quizzer/quizeditor/questionEditLayout.fxml";
     private static final String ANSWER_HBOX = "/main/resources/com/hszilard/quizzer/quizeditor/anwerHBox.fxml";
-
-    protected static final Logger LOGGER = Logger.getLogger(AbstractQuestionEditController.class.getName());
 
     protected ResourceBundle resources;
     protected Stage stage;
@@ -94,9 +94,7 @@ abstract class AbstractQuestionEditController {
     protected void configureStage() {
         stage.setMinWidth(500);
         stage.setMinHeight(350);
-        stage.getIcons().add(new Image(
-                "/main/resources/com/hszilard/quizzer/quizeditor/drawable/question-class-note-symbol_color.png"
-        ));
+        CommonUtils.iconify(stage);
         /* Making sure the 'owner' stage cannot be interacted with. */
         stage.initOwner(Main.getStage());
         stage.initModality(Modality.WINDOW_MODAL);

@@ -1,7 +1,9 @@
 package main.java.com.hszilard.quizzer.quizeditor;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.stage.Stage;
+import main.java.com.hszilard.quizzer.common.CommonUtils;
 import main.java.com.hszilard.quizzer.common.LocaleManager;
 import main.java.com.hszilard.quizzer.common.LocationManager;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
@@ -43,6 +45,7 @@ public class MainController {
     @FXML MenuItem fileExitMenuItem;
     @FXML MenuItem languageEnglishMenuItem;
     @FXML MenuItem languageHungarianMenuItem;
+    @FXML MenuItem aboutMenuItem;
 
     @FXML Button addButton;
     @FXML Button deleteButton;
@@ -56,7 +59,7 @@ public class MainController {
     private boolean justSaved = false;          // true if the quiz object hasn't been modified since created, opened or saved
 
     /* This Callback is used both when clicking on the Edit button and when double clicking on a ListView item (passed to the cell) */
-    private AbstractQuestionEditController.Callback editCallback = questionToSave -> {
+    private final AbstractQuestionEditController.Callback editCallback = questionToSave -> {
         int selectedQuestionIndex = listView.getSelectionModel().getSelectedIndex();
         Question selectedQuestion = listView.getItems().get(selectedQuestionIndex);
         listView.getItems().remove(selectedQuestion);
@@ -68,7 +71,7 @@ public class MainController {
     /* This method is invoked automatically after the resources have been loaded; starts all configuration logic */
     @FXML
     private void initialize() {
-        LOGGER.log(Level.INFO, "MainController initialization invoked.");
+        LOGGER.log(Level.FINE, "MainController initialization.");
         if (quiz == null) {
             quiz = new Quiz(resources.getString("main_unnamed"));
             quiz.setCreated(LocalDate.now());
@@ -84,9 +87,9 @@ public class MainController {
     }
     @FXML
     private void onNewClicked() {
-        LOGGER.log(Level.FINE, "New menu item clicked.");
+        LOGGER.log(Level.INFO, "New menu item clicked.");
         if (!justSaved) {
-            Optional<ButtonType> result = showChangeAlert(resources.getString("alert_sure-reset-text"));
+            Optional<ButtonType> result = CommonUtils.showChangeAlert(resources.getString("alert_sure-reset-text"));
             /* Don't do anything if the cancel option was chosen */
             if (result.isPresent() && result.get() == ButtonType.CANCEL) {
                 return;
@@ -100,9 +103,9 @@ public class MainController {
 
     @FXML
     private void onOpenClicked() {
-        LOGGER.log(Level.FINE, "Open menu item clicked.");
+        LOGGER.log(Level.INFO, "Open menu item clicked.");
         if (!justSaved) {
-            Optional<ButtonType> result = showChangeAlert(resources.getString("alert_sure-text"));
+            Optional<ButtonType> result = CommonUtils.showChangeAlert(resources.getString("alert_sure-text"));
             if (result.isPresent() && result.get() == ButtonType.CANCEL)
                 return;
         }
@@ -123,14 +126,14 @@ public class MainController {
             catch (QuizLoaderException e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
                 /* Show generic error message*/
-                showErrorAlert(resources.getString("error_not-legal"));
+                CommonUtils.showError(resources.getString("error_not-legal"));
             }
         }
     }
 
     @FXML
     private void onSaveClicked() {
-        LOGGER.log(Level.FINE, "Save menu item clicked.");
+        LOGGER.log(Level.INFO, "Save menu item clicked.");
         /* If we know the filepath, just save */
         if (quizPath != null) {
             try {
@@ -139,7 +142,7 @@ public class MainController {
             }
             catch (QuizExporterException e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
-                showErrorAlert(resources.getString("error_no-save"));
+                CommonUtils.showError(resources.getString("error_no-save"));
             }
             justSaved = true;
         }
@@ -151,7 +154,7 @@ public class MainController {
 
     @FXML
     private void onSaveAsClicked() {
-        LOGGER.log(Level.FINE, "Save As quiz menu item clicked clicked or method invoked.");
+        LOGGER.log(Level.INFO, "Save As quiz menu item clicked clicked or method invoked.");
         FileChooser fileChooser = new FileChooser();
         configureFileChooser(fileChooser, resources.getString("file_save"));
         File file = fileChooser.showSaveDialog(Main.getStage());
@@ -162,7 +165,7 @@ public class MainController {
             }
             catch (Exception e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
-                showErrorAlert(resources.getString("error_no-save"));
+                CommonUtils.showError(resources.getString("error_no-save"));
             }
             quizPath = file.getPath();
             LocationManager.setLastPath(this.getClass(), quizPath.substring(0, quizPath.lastIndexOf(File.separator)));
@@ -172,9 +175,9 @@ public class MainController {
 
     @FXML
     private void onExitButtonClicked() {
-        LOGGER.log(Level.FINE, "Exit menu item clicked.");
+        LOGGER.log(Level.INFO, "Exit menu item clicked.");
         if (!justSaved) {
-            Optional<ButtonType> result = showChangeAlert(resources.getString("alert_sure-text"));
+            Optional<ButtonType> result = CommonUtils.showChangeAlert((resources.getString("alert_sure-text")));
             if (result.isPresent() && result.get() == ButtonType.CANCEL) {
                 return;
             }
@@ -184,20 +187,26 @@ public class MainController {
 
     @FXML
     private void onEnglishLanguageSelected() {
-        LOGGER.log(Level.FINE, "English language menu item clicked.");
+        LOGGER.log(Level.INFO, "English language menu item clicked.");
         changeLanguage(new Locale("en"));
     }
 
     @FXML
     private void onHungarianLanguageSelected() {
-        LOGGER.log(Level.FINE, "English language menu item clicked.");
+        LOGGER.log(Level.INFO, "English language menu item clicked.");
         changeLanguage(new Locale("hu"));
+    }
+
+    @FXML
+    private void onAboutClicked(ActionEvent actionEvent) {
+        LOGGER.log(Level.INFO, "About menu item clicked.");
+        CommonUtils.showPopup(null, resources.getString("about_text"));
     }
 
     /* Add a new question to the quiz */
     @FXML
     private void onAddButtonClicked() {
-        LOGGER.log(Level.FINE, "addButton clicked.");
+        LOGGER.log(Level.INFO, "addButton clicked.");
         NewQuestionEditController newQuestionEditController = new NewQuestionEditController(question -> {
             quiz.getQuestions().add(question);
             quiz.updateEdited();
@@ -208,13 +217,13 @@ public class MainController {
         }
         catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
-            showErrorAlert(resources.getString("error_unexpected-error"));
+            CommonUtils.showError(resources.getString("error_unexpected-error"));
         }
     }
 
     @FXML
     private void onDeleteButtonClicked() {
-        LOGGER.log(Level.FINE, "deleteButton clicked.");
+        LOGGER.log(Level.INFO, "deleteButton clicked.");
 
         int index = listView.getSelectionModel().getSelectedIndex();
         if (index >= 0) {
@@ -227,7 +236,7 @@ public class MainController {
 
     @FXML
     void onEditButtonClicked() {
-        LOGGER.log(Level.FINE, "editButton clicked.");
+        LOGGER.log(Level.INFO, "editButton clicked.");
         ExistingQuestionEditController existingQuestionEditController =
                 new ExistingQuestionEditController(listView.getSelectionModel().getSelectedItem(), editCallback,
                         resources);
@@ -236,7 +245,7 @@ public class MainController {
         }
         catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
-            showErrorAlert(resources.getString("error_unexpected-error"));
+            CommonUtils.showError(resources.getString("error_unexpected-error"));
         }
     }
 
@@ -250,7 +259,7 @@ public class MainController {
 
         /* Show confirmation dialog */
         Optional<ButtonType> returnType =
-                showChangeAlert(ResourceBundle.getBundle("main.resources.com.hszilard.quizzer.quizeditor.strings",
+                CommonUtils.showChangeAlert(ResourceBundle.getBundle("main.resources.com.hszilard.quizzer.quizeditor.strings",
                         locale).getString("alert_language-change")
                                 + "\n"
                                 + resources.getString("alert_language-change"));
@@ -338,24 +347,6 @@ public class MainController {
         fileOpenMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
         fileSaveMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
         fileExitMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_DOWN));
-    }
-
-    /* Confirmation dialog boilerplate in one place */
-    private Optional<ButtonType> showChangeAlert(String text) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(resources.getString("alert_confirmation_title"));
-        alert.setHeaderText(resources.getString("alert_sure-header"));
-        alert.setContentText(text);
-        return alert.showAndWait();
-    }
-
-    /* Error dialog boilerplate in one place */
-    private void showErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(resources.getString("error_title"));
-        alert.setHeaderText(resources.getString("error_uh-oh"));
-        alert.setContentText(message);
-        alert.show();
     }
 
 }

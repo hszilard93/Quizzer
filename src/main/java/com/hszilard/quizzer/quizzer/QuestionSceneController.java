@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static main.java.com.hszilard.quizzer.quizzer.CommonUtils.addStyle;
+import static main.java.com.hszilard.quizzer.common.CommonUtils.addStyle;
 
 /**
  * @author Szilárd Hompoth at https://github.com/hszilard93
@@ -44,7 +44,7 @@ public class QuestionSceneController {
 
         questionTextLabel.setText(question.getQuestionText());
         configureAnswersGrid(question.getAnswers());
-        LOGGER.log(Level.INFO, "Scene ready.");
+        LOGGER.log(Level.FINE, "Scene ready.");
     }
 
     private void configureAnswersGrid(List<Answer> answers) {

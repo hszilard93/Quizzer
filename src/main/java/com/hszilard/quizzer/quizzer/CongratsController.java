@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import main.java.com.hszilard.quizzer.common.CommonUtils;
 import main.java.com.hszilard.quizzer.quizzer.game_model.TeamsManager;
 import main.java.com.hszilard.quizzer.quizzer.teams_model.Team;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
+import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.INFO;
 
 /**
@@ -32,11 +34,11 @@ public class CongratsController {
 
     @FXML
     private void initialize() {
-        LOGGER.log(INFO, "Initializing.");
+        LOGGER.log(FINE, "Initializing.");
     }
 
     private void postInit() {
-        LOGGER.log(INFO, "postInit started.");
+        LOGGER.log(FINE, "postInit started.");
         List<Team> teamsInOrder = teamsManager.teamsProperty()
                 .sorted(Comparator.comparingInt(Team::getScore).reversed());
         Team previousTeam = teamsInOrder.get(0);

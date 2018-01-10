@@ -11,7 +11,7 @@ import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 
 @DisplayName("Testing LocationManager")
-public class LocationManagerTest {
+class LocationManagerTest {
 
     @BeforeEach
     void setupEach() throws BackingStoreException, NoSuchFieldException, IllegalAccessException {

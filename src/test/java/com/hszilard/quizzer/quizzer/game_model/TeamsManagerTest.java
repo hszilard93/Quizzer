@@ -8,8 +8,8 @@ import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 
 @DisplayName("Testing LocationManager")
-public class TeamsManagerTest {
-    TeamsManager teamsManager;
+class TeamsManagerTest {
+    private TeamsManager teamsManager;
 
     @BeforeEach
     void setup() {
