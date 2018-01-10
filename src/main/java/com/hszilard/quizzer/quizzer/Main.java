@@ -42,4 +42,9 @@ public class Main extends Application {
         iconify(primaryStage);
         primaryStage.show();
     }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
 }
