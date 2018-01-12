@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<quiz created="2018-01-12" edited="2018-01-13">
+    <title>Demo Quiz</title>
+    <question difficulty="6">
+        <text>What is the third letter of the English alphabet?</text>
+        <answer correct="false">
+            <text>B</text>
+        </answer>
+        <answer correct="true">
+            <text>C</text>
+        </answer>
+        <answer correct="false">
+            <text>D</text>
+        </answer>
+        <answer correct="false">
+            <text>X</text>
+        </answer>
+    </question>
+    <question difficulty="6">
+        <text>How many is a dozen?</text>
+        <answer correct="false">
+            <text>10</text>
+        </answer>
+        <answer correct="false">
+            <text>13</text>
+        </answer>
+        <answer correct="true">
+            <text>12</text>
+        </answer>
+    </question>
+    <question difficulty="8">
+        <text>Who is generally respected as the first person to circumnavigate the globe?</text>
+        <answer correct="true">
+            <text>Ferdinand Magellan</text>
+        </answer>
+        <answer correct="false">
+            <text>Christopher Columbus</text>
+        </answer>
+    </question>
+    <question difficulty="10">
+        <text>Who was the 2nd president of the United States of America?</text>
+        <answer correct="false">
+            <text>Abraham Lincoln</text>
+        </answer>
+        <answer correct="true">
+            <text>John Adams</text>
+        </answer>
+        <answer correct="false">
+            <text>Benjamin Franklin</text>
+        </answer>
+        <answer correct="false">
+            <text>Andrew Jackson</text>
+        </answer>
+    </question>
+    <question difficulty="8">
+        <text>Who was the longest living British monarch as of 2017?</text>
+        <answer correct="false">
+            <text>Queen Victoria</text>
+        </answer>
+        <answer correct="true">
+            <text>Queen Elizabeth II</text>
+        </answer>
+    </question>
+    <question difficulty="6">
+        <text>How many legs does a spider have?</text>
+        <answer correct="false">
+            <text>6</text>
+        </answer>
+        <answer correct="true">
+            <text>8</text>
+        </answer>
+        <answer correct="false">
+            <text>10</text>
+        </answer>
+        <answer correct="false">
+            <text>12</text>
+        </answer>
+    </question>
+    <question difficulty="10">
+        <text>Which famous latin saying is attributed to Julius Ceasar?</text>
+        <answer correct="true">
+            <text>Alea iacta est.</text>
+        </answer>
+        <answer correct="false">
+            <text>Carthago delanda est.</text>
+        </answer>
+        <answer correct="false">
+            <text>Ceasar non supra grammaticos.</text>
+        </answer>
+    </question>
+    <question difficulty="6">
+        <text>How many centimeters are in a meter?</text>
+        <answer correct="false">
+            <text>1000</text>
+        </answer>
+        <answer correct="true">
+            <text>100</text>
+        </answer>
+    </question>
+    <question difficulty="8">
+        <text>On which Japanese town was did the US drop the first atomic bomb?</text>
+        <answer correct="false">
+            <text>Nagasaki</text>
+        </answer>
+        <answer correct="false">
+            <text>Tokyo</text>
+        </answer>
+        <answer correct="true">
+            <text>Hiroshima</text>
+        </answer>
+        <answer correct="false">
+            <text>Fukushima</text>
+        </answer>
+    </question>
+    <question difficulty="6">
+        <text>How many lives does a cat have according to a popular belief?</text>
+        <answer correct="true">
+            <text>7</text>
+        </answer>
+        <answer correct="false">
+            <text>9</text>
+        </answer>
+        <answer correct="false">
+            <text>13</text>
+        </answer>
+    </question>
+    <question difficulty="10">
+        <text>The American Civil War begun in ____ and ended in ____.</text>
+        <answer correct="false">
+            <text>1841, 1845</text>
+        </answer>
+        <answer correct="false">
+            <text>1851, 1855</text>
+        </answer>
+        <answer correct="true">
+            <text>1861, 1865</text>
+        </answer>
+        <answer correct="false">
+            <text>1871, 1875</text>
+        </answer>
+    </question>
+    <question difficulty="6">
+        <text>What is the name of our galaxy?</text>
+        <answer correct="false">
+            <text>Sunflower Galaxy</text>
+        </answer>
+        <answer correct="true">
+            <text>Milky Way Galaxy</text>
+        </answer>
+        <answer correct="false">
+            <text>Cheeseroute Galaxy</text>
+        </answer>
+        <answer correct="false">
+            <text>Glaxy Nr. 1</text>
+        </answer>
+    </question>
+    <question difficulty="12">
+        <text>What is the London-Paris distance?</text>
+        <answer correct="true">
+            <text>344 km (214 miles)</text>
+        </answer>
+        <answer correct="false">
+            <text>214 km (133 miles)</text>
+        </answer>
+        <answer correct="false">
+            <text>497 km (308 miles)</text>
+        </answer>
+    </question>
+    <question difficulty="8">
+        <text>Which is the tallest building in the world?</text>
+        <answer correct="false">
+            <text>One World Trade Center</text>
+        </answer>
+        <answer correct="true">
+            <text>Burj Khalifa</text>
+        </answer>
+        <answer correct="false">
+            <text>Shanghai Tower</text>
+        </answer>
+        <answer correct="false">
+            <text>The Great Pyramid of Giza</text>
+        </answer>
+    </question>
+    <question difficulty="6">
+        <text>How many inches are in a foot?</text>
+        <answer correct="false">
+            <text>8</text>
+        </answer>
+        <answer correct="false">
+            <text>10</text>
+        </answer>
+        <answer correct="true">
+            <text>12</text>
+        </answer>
+        <answer correct="false">
+            <text>16</text>
+        </answer>
+    </question>
+</quiz>
