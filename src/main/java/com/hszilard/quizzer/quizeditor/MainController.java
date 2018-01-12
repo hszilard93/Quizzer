@@ -85,6 +85,7 @@ public class MainController {
         configureButtons();
         configureStage();
         configureMenuItems();
+        justSaved = true;
     }
     @FXML
     private void onNewClicked() {
@@ -121,7 +122,6 @@ public class MainController {
                 quiz = quizLoader.loadQuiz(file.getPath());
                 quizPath = file.getPath();
                 LocationManager.setLastPath(this.getClass(), quizPath.substring(0, quizPath.lastIndexOf(File.separator)));
-                justSaved = true;
                 initialize();
             }
             catch (QuizLoaderException e) {

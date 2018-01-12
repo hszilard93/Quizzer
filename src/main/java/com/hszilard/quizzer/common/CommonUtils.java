@@ -21,10 +21,10 @@ import java.util.logging.Logger;
  * Common methods for displaying popups and doing other repetitive tasks.
  */
 public class CommonUtils {
-    public static final String VERSION = "0.91";
     private static final Logger LOGGER = Logger.getLogger(CommonUtils.class.getName());
     private static final String QUIZZER_ICON_PATH = "/main/resources/com/hszilard/quizzer/quizzer/drawable/icon.png";
     private static final String EDITOR_ICON_PATH = "/main/resources/com/hszilard/quizzer/quizeditor/drawable/icon.png";
+    private static final String VERSION = "0.92";
 
     private static String iconPath;
     private static ResourceBundle resources;

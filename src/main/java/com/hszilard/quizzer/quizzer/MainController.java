@@ -226,6 +226,9 @@ public class MainController {
     private void configureTeamsVBox() {
         if (!teamsVBox.getChildren().contains(addTeamButton)) {
             addTeamButton = new Button("+");
+            Tooltip tooltip = new Tooltip(resources.getString("main_add-tooltip"));
+            tooltip.setStyle("-fx-background-color: transparent; -fx-font-size: 12;");
+            addTeamButton.setTooltip(tooltip);
             addStyle(addTeamButton, RIGHT_STYLESHEET, "add-team-button");
             addTeamButton.setOnAction(event -> {
                 LOGGER.log(Level.INFO, "addTeamButton clicked.");
