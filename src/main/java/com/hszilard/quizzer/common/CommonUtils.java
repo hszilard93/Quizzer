@@ -21,6 +21,7 @@ import java.util.logging.Logger;
  * Common methods for displaying popups and doing other repetitive tasks.
  */
 public class CommonUtils {
+    public static final String VERSION = "0.91";
     private static final Logger LOGGER = Logger.getLogger(CommonUtils.class.getName());
     private static final String QUIZZER_ICON_PATH = "/main/resources/com/hszilard/quizzer/quizzer/drawable/icon.png";
     private static final String EDITOR_ICON_PATH = "/main/resources/com/hszilard/quizzer/quizeditor/drawable/icon.png";
@@ -30,7 +31,8 @@ public class CommonUtils {
 
     /**
      * This method should be called at the start of each application. It helps configure the app-specific resources (e.g. the app icons)
-     * @param pack The Quizzer or the QuizEditor package
+     *
+     * @param pack      The Quizzer or the QuizEditor package
      * @param resources The active string resources
      */
     public static void configure(Package pack, ResourceBundle resources) {
@@ -90,6 +92,12 @@ public class CommonUtils {
         alert.setContentText(content);
         iconify(alert.getDialogPane().getScene().getWindow());
         alert.show();
+    }
+
+    public static void showAboutPopup() {
+        showPopup(null, resources.getString("about_text")
+                + "\n\n"
+                + resources.getString("about_version") + " " + VERSION);
     }
 
     public static Optional<ButtonType> showInvalidQuizAlert() {

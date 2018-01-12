@@ -213,7 +213,7 @@ public class MainController {
     @FXML
     private void onAboutClicked(ActionEvent actionEvent) {
         LOGGER.log(Level.INFO, "About menu item clicked.");
-        CommonUtils.showPopup(null, resources.getString("about_text"));
+        CommonUtils.showAboutPopup();
     }
 
     /* Add a new question to the quiz */

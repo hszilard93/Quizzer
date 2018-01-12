@@ -69,12 +69,6 @@ public class MenuController {
     }
 
     @FXML
-    private void onAboutClicked(ActionEvent actionEvent) {
-        LOGGER.log(Level.INFO, "About menu item clicked.");
-        CommonUtils.showPopup(null, resources.getString("about_text"));
-    }
-
-    @FXML
     private void onEnglishLanguageSelected(ActionEvent actionEvent) {
         LOGGER.log(Level.INFO, "English language menu item clicked.");
         changeLanguage(new Locale("en"));
@@ -84,6 +78,12 @@ public class MenuController {
     private void onHungarianLanguageSelected(ActionEvent actionEvent) {
         LOGGER.log(Level.INFO, "English language menu item clicked.");
         changeLanguage(new Locale("hu"));
+    }
+
+    @FXML
+    private void onAboutClicked(ActionEvent actionEvent) {
+        LOGGER.log(Level.INFO, "About menu item clicked.");
+        CommonUtils.showAboutPopup();
     }
 
     private void configureMenuItems() {
