@@ -104,7 +104,7 @@ public class CommonUtils {
         LOGGER.log(Level.FINE, "Attempting to invalid quiz warning");
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(resources.getString("alert_confirmation_title"));
+        alert.setTitle(resources.getString("alert_invalid-title"));
         alert.setHeaderText(resources.getString("alert_invalid-header"));
         alert.setContentText(resources.getString("alert_invalid-text"));
         iconify(alert.getDialogPane().getScene().getWindow());
