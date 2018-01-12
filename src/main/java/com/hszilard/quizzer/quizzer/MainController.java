@@ -49,7 +49,6 @@ public class MainController {
     private static final String GRID_STYLESHEET = "/main/resources/com/hszilard/quizzer/quizzer/style/grid_styles.css";
     private static final String RIGHT_STYLESHEET =
             "/main/resources/com/hszilard/quizzer/quizzer/style/right_vbox_styles.css";
-    private static final int DEFAULT_SCORE = 10;
 
     @FXML private ResourceBundle resources;                 // contains the internationalized strings.
     @FXML private MenuBar menuBarLayout;
@@ -113,10 +112,19 @@ public class MainController {
                 Quiz quiz;
                 QuizLoader quizLoader = new SimpleXmlQuizLoader();
                 quiz = quizLoader.loadQuiz(file.getPath());
-                postOpenQuiz(quiz);
                 quizPath = file.getPath();
                 LocationManager
                         .setLastPath(this.getClass(), quizPath.substring(0, quizPath.lastIndexOf(File.separator)));
+
+                /* Check quiz. */
+                if (!CommonUtils.isValidQuiz(quiz)) {
+                    /* If the quiz is invalid, warn the user before opening it. */
+                    Optional<ButtonType> result = CommonUtils.showInvalidQuizAlert();
+                    if (result.isPresent() && result.get() == ButtonType.CANCEL)
+                        return;
+                }
+
+                postOpenQuiz(quiz);
             }
             catch (QuizLoaderException e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);

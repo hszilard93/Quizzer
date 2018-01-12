@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import main.java.com.hszilard.quizzer.common.CommonUtils;
 import main.java.com.hszilard.quizzer.common.LocaleManager;
 import main.java.com.hszilard.quizzer.common.LocationManager;
+import main.java.com.hszilard.quizzer.common.quiz_model.Answer;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
 import main.java.com.hszilard.quizzer.common.quiz_model.Quiz;
 import main.java.com.hszilard.quizzer.common.xml_converter.*;
@@ -136,6 +137,12 @@ public class MainController {
         LOGGER.log(Level.INFO, "Save menu item clicked.");
         /* If we know the filepath, just save */
         if (quizPath != null) {
+            if (!CommonUtils.isValidQuiz(quiz)) {
+                /* If quiz is invalid, warn user before saving. */
+                Optional<ButtonType> result = CommonUtils.showInvalidQuizAlert();
+                if (result.isPresent() && result.get() == ButtonType.CANCEL)
+                    return;
+            }
             try {
                 QuizExporter exporter = new SimpleXmlQuizExporter();
                 exporter.exportQuiz(quiz, quizPath);
@@ -154,6 +161,12 @@ public class MainController {
 
     @FXML
     private void onSaveAsClicked() {
+        if (!CommonUtils.isValidQuiz(quiz)) {
+            /* If quiz is invalid, warn user before saving. */
+            Optional<ButtonType> result = CommonUtils.showInvalidQuizAlert();
+            if (result.isPresent() && result.get() == ButtonType.CANCEL)
+                return;
+        }
         LOGGER.log(Level.INFO, "Save As quiz menu item clicked clicked or method invoked.");
         FileChooser fileChooser = new FileChooser();
         configureFileChooser(fileChooser, resources.getString("file_save"));
@@ -250,12 +263,10 @@ public class MainController {
     }
 
     private void changeLanguage(Locale locale) {
-        if (!LocaleManager.getPreferredLocale().equals(locale)) {
+        if (!LocaleManager.getPreferredLocale().equals(locale))
             LocaleManager.setPreferredLocale(locale);
-        }
-        else {
-            return;  // don't do anything if selected language is already in use
-        }
+        else
+            return;     // don't do anything if selected language is already in use
 
         /* Show confirmation dialog */
         Optional<ButtonType> returnType =
@@ -263,9 +274,8 @@ public class MainController {
                         locale).getString("alert_language-change")
                                 + "\n"
                                 + resources.getString("alert_language-change"));
-        if (!returnType.isPresent() || returnType.get() == ButtonType.CANCEL) {
+        if (!returnType.isPresent() || returnType.get() == ButtonType.CANCEL)
             return;
-        }
 
         LOGGER.log(Level.INFO, "Attempting to restart application because of language change.");
         Main.getStage().close();

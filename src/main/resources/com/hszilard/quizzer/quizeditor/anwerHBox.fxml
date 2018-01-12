@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.RadioButton?>
 <HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       stylesheets="/main/resources/com/hszilard/quizzer/quizeditor/style/question_edit_styles.css"
@@ -22,10 +22,10 @@
                maxWidth="Infinity"
                HBox.hgrow="ALWAYS"/>
 
-    <CheckBox fx:id="correctCheckBox">
+    <RadioButton fx:id="correctRadioButton">
         <tooltip>
             <Tooltip text="%edit_correct-tooltip"
                      styleClass="tooltip"/>
         </tooltip>
-    </CheckBox>
+    </RadioButton>
 </HBox>

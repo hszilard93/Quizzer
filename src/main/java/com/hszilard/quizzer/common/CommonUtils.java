@@ -7,6 +7,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import main.java.com.hszilard.quizzer.common.quiz_model.Answer;
+import main.java.com.hszilard.quizzer.common.quiz_model.Question;
+import main.java.com.hszilard.quizzer.common.quiz_model.Quiz;
 
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -89,6 +92,22 @@ public class CommonUtils {
         alert.show();
     }
 
+    public static Optional<ButtonType> showInvalidQuizAlert() {
+        LOGGER.log(Level.FINE, "Attempting to invalid quiz warning");
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(resources.getString("alert_confirmation_title"));
+        alert.setHeaderText(resources.getString("alert_invalid-header"));
+        alert.setContentText(resources.getString("alert_invalid-text"));
+        iconify(alert.getDialogPane().getScene().getWindow());
+
+        ((Button) (alert.getDialogPane().lookupButton(ButtonType.OK))).setText(resources.getString("alert_ok-button"));
+        ((Button) (alert.getDialogPane().lookupButton(ButtonType.CANCEL)))
+                .setText(resources.getString("alert_cancel-button"));
+
+        return alert.showAndWait();
+    }
+
     /* Error alert boilerplate */
     public static void showError(String text) {
         LOGGER.log(Level.FINE, "Attempting to show error alert.");
@@ -99,5 +118,24 @@ public class CommonUtils {
         alert.setContentText(text);
         iconify(alert.getDialogPane().getScene().getWindow());
         alert.show();
+    }
+
+    /* Checks for some mistakes that would make the quiz 'invalid' (e.g. not having at least 2 possible answers). */
+    public static boolean isValidQuiz(Quiz quiz) {
+        if (quiz.getQuestions().size() == 0)
+            return false;
+        for (Question q : quiz.getQuestions()) {
+            if (q.getQuestionText().isEmpty() || q.getAnswers().size() < 2)
+                return false;
+            boolean hasCorrectAnswer = false;
+            for (Answer a : q.getAnswers()) {
+                if (a.getAnswerText().isEmpty())
+                    return false;
+                hasCorrectAnswer |= a.isCorrect();
+            }
+            if (!hasCorrectAnswer)
+                return false;
+        }
+        return true;
     }
 }

@@ -40,6 +40,7 @@ abstract class AbstractQuestionEditController {
     protected Button removeAnswerButton;
     protected Button confirmButton;
     protected Button cancelButton;
+    protected ToggleGroup correctGroup;
     protected RadioButton easyRadioButton;
     protected RadioButton mediumRadioButton;
     protected RadioButton hardRadioButton;
@@ -86,6 +87,7 @@ abstract class AbstractQuestionEditController {
         hardRadioButton = (RadioButton) namespace.get("hardRadioButton");
         customRadioButton = (RadioButton) namespace.get("customRadioButton");
         difficultyTextField = (TextField) namespace.get("difficultyTextField");
+        correctGroup = new ToggleGroup();
 
         configureStage();
         configureNodes();
@@ -248,8 +250,13 @@ abstract class AbstractQuestionEditController {
         TextField answerTextField = (TextField) answerHBox.lookup("#answerTextField");
         answerTextField.textProperty().bindBidirectional(answer.answerTextProperty());
 
-        CheckBox correctCheckBox = (CheckBox) answerHBox.lookup("#correctCheckBox");
-        correctCheckBox.selectedProperty().bindBidirectional(answer.correctProperty());
+        RadioButton correctRadioButton = (RadioButton) answerHBox.lookup("#correctRadioButton");
+        correctRadioButton.selectedProperty().bindBidirectional(answer.correctProperty());
+        correctRadioButton.setToggleGroup(correctGroup);
+//
+//        correctGroup.selectedToggleProperty().addListener((ov, oldToggle, newToggle) -> {
+//            newToggle.setSelected(true);
+//        });
 
         return answerHBox;
     }
