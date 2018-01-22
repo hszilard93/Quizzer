@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -240,37 +241,7 @@ public class MainController {
                     if (result.isPresent()) {
                         Team team = result.get();
                         teamsManager.addTeam(team);
-
-                        FXMLLoader teamBoxLoader = new FXMLLoader(getClass()
-                                .getResource("/main/resources/com/hszilard/quizzer/quizzer/teamBox.fxml"),
-                                resources);
-                        Parent teamBox = teamBoxLoader.load();
-                        teamBox.styleProperty().bind(when(equal(team, teamsManager.currentTeamProperty()))
-                                .then("-fx-background-color: crimson;")
-                                .otherwise("-fx-background-color: #78909C;"));
-
-                        Label teamName = (Label) teamBoxLoader.getNamespace().get("nameLabel");
-                        Label teamScore = (Label) teamBoxLoader.getNamespace().get("scoreLabel");
-                        teamName.textProperty().bind(team.nameProperty());
-                        teamName.maxWidthProperty().bind(teamsVBox.widthProperty()
-                                .subtract(teamScore.widthProperty()).subtract(4));
-                        teamScore.textProperty().bind(team.scoreProperty().asString());
-
-                        teamBox.setOnMouseClicked(teamBoxEvent -> {
-                            if (teamBoxEvent.getClickCount() == 2) {
-                                LOGGER.log(Level.INFO, "teamBox double-clicked.");
-                                try {
-                                    Dialog<Team> editTeamDialog = teamDialogFactory.createEditTeamDialog(team);
-                                    Optional<Team> editResult = editTeamDialog.showAndWait();
-                                    if (editResult.isPresent())
-                                        team.setName(editResult.get().getName());
-                                }
-                                catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-
+                        Parent teamBox = makeTeamBox(team, teamDialogFactory);
                         teamsVBox.getChildren().add(teamsVBox.getChildren().size() - 1, teamBox);
                     }
                 }
@@ -278,7 +249,6 @@ public class MainController {
                     e.printStackTrace();
                 }
             });
-
             teamsVBox.getChildren().add(addTeamButton);
         }
     }
@@ -344,6 +314,64 @@ public class MainController {
         catch (IOException e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
             CommonUtils.showError(resources.getString("error_generic-message"));
+        }
+    }
+
+    private Parent makeTeamBox(Team team, TeamDialogFactory teamDialogFactory) throws IOException {
+        FXMLLoader teamBoxLoader = new FXMLLoader(getClass()
+                .getResource("/main/resources/com/hszilard/quizzer/quizzer/teamBox.fxml"), resources);
+        Parent teamBox = teamBoxLoader.load();
+
+        teamBox.styleProperty().bind(when(equal(team, teamsManager.currentTeamProperty()))
+                .then("-fx-background-color: crimson;")
+                .otherwise("-fx-background-color: #78909C;"));
+
+        Label teamName = (Label) teamBoxLoader.getNamespace().get("nameLabel");
+        Label teamScore = (Label) teamBoxLoader.getNamespace().get("scoreLabel");
+        teamName.textProperty().bind(team.nameProperty());
+        teamName.maxWidthProperty().bind(teamsVBox.widthProperty()
+                .subtract(teamScore.widthProperty()).subtract(4));
+        teamScore.textProperty().bind(team.scoreProperty().asString());
+        teamBox.setOnMouseClicked(clickEvent -> {
+            /* Handle right click as context request */
+            if (clickEvent.getButton() == MouseButton.SECONDARY) {
+                LOGGER.log(Level.INFO, "teamBox right-clicked.");
+                ContextMenu contextMenu = new ContextMenu();
+                MenuItem editItem = new MenuItem(resources.getString("team_edit-item"));
+                editItem.setOnAction(editEvent -> {
+                    LOGGER.log(Level.INFO, "editItem selected.");
+                    contextMenu.hide();
+                    showEditTeamDialog(team, teamDialogFactory);
+                });
+                MenuItem deleteItem = new MenuItem(resources.getString("team_delete-item"));
+                deleteItem.setOnAction(deleteEvent -> {
+                    LOGGER.log(Level.INFO, "deleteItemSelected");
+                    contextMenu.hide();
+                    teamsManager.teamsProperty().remove(team);
+                    teamsVBox.getChildren().remove(teamBox);
+                });
+                contextMenu.getItems().addAll(editItem, deleteItem);
+                contextMenu.show(teamsVBox, clickEvent.getScreenX(), clickEvent.getScreenY());
+            }
+            /* Handle double clicks as edit */
+            else if (clickEvent.getClickCount() == 2) {
+                LOGGER.log(Level.INFO, "teamBox double-clicked.");
+                showEditTeamDialog(team, teamDialogFactory);
+            }
+        });
+
+        return teamBox;
+    }
+
+    private void showEditTeamDialog(Team team, TeamDialogFactory teamDialogFactory) {
+        try {
+            Dialog<Team> editTeamDialog = teamDialogFactory.createEditTeamDialog(team);
+            Optional<Team> editResult = editTeamDialog.showAndWait();
+            if (editResult.isPresent())
+                team.setName(editResult.get().getName());
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

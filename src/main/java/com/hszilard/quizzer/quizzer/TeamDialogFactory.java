@@ -16,7 +16,7 @@ import static main.java.com.hszilard.quizzer.common.CommonUtils.showPopup;
 
 /**
  * @author Szilárd Hompoth at https://github.com/hszilard93
- * This is a factory that can make two kinds of Team Dialogs for editing new and existing teams.
+ * This is a factory that makes two kinds of Team Dialogs for editing new and existing teams.
  */
 class TeamDialogFactory {
     private static final Logger LOGGER = Logger.getLogger(TeamDialogFactory.class.getName());
