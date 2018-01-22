@@ -128,9 +128,9 @@ abstract class AbstractQuestionEditController {
         difficultyTextField.setEditable(false);
         difficultyTextField.setOnMouseClicked(e -> customRadioButton.setSelected(true));
 
-        easyRadioButton.setOnAction(e -> difficultyTextField.setText(Integer.toString(Difficulty.EASY.getValue())));
-        mediumRadioButton.setOnAction(e -> difficultyTextField.setText(Integer.toString(Difficulty.DEFAULT.getValue())));
-        hardRadioButton.setOnAction(e -> difficultyTextField.setText(Integer.toString(Difficulty.HARD.getValue())));
+        easyRadioButton.setOnAction(e -> difficultyTextField.setText(Integer.toString(Difficulty.EASY.value())));
+        mediumRadioButton.setOnAction(e -> difficultyTextField.setText(Integer.toString(Difficulty.DEFAULT.value())));
+        hardRadioButton.setOnAction(e -> difficultyTextField.setText(Integer.toString(Difficulty.HARD.value())));
 
         if (difficulty.equals(Difficulty.EASY))
             easyRadioButton.setSelected(true);
@@ -142,7 +142,7 @@ abstract class AbstractQuestionEditController {
             customRadioButton.setSelected(true);
             difficultyTextField.setEditable(true);
         }
-        difficultyTextField.setText(Integer.toString(difficulty.getValue()));
+        difficultyTextField.setText(Integer.toString(difficulty.value()));
 
         toggleGroup.selectedToggleProperty().addListener((ov, oldToggle, newToggle) -> {
             newToggle.setSelected(true);
@@ -210,14 +210,14 @@ abstract class AbstractQuestionEditController {
                         int difficultyValue = Integer.parseInt(difficultyTextField.getText());
                         if (difficultyValue <= 0)
                             throw new NumberFormatException();
-                        else if (difficultyValue == Difficulty.EASY.getValue())
+                        else if (difficultyValue == Difficulty.EASY.value())
                             question.setDifficulty(Difficulty.EASY);
-                        else if (difficultyValue == Difficulty.DEFAULT.getValue())
+                        else if (difficultyValue == Difficulty.DEFAULT.value())
                             question.setDifficulty(Difficulty.DEFAULT);
-                        else if (difficultyValue == Difficulty.HARD.getValue())
+                        else if (difficultyValue == Difficulty.HARD.value())
                             question.setDifficulty(Difficulty.HARD);
                         else
-                            question.setDifficulty(new Difficulty(difficultyValue));
+                            question.setDifficulty(Difficulty.difficulty(difficultyValue));
                     } catch (NumberFormatException nfe) {
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setTitle(resources.getString("alert_warning_title"));

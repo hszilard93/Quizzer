@@ -82,7 +82,7 @@ public class SimpleXmlQuizExporter implements QuizExporter {
 
     private Node getQuestionElement(Document doc, Question question) {
         Element questionElement = doc.createElement(Values.QUESTION_TAG);
-        questionElement.setAttribute(Values.DIFFICULTY_ATTR, Integer.toString(question.getDifficulty().getValue()));
+        questionElement.setAttribute(Values.DIFFICULTY_ATTR, Integer.toString(question.getDifficulty().value()));
         questionElement.appendChild(getTextElement(doc, Values.QUESTION_TEXT_TAG, question.getQuestionText()));
 
         for (Answer answer : question.getAnswers()) {

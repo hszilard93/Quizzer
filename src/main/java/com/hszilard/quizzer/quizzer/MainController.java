@@ -193,11 +193,11 @@ public class MainController {
 
                 Button questionButton = new Button("" + (i + 1));
                 addStyle(questionButton, GRID_STYLESHEET, "question-button");
-                if (question.getDifficulty().equals(Difficulty.EASY))
+                if (question.getDifficulty() == Difficulty.EASY)
                     questionButton.getStyleClass().add("easy-question-button");
-                else if (question.getDifficulty().equals(Difficulty.DEFAULT))
+                else if (question.getDifficulty() == Difficulty.DEFAULT)
                     questionButton.getStyleClass().add("medium-question-button");
-                else if (question.getDifficulty().equals(Difficulty.HARD))
+                else if (question.getDifficulty() == Difficulty.HARD)
                     questionButton.getStyleClass().add("hard-question-button");
                 else
                     questionButton.getStyleClass().add("custom-question-button");
@@ -305,7 +305,7 @@ public class MainController {
                 public void onCorrect() {
                     LOGGER.log(Level.INFO, "Answer was correct.");
                     if (teamsManager.currentTeamProperty() != null) {
-                        int score = question.getDifficulty().getValue();
+                        int score = question.getDifficulty().value();
                         teamsManager.currentTeamProperty().get().addToScore(score);
                         valueButton.setText("" + score);
                     }
