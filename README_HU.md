@@ -14,4 +14,4 @@ A Quizzer első prototípus-változatait a cserkészcsapatom évente megrendezet
 
 [![alt text](https://i.imgur.com/BXr7ANo.jpg "Kattints a videóhoz")](https://www.youtube.com/watch?v=Yfu9C1AcGk0&feature=youtu.be)
 
-##### Verzió 0.92
+##### Verzió 0.93

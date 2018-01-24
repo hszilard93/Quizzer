@@ -15,4 +15,4 @@ I made the first few prototypes of Quizzer for my scout group's annual history c
 
 [![alt text](https://i.imgur.com/BXr7ANo.jpg "Click for video")](https://www.youtube.com/watch?v=Yfu9C1AcGk0&feature=youtu.be)
 
-##### Version 0.92
+##### Version 0.93
