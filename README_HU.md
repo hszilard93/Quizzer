@@ -5,7 +5,7 @@ A Quizzer első prototípus-változatait a cserkészcsapatom évente megrendezet
 
 ## Telepítési útmutató
 
-#### 1. Tölds le a .jar fájlokat az Executables könyvtárból és lépj a 2a pontra. Amennyiben nincs számítógépedre telepítve a Java futási környezet (JRE, minimum 1.8-as verzió), és Windows operációs rendszert használsz, letöltheted az ugyanott található .zip fájlokat is. Megjegyzés: a .zip fájlok *jelentősen* nagyobb terjedelműek! Ezután kövesd a 2b pont utasításait. 
+#### 1. Tölds le a legújabb .jar fájlokat a [Releases](https://github.com/hszilard93/Quizzer/releases) nézetből és lépj a 2a pontra. Amennyiben nincs számítógépedre telepítve a Java futási környezet (JRE, minimum 1.8-as verzió), és Windows operációs rendszert használsz, letöltheted az ugyanott található .zip fájlokat is. Megjegyzés: a .zip fájlok *jelentősen* nagyobb méretűek! Ezután kövesd a 2b pont utasításait. 
 #### 2a. A .jar fájlok futnak bármilyen operációs rendszeren, amennyiben a Java futási környezet telepítve van (JRE, legalább 1.8-as verzió; a JRE telepítéséhez keress rá a 'Java' kifejezésre).
 #### 2b. Csomagold ki a letöltött .zip fájlokat bármilyen csomagoló eszközzel (például WinRAR vagy 7Zip, Total Commander beépített stb.) Ezután egyszerűen futtasd a .exe fájlokat a kicsomagolt könyvtárakból.
 
