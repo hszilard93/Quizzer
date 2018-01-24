@@ -18,15 +18,24 @@ import static java.util.logging.Level.*;
 public class TurnsManager {
     private static final Logger LOGGER = Logger.getLogger(TurnsManager.class.getName());
 
+    private final Quiz quiz;
+    private final TeamsManager teamsManager;
+
     private final IntegerProperty totalTurns = new SimpleIntegerProperty();
     private final IntegerProperty currentTurn = new SimpleIntegerProperty(1);
     private final IntegerProperty questionsPerTurn = new SimpleIntegerProperty();
     private final IntegerProperty questionCounter = new SimpleIntegerProperty(0);
     private final BooleanProperty gameOver = new SimpleBooleanProperty();
+    private final BooleanProperty invalidStage = new SimpleBooleanProperty();
 
     public TurnsManager(final Quiz quiz, final TeamsManager teamsManager) {
-        LOGGER.log(INFO, "Constructing TurnsManager.");
+        LOGGER.log(FINE, "Constructing TurnsManager.");
+        this.quiz = quiz;
+        this.teamsManager = teamsManager;
+        configureProperties();
+    }
 
+    private void configureProperties() {
         totalTurns.bind(Bindings.createIntegerBinding(() -> {
             if (teamsManager.teamsProperty().size() > 0)
                 return quiz.getQuestions().size() / teamsManager.teamsProperty().size();
@@ -34,8 +43,10 @@ public class TurnsManager {
         }, quiz.getQuestions(), teamsManager.teamsProperty()));
 
         questionsPerTurn.bind(Bindings.createIntegerBinding(() -> {
-            if (totalTurns.get() > 0)
-                return (quiz.getQuestions().size() - quiz.getQuestions().size() % teamsManager.teamsProperty().size()) / totalTurns.get();
+            if (totalTurns.get() > 0) {
+                return (quiz.getQuestions().size() - quiz.getQuestions().size()
+                        % teamsManager.teamsProperty().size()) / totalTurns.get();
+            }
             else
                 return 0;
         }, quiz.getQuestions(), totalTurns));
@@ -49,10 +60,18 @@ public class TurnsManager {
 
         gameOver.bind(Bindings.createBooleanBinding(() -> {
             if (totalTurns.greaterThan(0).get())
-                return currentTurn.greaterThan(totalTurnsProperty()).get();
+                return currentTurn.greaterThan(totalTurns).get();
             else
                 return false;
         }, currentTurn, totalTurns));
+
+        invalidStage.bind(Bindings.createBooleanBinding(() -> {
+//            if (totalTurnsProperty().get() == 0)
+//                return true;
+            if (quiz.getQuestions().size() < teamsManager.teamsProperty().size())
+                return true;
+            return false;
+        }, totalTurns, quiz.questionsProperty().sizeProperty()));
 
         totalTurns.addListener(((observable, oldValue, newValue) ->
                 LOGGER.log(Level.FINE, "Total turns: " + newValue)));
@@ -63,7 +82,9 @@ public class TurnsManager {
         questionCounter.addListener((observable, oldValue, newValue) ->
                 LOGGER.log(FINE, "Question count: " + newValue));
         gameOver.addListener((observable, oldValue, newValue) ->
-                LOGGER.log(INFO, "gameOver: " + newValue));
+                LOGGER.log(FINE, "gameOver: " + newValue));
+        invalidStage.addListener((observable, oldValue, newValue) ->
+                LOGGER.log(FINE, "invalidStage: " + newValue));
     }
 
     public void nextQuestion() {
@@ -98,5 +119,9 @@ public class TurnsManager {
 
     public BooleanProperty gameOverProperty() {
         return gameOver;
+    }
+
+    public BooleanProperty invalidStageProperty() {
+        return invalidStage;
     }
 }

@@ -69,6 +69,14 @@ public class MainController {
         setupViews();
     }
 
+    private void setupViews() {
+        LOGGER.log(Level.INFO, "Setting up views.");
+        menuBarLayoutController.init(this);
+        configureQuestionsGrid();
+        configureTeamsVBox();
+        configureTurnsLabel();
+    }
+
     void restart() {
         LOGGER.log(Level.INFO, "Attempting to restart quiz.");
 
@@ -146,27 +154,6 @@ public class MainController {
         ((Stage) (questionsGrid.getScene().getWindow())).setTitle("Quizzer - " + quiz.getTitle());
 
         configureTurnsLabel();
-
-        /*
-        This happens when there are no more turns left.
-         */
-        turnsManager.gameOverProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == true) {
-                for (Node node : questionsGrid.getChildren())
-                    node.setDisable(true);
-                turnsLabel.textProperty().unbind();
-                turnsLabel.setText(resources.getString("main_turns-over"));
-                showCongratsPopup();
-            }
-        });
-    }
-
-    private void setupViews() {
-        LOGGER.log(Level.INFO, "Setting up views.");
-        menuBarLayoutController.init(this);
-        configureQuestionsGrid();
-        configureTeamsVBox();
-        configureTurnsLabel();
     }
 
     private void configureQuestionsGrid() {
@@ -190,38 +177,42 @@ public class MainController {
                     questionsGrid.heightProperty().divide(colSize)).subtract(8);
 
             for (int i = 0; i < questionsSize; i++) {
-                final Question question = quiz.getQuestions().get(i);
-
-                Button questionButton = new Button("" + (i + 1));
-                addStyle(questionButton, GRID_STYLESHEET, "question-button");
-                if (question.getDifficulty() == Difficulty.EASY)
-                    questionButton.getStyleClass().add("easy-question-button");
-                else if (question.getDifficulty() == Difficulty.DEFAULT)
-                    questionButton.getStyleClass().add("medium-question-button");
-                else if (question.getDifficulty() == Difficulty.HARD)
-                    questionButton.getStyleClass().add("hard-question-button");
-                else
-                    questionButton.getStyleClass().add("custom-question-button");
-
-                questionButton.prefWidthProperty().bind(buttonSize);
-                questionButton.prefHeightProperty().bind(buttonSize);
-                questionButton.setOnAction(e -> {
-                    LOGGER.log(Level.INFO, "Question clicked.");
-                    if (teamsManager.currentTeamProperty().get() !=
-                        null) {                // if null, there are no teams yet
-                        showQuestionDialog(question, questionButton);
-                    }
-                    else {
-                        showPopup(resources.getString("inform_header-uh-oh"),
-                                resources.getString("inform_teams-first"));
-                    }
-                });
-
+                Button questionButton = makeButton(i, buttonSize);
                 int rowIndex = i / rowSize;
                 int colIndex = i % rowSize;
                 questionsGrid.add(questionButton, colIndex, rowIndex);
             }
         }
+    }
+
+    private Button makeButton(int i, NumberBinding buttonSize) {
+        final Question question = quiz.getQuestions().get(i);
+        Button button = new Button(Integer.toString(i + 1));
+
+        addStyle(button, GRID_STYLESHEET, "question-button");
+        if (question.getDifficulty() == Difficulty.EASY)
+            button.getStyleClass().add("easy-question-button");
+        else if (question.getDifficulty() == Difficulty.DEFAULT)
+            button.getStyleClass().add("medium-question-button");
+        else if (question.getDifficulty() == Difficulty.HARD)
+            button.getStyleClass().add("hard-question-button");
+        else
+            button.getStyleClass().add("custom-question-button");
+
+        button.prefWidthProperty().bind(buttonSize);
+        button.prefHeightProperty().bind(buttonSize);
+        button.setOnAction(e -> {
+            LOGGER.log(Level.INFO, "Question clicked.");
+            if (teamsManager.currentTeamProperty().get() == null)           // if null, there are no teams yet
+                showPopup(resources.getString("inform_header-uh-oh"),
+                        resources.getString("inform_teams-first"));
+            else if (turnsManager.invalidStageProperty().get())             // or there may be too many teams
+                showPopup(resources.getString("inform_header-uh-oh"),
+                        resources.getString("inform_invalid"));
+            else
+                showQuestionDialog(question, button);
+        });
+        return button;
     }
 
     private void configureTeamsVBox() {
@@ -254,10 +245,23 @@ public class MainController {
     }
 
     private void configureTurnsLabel() {
-        if (turnsManager != null)
+        if (turnsManager != null) {
             turnsLabel.textProperty().bind(new SimpleStringProperty(resources.getString("main_turns"))
                     .concat(turnsManager.currentTurnProperty().asString()
                             .concat("/").concat(turnsManager.totalTurnsProperty().asString())));
+            /*
+            This happens when there are no more turns left.
+            */
+            turnsManager.gameOverProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue == true) {
+                    for (Node node : questionsGrid.getChildren())
+                        node.setDisable(true);
+                    turnsLabel.textProperty().unbind();
+                    turnsLabel.setText(resources.getString("main_turns-over"));
+                    showCongratsPopup();
+                }
+            });
+        }
         else
             turnsLabel.setText(resources.getString("main_turns") + "-/-");
     }
@@ -286,7 +290,6 @@ public class MainController {
                     valueButton.getStyleClass().add("coin-button");
                     valueButton.setDisable(true);
                 }
-
                 @Override
                 public void onIncorrect() {
                     LOGGER.log(Level.INFO, "Answer was incorrect.");

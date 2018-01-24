@@ -11,6 +11,8 @@ import java.util.prefs.Preferences;
 /**
  * @author Szilárd Hompoth at https://github.com/hszilard93
  * This class manages the locale settings for the supported languages.
+ * The languages are shared ACROSS APPLICATIONS.
+ * E.g. if the preferred language changes for the Editor app, Quizzer will also start with the new language.
  */
 public class LocaleManager {
     private static final Logger LOGGER = Logger.getLogger(LocaleManager.class.getName());
