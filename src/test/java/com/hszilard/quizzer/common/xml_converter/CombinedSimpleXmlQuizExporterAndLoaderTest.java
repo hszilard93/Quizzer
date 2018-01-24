@@ -69,7 +69,7 @@ class CombinedSimpleXmlQuizExporterAndLoaderTest {
         Answer answer3ToQuestion2 = new Answer("Some answer 6", true);
         Answer answer4ToQuestion2 = new Answer("Some answer 7", false);
         question2.answersProperty().addAll(answer1ToQuestion2, answer2ToQuestion2, answer3ToQuestion2, answer4ToQuestion2);
-        question2.setDifficulty(new Difficulty(5));             // custom difficulty
+        question2.setDifficulty(Difficulty.difficulty(5));             // custom difficulty
 
         originalQuiz.getQuestions().addAll(question1, question2);
 
@@ -100,7 +100,7 @@ class CombinedSimpleXmlQuizExporterAndLoaderTest {
         for (int i = 0; i < numberOfQuestions; i++) {
             String questionText = randomStringGenerator.generate(random.nextInt(256));
             Question question = new Question(questionText);
-            Difficulty difficulty = new Difficulty(random.nextInt(Integer.MAX_VALUE) + 1);
+            Difficulty difficulty = Difficulty.difficulty(random.nextInt(Integer.MAX_VALUE) + 1);
             question.setDifficulty(difficulty);
 
             int numberOfAnswers = random.nextInt(64);

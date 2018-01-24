@@ -2,6 +2,7 @@ package main.java.com.hszilard.quizzer.quizeditor;
 
 import javafx.scene.shape.Circle;
 import main.java.com.hszilard.quizzer.common.quiz_model.Answer;
+import main.java.com.hszilard.quizzer.common.quiz_model.Difficulty;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
 import main.java.com.hszilard.quizzer.common.xml_converter.SimpleXmlQuizLoader;
 import javafx.beans.binding.Bindings;
@@ -76,11 +77,11 @@ class QuestionListCell extends ListCell<Question> {
         titleLabel.textProperty().bind(question.questionTextProperty());
 
         difficultyCircle.getStyleClass().clear();
-        if (question.getDifficulty().equals(EASY))
+        if (question.getDifficulty() == Difficulty.EASY)
             difficultyCircle.getStyleClass().add("easy-circle");
-        else if (question.getDifficulty().equals(DEFAULT))
+        else if (question.getDifficulty() == Difficulty.DEFAULT)
             difficultyCircle.getStyleClass().add("medium-circle");
-        else if (question.getDifficulty().equals(HARD))
+        else if (question.getDifficulty() == Difficulty.HARD)
             difficultyCircle.getStyleClass().add("hard-circle");
         else
             difficultyCircle.getStyleClass().add("custom-circle");

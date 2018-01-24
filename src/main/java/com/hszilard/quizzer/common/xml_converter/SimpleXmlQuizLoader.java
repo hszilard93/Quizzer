@@ -76,12 +76,12 @@ public class SimpleXmlQuizLoader implements QuizLoader {
             }
             catch (NumberFormatException e) {
                 LOGGER.log(Level.INFO, "Nonexistent or invalid difficulty for question nr. " + i);
-                difficultyValue = Difficulty.DEFAULT.getValue();
+                difficultyValue = Difficulty.DEFAULT.value();
             }
 
             String questionText = questionElement.getElementsByTagName(Values.QUESTION_TEXT_TAG).item(0).getTextContent();
             Question question = new Question(questionText);
-            question.setDifficulty(new Difficulty(difficultyValue));
+            question.setDifficulty(Difficulty.difficulty(difficultyValue));
             // loading all answers belonging to this question
             question.getAnswers().addAll(loadAnswers(questionElement));
             questionsList.add(question);

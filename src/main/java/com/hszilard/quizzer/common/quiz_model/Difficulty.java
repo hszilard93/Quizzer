@@ -1,7 +1,10 @@
 package main.java.com.hszilard.quizzer.common.quiz_model;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+
+import java.util.HashMap;
 
 /**
  * @author Szilárd Hompoth at https://github.com/hszilard93
@@ -12,39 +15,36 @@ public class Difficulty {
     public static final Difficulty DEFAULT = new Difficulty(8);
     public static final Difficulty HARD = new Difficulty(10);
 
-    final private IntegerProperty value = new SimpleIntegerProperty();
+    private static final HashMap<Integer, Difficulty> difficulties = new HashMap<>();
 
-    public Difficulty(int value) {
-        setValue(value);
+    private final int value;
+
+    static {
+        difficulties.put(EASY.value, EASY);
+        difficulties.put(DEFAULT.value, DEFAULT);
+        difficulties.put(HARD.value, HARD);
     }
 
-    public int getValue() {
-        return value.get();
+    private Difficulty(int value) {
+        this.value = value;
     }
 
-    public void setValue(int value) {
-        if (value <= 0) {
+    /* Static factory method (see Effective Java, Chapter 1).
+     * Only one Difficulty of the same value exists. */
+    public static Difficulty difficulty(int value) {
+        if (value <= 0)
             throw new IllegalArgumentException("Illegal value: " + value);
+
+        if (difficulties.containsKey(value))
+            return difficulties.get(value);
+        else {
+            Difficulty newDifficulty = new Difficulty(value);
+            difficulties.put(value, newDifficulty);
+            return newDifficulty;
         }
-        this.value.setValue(value);
     }
 
-    public IntegerProperty valueProperty() {
+    public int value() {
         return value;
     }
-
-    @Override
-    public int hashCode() {
-        return Integer.hashCode(value.get());
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (this == other) return true;
-        if (other == null) return false;
-        if (getClass() != other.getClass()) return false;
-        /* ! JavaFX properties don't have their equals method overridden ! */
-        return this.valueProperty().get() == ((Difficulty) other).valueProperty().get();
-    }
-
 }

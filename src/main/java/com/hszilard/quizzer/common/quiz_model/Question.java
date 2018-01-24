@@ -92,6 +92,7 @@ public class Question {
         if (getClass() != other.getClass()) return false;
 
         return this.questionText.get().equals(((Question)other).questionText.get())
+                && this.getDifficulty().equals(((Question) other).getDifficulty())
                 && this.answers.equals(((Question)other).answers);
     }
 }

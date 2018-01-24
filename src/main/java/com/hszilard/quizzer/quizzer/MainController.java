@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -66,6 +67,14 @@ public class MainController {
     private void initialize() {
         teamsManager = new TeamsManager();
         setupViews();
+    }
+
+    private void setupViews() {
+        LOGGER.log(Level.INFO, "Setting up views.");
+        menuBarLayoutController.init(this);
+        configureQuestionsGrid();
+        configureTeamsVBox();
+        configureTurnsLabel();
     }
 
     void restart() {
@@ -145,27 +154,6 @@ public class MainController {
         ((Stage) (questionsGrid.getScene().getWindow())).setTitle("Quizzer - " + quiz.getTitle());
 
         configureTurnsLabel();
-
-        /*
-        This happens when there are no more turns left.
-         */
-        turnsManager.gameOverProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == true) {
-                for (Node node : questionsGrid.getChildren())
-                    node.setDisable(true);
-                turnsLabel.textProperty().unbind();
-                turnsLabel.setText(resources.getString("main_turns-over"));
-                showCongratsPopup();
-            }
-        });
-    }
-
-    private void setupViews() {
-        LOGGER.log(Level.INFO, "Setting up views.");
-        menuBarLayoutController.init(this);
-        configureQuestionsGrid();
-        configureTeamsVBox();
-        configureTurnsLabel();
     }
 
     private void configureQuestionsGrid() {
@@ -189,38 +177,42 @@ public class MainController {
                     questionsGrid.heightProperty().divide(colSize)).subtract(8);
 
             for (int i = 0; i < questionsSize; i++) {
-                final Question question = quiz.getQuestions().get(i);
-
-                Button questionButton = new Button("" + (i + 1));
-                addStyle(questionButton, GRID_STYLESHEET, "question-button");
-                if (question.getDifficulty().equals(Difficulty.EASY))
-                    questionButton.getStyleClass().add("easy-question-button");
-                else if (question.getDifficulty().equals(Difficulty.DEFAULT))
-                    questionButton.getStyleClass().add("medium-question-button");
-                else if (question.getDifficulty().equals(Difficulty.HARD))
-                    questionButton.getStyleClass().add("hard-question-button");
-                else
-                    questionButton.getStyleClass().add("custom-question-button");
-
-                questionButton.prefWidthProperty().bind(buttonSize);
-                questionButton.prefHeightProperty().bind(buttonSize);
-                questionButton.setOnAction(e -> {
-                    LOGGER.log(Level.INFO, "Question clicked.");
-                    if (teamsManager.currentTeamProperty().get() !=
-                        null) {                // if null, there are no teams yet
-                        showQuestionDialog(question, questionButton);
-                    }
-                    else {
-                        showPopup(resources.getString("inform_header-uh-oh"),
-                                resources.getString("inform_teams-first"));
-                    }
-                });
-
+                Button questionButton = makeButton(i, buttonSize);
                 int rowIndex = i / rowSize;
                 int colIndex = i % rowSize;
                 questionsGrid.add(questionButton, colIndex, rowIndex);
             }
         }
+    }
+
+    private Button makeButton(int i, NumberBinding buttonSize) {
+        final Question question = quiz.getQuestions().get(i);
+        Button button = new Button(Integer.toString(i + 1));
+
+        addStyle(button, GRID_STYLESHEET, "question-button");
+        if (question.getDifficulty() == Difficulty.EASY)
+            button.getStyleClass().add("easy-question-button");
+        else if (question.getDifficulty() == Difficulty.DEFAULT)
+            button.getStyleClass().add("medium-question-button");
+        else if (question.getDifficulty() == Difficulty.HARD)
+            button.getStyleClass().add("hard-question-button");
+        else
+            button.getStyleClass().add("custom-question-button");
+
+        button.prefWidthProperty().bind(buttonSize);
+        button.prefHeightProperty().bind(buttonSize);
+        button.setOnAction(e -> {
+            LOGGER.log(Level.INFO, "Question clicked.");
+            if (teamsManager.currentTeamProperty().get() == null)           // if null, there are no teams yet
+                showPopup(resources.getString("inform_header-uh-oh"),
+                        resources.getString("inform_teams-first"));
+            else if (turnsManager.invalidStageProperty().get())             // or there may be too many teams
+                showPopup(resources.getString("inform_header-uh-oh"),
+                        resources.getString("inform_invalid"));
+            else
+                showQuestionDialog(question, button);
+        });
+        return button;
     }
 
     private void configureTeamsVBox() {
@@ -240,37 +232,7 @@ public class MainController {
                     if (result.isPresent()) {
                         Team team = result.get();
                         teamsManager.addTeam(team);
-
-                        FXMLLoader teamBoxLoader = new FXMLLoader(getClass()
-                                .getResource("/main/resources/com/hszilard/quizzer/quizzer/teamBox.fxml"),
-                                resources);
-                        Parent teamBox = teamBoxLoader.load();
-                        teamBox.styleProperty().bind(when(equal(team, teamsManager.currentTeamProperty()))
-                                .then("-fx-background-color: crimson;")
-                                .otherwise("-fx-background-color: #78909C;"));
-
-                        Label teamName = (Label) teamBoxLoader.getNamespace().get("nameLabel");
-                        Label teamScore = (Label) teamBoxLoader.getNamespace().get("scoreLabel");
-                        teamName.textProperty().bind(team.nameProperty());
-                        teamName.maxWidthProperty().bind(teamsVBox.widthProperty()
-                                .subtract(teamScore.widthProperty()).subtract(4));
-                        teamScore.textProperty().bind(team.scoreProperty().asString());
-
-                        teamBox.setOnMouseClicked(teamBoxEvent -> {
-                            if (teamBoxEvent.getClickCount() == 2) {
-                                LOGGER.log(Level.INFO, "teamBox double-clicked.");
-                                try {
-                                    Dialog<Team> editTeamDialog = teamDialogFactory.createEditTeamDialog(team);
-                                    Optional<Team> editResult = editTeamDialog.showAndWait();
-                                    if (editResult.isPresent())
-                                        team.setName(editResult.get().getName());
-                                }
-                                catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-
+                        Parent teamBox = makeTeamBox(team, teamDialogFactory);
                         teamsVBox.getChildren().add(teamsVBox.getChildren().size() - 1, teamBox);
                     }
                 }
@@ -278,16 +240,28 @@ public class MainController {
                     e.printStackTrace();
                 }
             });
-
             teamsVBox.getChildren().add(addTeamButton);
         }
     }
 
     private void configureTurnsLabel() {
-        if (turnsManager != null)
+        if (turnsManager != null) {
             turnsLabel.textProperty().bind(new SimpleStringProperty(resources.getString("main_turns"))
                     .concat(turnsManager.currentTurnProperty().asString()
                             .concat("/").concat(turnsManager.totalTurnsProperty().asString())));
+            /*
+            This happens when there are no more turns left.
+            */
+            turnsManager.gameOverProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue == true) {
+                    for (Node node : questionsGrid.getChildren())
+                        node.setDisable(true);
+                    turnsLabel.textProperty().unbind();
+                    turnsLabel.setText(resources.getString("main_turns-over"));
+                    showCongratsPopup();
+                }
+            });
+        }
         else
             turnsLabel.setText(resources.getString("main_turns") + "-/-");
     }
@@ -305,7 +279,7 @@ public class MainController {
                 public void onCorrect() {
                     LOGGER.log(Level.INFO, "Answer was correct.");
                     if (teamsManager.currentTeamProperty() != null) {
-                        int score = question.getDifficulty().getValue();
+                        int score = question.getDifficulty().value();
                         teamsManager.currentTeamProperty().get().addToScore(score);
                         valueButton.setText("" + score);
                     }
@@ -316,7 +290,6 @@ public class MainController {
                     valueButton.getStyleClass().add("coin-button");
                     valueButton.setDisable(true);
                 }
-
                 @Override
                 public void onIncorrect() {
                     LOGGER.log(Level.INFO, "Answer was incorrect.");
@@ -344,6 +317,64 @@ public class MainController {
         catch (IOException e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
             CommonUtils.showError(resources.getString("error_generic-message"));
+        }
+    }
+
+    private Parent makeTeamBox(Team team, TeamDialogFactory teamDialogFactory) throws IOException {
+        FXMLLoader teamBoxLoader = new FXMLLoader(getClass()
+                .getResource("/main/resources/com/hszilard/quizzer/quizzer/teamBox.fxml"), resources);
+        Parent teamBox = teamBoxLoader.load();
+
+        teamBox.styleProperty().bind(when(equal(team, teamsManager.currentTeamProperty()))
+                .then("-fx-background-color: crimson;")
+                .otherwise("-fx-background-color: #78909C;"));
+
+        Label teamName = (Label) teamBoxLoader.getNamespace().get("nameLabel");
+        Label teamScore = (Label) teamBoxLoader.getNamespace().get("scoreLabel");
+        teamName.textProperty().bind(team.nameProperty());
+        teamName.maxWidthProperty().bind(teamsVBox.widthProperty()
+                .subtract(teamScore.widthProperty()).subtract(4));
+        teamScore.textProperty().bind(team.scoreProperty().asString());
+        teamBox.setOnMouseClicked(clickEvent -> {
+            /* Handle right click as context request */
+            if (clickEvent.getButton() == MouseButton.SECONDARY) {
+                LOGGER.log(Level.INFO, "teamBox right-clicked.");
+                ContextMenu contextMenu = new ContextMenu();
+                MenuItem editItem = new MenuItem(resources.getString("team_edit-item"));
+                editItem.setOnAction(editEvent -> {
+                    LOGGER.log(Level.INFO, "editItem selected.");
+                    contextMenu.hide();
+                    showEditTeamDialog(team, teamDialogFactory);
+                });
+                MenuItem deleteItem = new MenuItem(resources.getString("team_delete-item"));
+                deleteItem.setOnAction(deleteEvent -> {
+                    LOGGER.log(Level.INFO, "deleteItemSelected");
+                    contextMenu.hide();
+                    teamsManager.teamsProperty().remove(team);
+                    teamsVBox.getChildren().remove(teamBox);
+                });
+                contextMenu.getItems().addAll(editItem, deleteItem);
+                contextMenu.show(teamsVBox, clickEvent.getScreenX(), clickEvent.getScreenY());
+            }
+            /* Handle double clicks as edit */
+            else if (clickEvent.getClickCount() == 2) {
+                LOGGER.log(Level.INFO, "teamBox double-clicked.");
+                showEditTeamDialog(team, teamDialogFactory);
+            }
+        });
+
+        return teamBox;
+    }
+
+    private void showEditTeamDialog(Team team, TeamDialogFactory teamDialogFactory) {
+        try {
+            Dialog<Team> editTeamDialog = teamDialogFactory.createEditTeamDialog(team);
+            Optional<Team> editResult = editTeamDialog.showAndWait();
+            if (editResult.isPresent())
+                team.setName(editResult.get().getName());
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
