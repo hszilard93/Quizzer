@@ -5,6 +5,9 @@ I made the first few prototypes of Quizzer for my scout group's annual history c
 
 *Quizzer currently supports two languages: English and Hungarian.*
 
+Quizzer in action:
+![alt text](https://i.imgur.com/p8MTv4o.jpg "Quizzer in action")
+
 ## Instructions
 
 #### 1. Download the .jar files of the latest version from the [Releases view](https://github.com/hszilard93/Quizzer/releases) and proceed to instruction 2a. If you do not have the Java Runtime Environment (JRE) installed (minimum version 1.8), and you are using a Windows operating system, you might want to download the .zip files. Note, however, that the .zip files are *significantly* larger in size. After this, proceed to instruction 2b.
