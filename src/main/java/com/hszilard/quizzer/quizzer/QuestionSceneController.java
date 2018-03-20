@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import main.java.com.hszilard.quizzer.common.quiz_model.Answer;
 import main.java.com.hszilard.quizzer.common.quiz_model.Question;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -48,6 +49,7 @@ public class QuestionSceneController {
     }
 
     private void configureAnswersGrid(List<Answer> answers) {
+        Collections.shuffle(answers);           // the answers must be shuffled but preserving their original order is not important
         int answerSize = answers.size();
         for (int i = 0; i < answerSize; i++) {
             Answer answer = answers.get(i);
