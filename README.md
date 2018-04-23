@@ -1,7 +1,7 @@
 ## About Quizzer
 
 #### Quizzer is an open source quiz application with an editor that can be used in the class or in any sort of competition context.
-I made the first few prototypes of Quizzer for my scout group's annual history contest. After a while I got annoyed of building these quick and dirty apps and wanted to create something that can be easily recycled as well as used by others. Feel free to do so!
+I made the first few prototypes of Quizzer for my scout group's annual history contest. After a while, I got annoyed of building these quick and dirty apps and wanted to create something that can be easily recycled as well as used by others. Feel free to do so!
 
 *Quizzer currently supports two languages: English and Hungarian.*
 
@@ -15,4 +15,4 @@ I made the first few prototypes of Quizzer for my scout group's annual history c
 
 [![alt text](https://i.imgur.com/BXr7ANo.jpg "Click for video")](https://www.youtube.com/watch?v=Yfu9C1AcGk0&feature=youtu.be)
 
-##### Version 0.93
+##### Version 0.94

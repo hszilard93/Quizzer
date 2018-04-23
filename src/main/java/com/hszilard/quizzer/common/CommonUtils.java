@@ -24,7 +24,7 @@ public class CommonUtils {
     private static final Logger LOGGER = Logger.getLogger(CommonUtils.class.getName());
     private static final String QUIZZER_ICON_PATH = "/main/resources/com/hszilard/quizzer/quizzer/drawable/icon.png";
     private static final String EDITOR_ICON_PATH = "/main/resources/com/hszilard/quizzer/quizeditor/drawable/icon.png";
-    private static final String VERSION = "0.93";
+    private static final String VERSION = "0.94";
 
     private static String iconPath;
     private static ResourceBundle resources;
